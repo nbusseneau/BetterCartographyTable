@@ -89,7 +89,7 @@ It is not required for all clients on the server to install the mod, however van
 
 - **[Prerequisite]** Install [**BepInExPack Valheim**](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/).
 - Create a new directory `nbusseneau-Better_Cartography_Table` in your `BepInEx/plugins/` directory.
-- Download [nbusseneau-Better_Cartography_Table-0.0.1.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.0.1.zip).
+- Download [nbusseneau-Better_Cartography_Table-0.1.0.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.1.0.zip).
 - Extract the archive.
 - Move all files to your `BepInEx/plugins/nbusseneau-Better_Cartography_Table` directory. It should look like this:
   ```

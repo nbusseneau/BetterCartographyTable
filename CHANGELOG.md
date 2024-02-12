@@ -7,4 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Initial release.
+## [0.1.0] - 2024-02-12
+
+### Added
+
+-   Initial release.
+
+[Unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.1.0...HEAD
+
+[0.1.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/d81736f2634eb52248432e1a66f59ac0acb491b4...0.1.0
