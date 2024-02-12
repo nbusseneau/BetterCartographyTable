@@ -11,6 +11,8 @@ env:
   python-version: "3.12"
   changelog: CHANGELOG.md
   readme: README.md
+  config: thunderstore.toml
+  plugin: src/Plugin.cs
 
 jobs:
   tag-and-release:
@@ -29,17 +31,26 @@ jobs:
           python-version: ${{ env.python-version }}
 
       - name: Build release notes
-        env:
-          prog: |
-            from pathlib import Path
-            import re
-            regex = re.compile(r'## \[Unreleased\]\s+(?P<notes>.*?)\s+## ', re.DOTALL)
-            changelog = Path('${{ env.changelog }}').read_text()
-            found = regex.search(changelog)
-            if found:
-              print(found.group('notes'))
+        shell: python
         run: |
-          python -c "${{ env.prog }}" > ${{ env.release-notes }}
+          import os
+          from pathlib import Path
+          import re
+
+          regex = re.compile(r'## \[Unreleased\]\s+(?P<notes>.*?)\s+## ', re.DOTALL)
+          changelog = Path('${{ env.changelog }}').read_text()
+          found = regex.search(changelog)
+
+          def set_env(name, value):
+              with open(os.environ['GITHUB_ENV'], 'a') as f:
+                  delimiter = "EOF"
+                  print(f'{name}<<{delimiter}', file=f)
+                  print(value, file=f)
+                  print(delimiter, file=f)
+
+          if found:
+            notes = found.group('notes')
+            set_env("release-notes", notes)
 
       - name: Rotate unreleased section in changelog
         uses: thomaseizinger/keep-a-changelog-new-release@5bc232893483441c5d6cd6c9dcb1e48abf9a2bae
@@ -51,12 +62,13 @@ jobs:
           sed -i 's;nbusseneau/Better_Cartography_table/[0-9]\+.[0-9]\+.[0-9]\+;nbusseneau/Better_Cartography_table/${{ github.event.inputs.tag }}.zip;g' ${{ env.readme }}
           sed -i 's/nbusseneau-Better_Cartography_Table-[0-9]\+.[0-9]\+.[0-9]\+.zip/nbusseneau-Better_Cartography_Table-${{ github.event.inputs.tag }}.zip/g' ${{ env.readme }}
           sed -i 's/versionNumber = ".*"/versionNumber = "${{ github.event.inputs.tag }}"/' ${{ env.config }}
+          sed -i 's/ModVersion = ".*"/ModVersion = "${{ github.event.inputs.tag }}"/' ${{ env.plugin }}
 
       - name: Push updated files to repository
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ${{ env.changelog }} ${{ env.readme }} ${{ env.config }}
+          git add ${{ env.changelog }} ${{ env.readme }} ${{ env.config }} ${{ env.plugin }}
           git commit --message "Release ${{ github.event.inputs.tag }}"
           git push origin HEAD:main
 
@@ -71,7 +83,7 @@ jobs:
         with:
           release_name: ${{ github.event.inputs.tag }}
           tag_name: ${{ github.event.inputs.tag }}
-          body_path: ${{ env.release-notes }}
+          body: ${{ env.release-notes }}
           commitish: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
