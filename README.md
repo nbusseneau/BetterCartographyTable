@@ -1,0 +1,72 @@
+# Better™️ Cartography Table
+
+[Valheim](https://store.steampowered.com/app/892970/Valheim/) mod that allows precise control over sharing pins via **cartography tables**.
+Supports **private pins**, **public pins**, and **guild pins**.
+
+## Features
+
+- All pins are **private** by default.
+  - You can now safely go ham and pin all those nice berries / copper veins / whatever floats your boat, without worrying about cluttering another player's map.
+- Pins can be individually shared when interacting with a **cartography table**.
+  - You have precise control over how to coordinate with other players on the server.
+- **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) if installed).
+  - For when you want to share super secret guild hideouts with your mates. Not that it ever happens. Definitely don't look for super secret guild hideouts on your servers. Nope.
+- If multiple players are currently interacting with the same **cartography table**, changes to **public** or **guild pins** (depending on table mode) are reflected in real time for all of them.
+  - This allows collaborating over the map in real time, especially useful when planning the next expedition.
+
+## But why?
+
+The vanilla **cartography table** is quirky and often leads to frustration on multiplayer servers: it only stores the pins of the last player that wrote to the table, completely replacing what was previously recorded.
+
+This often results in situations where shared pins seem to disappear / reappear constantly when multiple players interact with the table on a regular basis (and it also never updates cross off status...).
+
+On top of that, since the **cartography table** is "all or nothing" both ways, some players might refrain from interacting with the table (e.g. when someone is meticulously pinning all berries / copper veins / etc., or when they do not want to share some pins they would prefer to keep private).
+
+## Vanilla cartography tables, but Better™️
+
+The goal is to stick close to the vanilla experience and keep **cartography tables** relevant. We are not bypassing **cartography tables**: sharing map data (both pins and exploration) still requires players to interact with the same **cartography table** on a regular basis to synchronize progress.
+
+How it works:
+
+- When interacting with a **cartography table**:
+  - Synchronize map exploration (same as vanilla).
+  - Retrieve **table pins** currently stored on the table.
+  - Open the map:
+    - **Private pins** can be interacted with, and can additionally be stored on the table, becoming **table pins** (either **public** or **guild pins**, depending on the table mode).
+    - **Table pins** can be interacted with, and can additionally be unstored from the table, becoming **private** pins. If multiple players are currently interacting with the same **cartography table**, changes to **table pins** are reflected in real time for all of them.
+- When opening the map without interacting with a **cartography table**:
+  - **Private pins** can be interacted with.
+  - **Public** or **guild pins** previously retrieved from a **cartography table** can be displayed / hidden, but cannot be interacted with.
+
+**Table pins** are stored in a custom ZDO key under the **cartography table**'s ZNetView's ZDO, thus there is no risk if a client without the mod installed interacts with a modded table. However vanilla clients will not be able to use a modded table: they cannot retrieve **table pins**, cannot store **table pins**, and cannot even use the table to store vanilla shared pins (because these get overwritten by design when a modded client interacts with a modded table).
+
+## Install
+
+This is a client-side mod, it does not need to be installed on the server.
+
+It is not required for all clients on the server to install the mod, however vanilla clients without the mod will not have access to any shared pins. This is kinda pointless so of course it's better if all clients install it 😅
+
+### Thunderstore (recommended)
+
+- **[Prerequisite]** Install [**r2modman**](https://valheim.thunderstore.io/package/ebkr/r2modman/).
+- Click **Install with Mod Manager** from the [mod page](https://valheim.thunderstore.io/package/nbusseneau/Better_Cartography_table/).
+- **[Optional]** Install [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) for guild support.
+
+### Manually (not recommended)
+
+- **[Prerequisite]** Install [**BepInExPack Valheim**](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/).
+- Create a new directory `nbusseneau-Better_Cartography_Table` in your `BepInEx/plugins/` directory.
+- Download [nbusseneau-Better_Cartography_Table-0.0.1.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.0.1.zip).
+- Extract the archive.
+- Move all files to your `BepInEx/plugins/nbusseneau-Better_Cartography_Table` directory. It should look like this:
+  ```
+  BepInEx/
+  └── plugins/
+      └── nbusseneau-Better_Cartography_Table
+          ├── BetterCartographyTable.dll
+          ├── CHANGELOG.md
+          ├── icon.png
+          ├── manifest.json
+          └── README.md
+  ```
+- **[Optional]** Install [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) for guild support.

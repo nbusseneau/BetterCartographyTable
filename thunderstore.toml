@@ -1,0 +1,36 @@
+[config]
+schemaVersion = "0.0.1"
+
+
+[package]
+namespace = "nbusseneau"
+name = "Better_Cartography_Table"
+versionNumber = "0.0.1"
+description = "Allows precise control over sharing pins via cartography tables. Supports private pins, public pins, and guild pins."
+websiteUrl = "https://github.com/nbusseneau/BetterCartographyTable"
+containsNsfwContent = false
+
+[package.dependencies]
+denikson-BepInExPack_Valheim = "5.4.2202"
+
+
+[build]
+icon = "./icon.png"
+readme = "./README.md"
+outdir = "./build"
+
+[[build.copy]]
+source = "./CHANGELOG.md"
+target = "./CHANGELOG.md"
+
+[[build.copy]]
+source = "./src/bin/Release/BetterCartographyTable.dll"
+target = "./BetterCartographyTable.dll"
+
+
+[publish]
+repository = "https://thunderstore.io"
+communities = [ "valheim", ]
+
+[publish.categories]
+valheim = [ "client-side", "mods", "tools", "tweaks", "utility", ]

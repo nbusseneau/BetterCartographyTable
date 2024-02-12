@@ -1,0 +1,130 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag / Version number (leave empty for dry-run)"
+        required: false
+
+env:
+  python-version: "3.12"
+  changelog: CHANGELOG.md
+  readme: README.md
+  config: thunderstore.toml
+  build-dir: build/
+  artifacts-content-type: application/zip
+
+jobs:
+  tag-and-release:
+    name: Rotate changelog, version, tag, and create release
+    runs-on: ubuntu-latest
+    if: github.event.inputs.tag
+    outputs:
+      upload_url: ${{ steps.release.outputs.upload_url }}
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+      - name: Set up Python
+        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984
+        with:
+          python-version: ${{ env.python-version }}
+
+      - name: Build release notes
+        env:
+          prog: |
+            from pathlib import Path
+            import re
+            regex = re.compile(r'## \[Unreleased\]\s+(?P<notes>.*?)\s+## ', re.DOTALL)
+            changelog = Path('${{ env.changelog }}').read_text()
+            found = regex.search(changelog)
+            if found:
+              print(found.group('notes'))
+        run: |
+          python -c "${{ env.prog }}" > ${{ env.release-notes }}
+
+      - name: Rotate unreleased section in changelog
+        uses: thomaseizinger/keep-a-changelog-new-release@5bc232893483441c5d6cd6c9dcb1e48abf9a2bae
+        with:
+          tag: ${{ github.event.inputs.tag }}
+
+      - name: Rotate version
+        run: |
+          sed -i 's;nbusseneau/Better_Cartography_table/[0-9]\+.[0-9]\+.[0-9]\+;nbusseneau/Better_Cartography_table/${{ github.event.inputs.tag }}.zip;g' ${{ env.readme }}
+          sed -i 's/nbusseneau-Better_Cartography_Table-[0-9]\+.[0-9]\+.[0-9]\+.zip/nbusseneau-Better_Cartography_Table-${{ github.event.inputs.tag }}.zip/g' ${{ env.readme }}
+          sed -i 's/versionNumber = ".*"/versionNumber = "${{ github.event.inputs.tag }}"/' ${{ env.config }}
+
+      - name: Push updated files to repository
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ${{ env.changelog }} ${{ env.readme }} ${{ env.config }}
+          git commit --message "Release ${{ github.event.inputs.tag }}"
+          git push origin HEAD:main
+
+      - name: Tag
+        run: |
+          git tag ${{ github.event.inputs.tag }}
+          git push origin --tags
+
+      - name: Create release
+        id: release
+        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
+        with:
+          release_name: ${{ github.event.inputs.tag }}
+          tag_name: ${{ github.event.inputs.tag }}
+          body_path: ${{ env.release-notes }}
+          commitish: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-publish-package:
+    name: Build and publish package
+    needs: tag-and-release
+    if: always() && (needs.tag-and-release.result == 'success' || needs.tag-and-release.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        with:
+          ref: ${{ github.event.inputs.tag || github.sha }}
+
+      - name: Build solution
+        run: dotnet build -c Release
+
+      - name: Install Thunderstore CLI
+        run: dotnet tool install -g tcli
+
+      - name: Build package
+        if: ${{ !needs.tag-and-release.outputs.upload_url }}
+        run: tcli build
+
+      - name: Publish package
+        if: needs.tag-and-release.outputs.upload_url
+        env:
+          TCLI_AUTH_TOKEN: ${{ secrets.TCLI_AUTH_TOKEN }}
+        run: tcli publish
+
+      - name: Retrieve package name
+        run: |
+          ARTIFACTS_NAME=$(find "${{ env.build-dir }}" -type f -printf "%f\n")
+          echo "artifacts-name=${ARTIFACTS_NAME}" >> "$GITHUB_ENV"
+
+      - name: Upload artifacts to workflow
+        uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595
+        with:
+          name: ${{ env.artifacts-name }}
+          path: ${{ env.build-dir }}/${{ env.artifacts-name }}
+          retention-days: 1
+
+      - name: Upload artifacts to release
+        if: needs.tag-and-release.outputs.upload_url
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
+        with:
+          upload_url: ${{ needs.tag-and-release.outputs.upload_url }}
+          asset_path: ${{ env.build-dir }}/${{ env.artifacts-name }}
+          asset_name: ${{ env.artifacts-name }}
+          asset_content_type: ${{ env.artifacts-content-type }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
