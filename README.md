@@ -3,16 +3,49 @@
 [Valheim](https://store.steampowered.com/app/892970/Valheim/) mod that allows precise control over sharing pins via **cartography tables**.
 Supports **private pins**, **public pins**, and **guild pins**.
 
+## Video showcase
+
+**(Click on items to show details)**
+
+<details>
+<summary><b>Private</b> and <b>public pins</b></summary>
+
+Astrid and Brynhild are playing together, however Astrid has a tad too many mushroom pins for Brynhild's liking.
+Thanks to **Better™️ Cartography Table**, their friendship is safe, as Astrid can selectively decide which pins to share on the public cartography table.
+
+https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e13e6267-88ad-4aee-bdfe-f78e807bc2f8
+
+</details>
+
+<details>
+<summary>Real-time collaboration</summary>
+
+Astrid and Brynhild are planning their next expedition.
+Thanks to **Better™️ Cartography Table**, they can collaborate in real time on the cartography table.
+
+https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e535a301-994f-4129-b9ec-3e51685bab2c
+
+</details>
+
+<details>
+<summary><b>Guild pins</b></summary>
+
+Thanks to **Better™️ Cartography Table**, guilds can privately share pins amongst members.
+Brynhild is a member of The Ground Shakers guild, and Astrid does not have access to their cartography table.
+Astrid creates The Mushroom Enjoyers guild so that she can share a Super Secret Hideout with other mushroom enjoyers, which Brynhild will never know about.
+
+https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00f-4047-b9ce-3839ac499035
+
+</details>
+
 ## Features
 
-- All pins are **private** by default.
+- Pins are **private** by default, and can be individually shared on a **public cartography table**.
   - You can now safely go ham and pin all those nice berries / copper veins / whatever floats your boat, without worrying about cluttering another player's map.
-- Pins can be individually shared when interacting with a **cartography table**.
-  - You have precise control over how to coordinate with other players on the server.
-- **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) if installed).
-  - For when you want to share super secret guild hideouts with your mates. Not that it ever happens. Definitely don't look for super secret guild hideouts on your servers. Nope.
-- If multiple players are currently interacting with the same **cartography table**, changes to **public** or **guild pins** (depending on table mode) are reflected in real time for all of them.
+- When multiple players are interacting with the same **cartography table**, changes are reflected in real time for all of them.
   - This allows collaborating over the map in real time, especially useful when planning the next expedition.
+- **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) is installed).
+  - For when you want to share super secret guild hideouts with your mates. Not that it ever happens. Definitely don't look for super secret guild hideouts on your servers. Nope...
 
 ## But why?
 
@@ -20,7 +53,7 @@ The vanilla **cartography table** is quirky and often leads to frustration on mu
 
 This often results in situations where shared pins seem to disappear / reappear constantly when multiple players interact with the table on a regular basis (and it also never updates cross off status...).
 
-On top of that, since the **cartography table** is "all or nothing" both ways, some players might refrain from interacting with the table (e.g. when someone is meticulously pinning all berries / copper veins / etc., or when they do not want to share some pins they would prefer to keep private).
+On top of that, since the **cartography table** is "all or nothing" both ways, some players might refrain from interacting with the table (e.g. when someone is meticulously pinning all berries / copper veins / etc., or when they do not want to share some super secret pins they would prefer to keep private).
 
 ## Vanilla cartography tables, but Better™️
 
