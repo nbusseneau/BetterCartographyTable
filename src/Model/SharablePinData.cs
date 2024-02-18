@@ -13,7 +13,7 @@ namespace BetterCartographyTable.Model;
 /// </summary>
 public class SharablePinData : PinData, IEquatable<PinData>
 {
-  private static readonly HashSet<PinType> interactablePinTypes = [
+  private static readonly HashSet<PinType> sharablePinTypes = [
     PinType.Icon0,
     PinType.Icon1,
     PinType.Icon2,
@@ -26,7 +26,7 @@ public class SharablePinData : PinData, IEquatable<PinData>
   ];
 
   public SharingMode SharingMode { get; set; } = SharingMode.Private;
-  public bool IsInteractable => interactablePinTypes.Contains(this.m_type);
+  public bool IsSharable => sharablePinTypes.Contains(this.m_type);
   public bool IsPrivate => this.SharingMode == SharingMode.Private;
   public bool IsPublic => this.SharingMode == SharingMode.Public;
   public bool IsGuild => this.SharingMode == SharingMode.Guild;

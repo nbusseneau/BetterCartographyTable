@@ -123,8 +123,8 @@ public static class InteractionManager
       return;
     }
 
-    // all other actions require interacting with a map table
-    if (!IsInteracting) return;
+    // all other actions require interacting with a sharable pin on a map table
+    if (!IsInteracting && !closestPin.IsSharable) return;
     var isTablePin = closestPin.IsMapTablePin(CurrentMapTable);
 
     var modifierPlusLeftClickingPrivatePin = Plugin.IsModifierKeyPushed && closestPin.IsPrivate;
@@ -167,8 +167,8 @@ public static class InteractionManager
       return;
     }
 
-    // all other actions require interacting with a map table
-    if (!IsInteracting) return;
+    // all other actions require interacting with a sharable pin on a map table
+    if (!IsInteracting && !closestPin.IsSharable) return;
     var isTablePin = closestPin.IsMapTablePin(CurrentMapTable);
 
     var modifierPlusRightClickingPrivatePin = Plugin.IsModifierKeyPushed && closestPin.IsPrivate;
