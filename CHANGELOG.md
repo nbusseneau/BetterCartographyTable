@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2024-02-18
+
 ### Fixed
 
 -   Restrict map interactions to sharable pin types.
@@ -19,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial release.
 
-[Unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.1.1...HEAD
+
+[0.1.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.1.0...0.1.1
 
 [0.1.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/d81736f2634eb52248432e1a66f59ac0acb491b4...0.1.0

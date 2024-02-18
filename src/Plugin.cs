@@ -16,7 +16,7 @@ public class Plugin : BaseUnityPlugin
 {
   internal const string ModGUID = "nbusseneau.BetterCartographyTable";
   private const string ModName = "BetterCartographyTable";
-  private const string ModVersion = "0.0.1";
+  private const string ModVersion = "0.1.1";
 
   private static ConfigEntry<KeyboardShortcut> modifierKey;
   private static ConfigEntry<Color> publicPinsColor;
