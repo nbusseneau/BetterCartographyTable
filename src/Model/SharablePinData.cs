@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BetterCartographyTable.Extensions;
+using TMPro;
 using UnityEngine;
 using static Minimap;
 
@@ -41,19 +42,16 @@ public class SharablePinData : PinData, IEquatable<PinData>
 
   public void SetColor(Color color)
   {
-    this.m_iconElement.color = color;
-    if (this.m_NamePinData is not null) this.m_NamePinData.PinNameText.color = color;
+    if (this.m_iconElement is { } iconElement) iconElement.color = color;
+    if (this.m_NamePinData?.PinNameText is { } pinNameText) pinNameText.color = color;
   }
 
   public void SetVisibility(bool isVisible)
   {
-    this.m_uiElement.gameObject.SetActive(isVisible);
-    this.m_iconElement.gameObject.SetActive(isVisible);
+    this.m_uiElement?.gameObject?.SetActive(isVisible);
     if (instance.m_mode == MapMode.Large)
     {
-      this.m_NamePinData?.PinNameGameObject.gameObject.SetActive(isVisible);
-      this.m_NamePinData?.PinNameRectTransform.gameObject.SetActive(isVisible);
-      this.m_NamePinData?.PinNameText.gameObject.SetActive(isVisible);
+      this.m_NamePinData?.PinNameGameObject?.gameObject?.SetActive(isVisible);
     }
   }
 

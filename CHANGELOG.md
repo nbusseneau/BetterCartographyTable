@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Restrict map interactions to sharable pin types.
 -   Remove debug logging.
+-   Fix pin type filter toggling flooding logs with `NullReferenceException` errors.
 
 ## [0.1.0] - 2024-02-12
 
