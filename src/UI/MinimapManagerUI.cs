@@ -95,7 +95,6 @@ public static class MinimapManagerUI
 
   private static void UpdatePins()
   {
-    Plugin.Logger.LogDebug($"ArePublicPinsDisplayed: {ArePublicPinsDisplayed} | AreGuildPinsDisplayed: {AreGuildPinsDisplayed}");
     foreach (var pin in MinimapManager.PublicPins)
     {
       pin.SetVisibility(ArePublicPinsDisplayed);
