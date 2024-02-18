@@ -82,7 +82,7 @@ It is not required for all clients on the server to install the mod, however van
 ### Thunderstore (recommended)
 
 - **[Prerequisite]** Install [**r2modman**](https://valheim.thunderstore.io/package/ebkr/r2modman/).
-- Click **Install with Mod Manager** from the [mod page](https://valheim.thunderstore.io/package/nbusseneau/Better_Cartography_table/).
+- Click **Install with Mod Manager** from the [mod page](https://valheim.thunderstore.io/package/nbusseneau/Better_Cartography_Table/).
 - **[Optional]** Install [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) for guild support.
 
 ### Manually (not recommended)
