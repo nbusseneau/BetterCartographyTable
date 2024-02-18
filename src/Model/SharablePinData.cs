@@ -40,12 +40,6 @@ public class SharablePinData : PinData, IEquatable<PinData>
   public void ToggleChecked() => this.m_checked = !this.m_checked;
   public override string ToString() => $"{this.SharingMode} {m_name} {m_pos} {(m_checked ? "⦻" : "⭘")} {m_author} {m_ownerID}L {Enum.GetName(typeof(PinType), m_type)}";
 
-  public void SetColor(Color color)
-  {
-    if (this.m_iconElement is { } iconElement) iconElement.color = color;
-    if (this.m_NamePinData?.PinNameText is { } pinNameText) pinNameText.color = color;
-  }
-
   public void SetVisibility(bool isVisible)
   {
     this.m_uiElement?.gameObject?.SetActive(isVisible);
@@ -53,6 +47,12 @@ public class SharablePinData : PinData, IEquatable<PinData>
     {
       this.m_NamePinData?.PinNameGameObject?.gameObject?.SetActive(isVisible);
     }
+  }
+
+  public void SetColor(Color color)
+  {
+    if (this.m_iconElement is { } iconElement) iconElement.color = color;
+    if (this.m_NamePinData?.PinNameText is { } pinNameText) pinNameText.color = color;
   }
 
   public ZPackage ToZPackage()
