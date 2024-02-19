@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using BetterCartographyTable.Extensions;
-using TMPro;
 using UnityEngine;
 using static Minimap;
 
