@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 -   Fix shared pins disappearing if a cartography table is in use while a save occurs.
+-   Fix `NullReferenceException` errors if hovering a cartography table while the game is shutting down.
 
 ## [0.1.1] - 2024-02-18
 

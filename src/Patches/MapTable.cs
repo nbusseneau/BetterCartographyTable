@@ -67,6 +67,7 @@ public static class MapTablePatches
 
     private static void Postfix(MapTable __instance, ref string __result)
     {
+      if (__instance is null) return;
       var hoverText = InteractionManager.GetHoverText(__instance);
       __result = Localization.instance.Localize(hoverText);
     }
