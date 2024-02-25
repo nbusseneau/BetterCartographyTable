@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+-   Fix shared pins disappearing if a cartography table is in use while a save occurs.
+
 ## [0.1.1] - 2024-02-18
 
 ### Fixed

@@ -11,6 +11,7 @@ namespace BetterCartographyTable.Managers;
 public static class MinimapManager
 {
   private static SharablePins Pins { get; } = [];
+  public static IEnumerable<SharablePinData> PrivatePins => Pins.PrivatePins;
   public static IEnumerable<SharablePinData> SharedPins => Pins.SharedPins;
   public static IEnumerable<SharablePinData> PublicPins => Pins.PublicPins;
   public static IEnumerable<SharablePinData> GuildPins => Pins.GuildPins;

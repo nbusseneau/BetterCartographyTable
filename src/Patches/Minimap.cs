@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using BetterCartographyTable.Managers;
 using BetterCartographyTable.Model;
@@ -99,7 +100,31 @@ public static class MinimapPatches
 
   #endregion
 
-  #region Explored map
+  #region Map data intercepts
+
+  /// <summary>
+  /// Inject private pins as <c>Minimap.instance.m_pins</c> replacement in <c>Minimap.GetMapData()</c> so that world
+  /// data stores non-shared pins in a vanilla-compatible way.
+  /// </summary>
+  [HarmonyPatch(typeof(Minimap), nameof(Minimap.GetMapData))]
+  private class InjectPrivatePinsInGetMapData
+  {
+    private static List<PinData> privatePins;
+    private static void Prefix() => privatePins = MinimapManager.PrivatePins.ToList<PinData>();
+
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+      return new CodeMatcher(instructions)
+          .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
+          .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetMapData()")
+          .SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPrivatePinsInGetMapData), nameof(privatePins)))
+          .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
+          .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetMapData()")
+          .SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPrivatePinsInGetMapData), nameof(privatePins)))
+          .InstructionEnumeration();
+    }
+  }
+
 
   /// <summary>
   /// Truncate <c>Minimap.AddSharedMapData()</c> so that it only retrieves explored map data from vanilla shared data, and not pins.

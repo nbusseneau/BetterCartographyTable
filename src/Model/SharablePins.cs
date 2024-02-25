@@ -15,6 +15,7 @@ namespace BetterCartographyTable.Model;
 public class SharablePins : List<PinData>
 {
   public IEnumerable<SharablePinData> AsSharable => this.Cast<SharablePinData>();
+  public IEnumerable<SharablePinData> PrivatePins => this.AsSharable.Where(p => p.IsPrivate);
   public IEnumerable<SharablePinData> SharedPins => this.AsSharable.Where(p => p.IsShared);
   public IEnumerable<SharablePinData> PublicPins => this.AsSharable.Where(p => p.IsPublic);
   public IEnumerable<SharablePinData> GuildPins => this.AsSharable.Where(p => p.IsGuild);

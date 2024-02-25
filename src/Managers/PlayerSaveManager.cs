@@ -13,7 +13,6 @@ public static class PlayerSaveManager
   {
     if (Player.m_localPlayer is null) return;
     StorePinsInPlayerSavefile(MinimapManager.SharedPins);
-    MinimapManager.RemovePins(MinimapManager.SharedPins);
   }
 
   /// <summary>
