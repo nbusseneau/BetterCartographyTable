@@ -33,8 +33,8 @@ public static class InteractionManager
     else
     {
       CurrentMapTable = mapTable;
-      CurrentMapTable.SyncExploredMap();
       MinimapManager.ReplaceMinimapPinsWithTablePins(CurrentMapTable);
+      CurrentMapTable.SyncVanillaSharedData();
       CurrentMapTable.StartListeningForPinEvents();
       MinimapManager.OpenMap(mapTable);
     }
@@ -93,7 +93,7 @@ public static class InteractionManager
   public static void OnMapClose()
   {
     if (!IsInteracting) return;
-    CurrentMapTable.SyncExploredMap();
+    CurrentMapTable.SyncVanillaSharedData();
     CurrentMapTable.ReplaceTablePinsWithMinimapPins();
     CurrentMapTable.StopListeningForPinEvents();
     MinimapManager.OnMapClose();

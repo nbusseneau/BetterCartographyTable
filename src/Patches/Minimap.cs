@@ -125,9 +125,32 @@ public static class MinimapPatches
     }
   }
 
+  /// <summary>
+  /// Inject public pins as <c>Minimap.instance.m_pins</c> replacement in <c>Minimap.GetSharedMapData()</c> so that
+  /// non-modded clients can retrieve public pins stored in vanilla shared data.
+  /// </summary>
+  [HarmonyPatch(typeof(Minimap), nameof(Minimap.GetSharedMapData))]
+  private class InjectPublicPinsInGetSharedMapData
+  {
+    private static List<PinData> publicPins;
+    private static void Prefix() => publicPins = MinimapManager.PublicPins.ToList<PinData>();
+
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+      return new CodeMatcher(instructions)
+          .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
+          .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetSharedMapData()")
+          .SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPublicPinsInGetSharedMapData), nameof(publicPins)))
+          .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
+          .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetSharedMapData()")
+          .SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPublicPinsInGetSharedMapData), nameof(publicPins)))
+          .InstructionEnumeration();
+    }
+  }
 
   /// <summary>
-  /// Truncate <c>Minimap.AddSharedMapData()</c> so that it only retrieves explored map data from vanilla shared data, and not pins.
+  /// Truncate <c>Minimap.AddSharedMapData()</c> after retrieving explored map data from vanilla shared data, ignoring
+  /// pins coming from non-modded clients.
   /// </summary>
   [HarmonyPatch(typeof(Minimap), nameof(Minimap.AddSharedMapData))]
   private class TruncateAddSharedMapData
@@ -142,34 +165,8 @@ public static class MinimapPatches
               new CodeMatch(OpCodes.Ldc_I4_2),
               new CodeMatch(OpCodes.Blt))
           .ThrowIfInvalid("Could not truncate Minimap.AddSharedMapData()")
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_3))
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Ret))
-          .InstructionEnumeration();
-    }
-  }
-
-  /// <summary>
-  /// Truncate <c>Minimap.GetSharedMapData()</c> so that it only stores explored map data in vanilla shared data, and not pins.
-  /// </summary>
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.GetSharedMapData))]
-  private class TruncateGetSharedMapData
-  {
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-    {
-      return new CodeMatcher(instructions)
-          .MatchForward(false,
-              new CodeMatch(OpCodes.Ldc_I4_0),
-              new CodeMatch(OpCodes.Stloc_2),
-              new CodeMatch(OpCodes.Ldarg_0),
-              new CodeMatch(OpCodes.Ldfld),
-              new CodeMatch(OpCodes.Callvirt))
-          .ThrowIfInvalid("Could not truncate Minimap.GetSharedMapData()")
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_1))
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Ldc_I4_0))
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(ZPackage), nameof(ZPackage.Write), [typeof(int)])))
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_1))
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(ZPackage), nameof(ZPackage.GetArray))))
-          .InsertAndAdvance(new CodeInstruction(OpCodes.Ret))
+          .SetAndAdvance(OpCodes.Ldloc_3, null)
+          .SetAndAdvance(OpCodes.Ret, null)
           .InstructionEnumeration();
     }
   }

@@ -118,12 +118,12 @@ public static class MapTableExtensions
 
   #endregion
 
-  #region Explored map storage (vanilla ZDO key)
+  #region Explored map and vanilla pins storage (vanilla ZDO key)
 
-  public static void SyncExploredMap(this MapTable mapTable)
+  public static void SyncVanillaSharedData(this MapTable mapTable)
   {
     mapTable.RetrieveExploredMapFromZDO();
-    mapTable.StoreExploredMapInZDO();
+    mapTable.StoreExploredMapAndPublicPinsInZDO();
   }
 
   private static void RetrieveExploredMapFromZDO(this MapTable mapTable)
@@ -132,17 +132,17 @@ public static class MapTableExtensions
     {
       array = Utils.Decompress(array);
       // AddSharedMapData(...) has been truncated via a Harmony patch so that it only retrieves
-      // explored map data from vanilla shared data, and not pins.
+      // explored map data from vanilla shared data, ignoring pins coming from non-modded clients.
       Minimap.instance.AddSharedMapData(array);
     }
   }
 
-  private static void StoreExploredMapInZDO(this MapTable mapTable)
+  private static void StoreExploredMapAndPublicPinsInZDO(this MapTable mapTable)
   {
     var array = mapTable.m_nview.GetZDO().GetByteArray(ZDOVars.s_data);
     if (array is not null) array = Utils.Decompress(array);
-    // Underlying call to GetSharedMapData(...) has been truncated via a Harmony patch so that it
-    // only stores explored map data in vanilla shared data, and not pins.
+    // Underlying call to GetSharedMapData(...) has been modified via a Harmony patch so that it
+    // stores public pins in vanilla shared data, for limited compatibility with non-modded clients.
     var zPackage = mapTable.GetMapData(array);
     mapTable.m_nview.InvokeRPC("MapData", zPackage);
   }

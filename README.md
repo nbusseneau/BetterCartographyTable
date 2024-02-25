@@ -71,13 +71,13 @@ How it works:
   - **Private pins** can be interacted with.
   - **Public** or **guild pins** previously retrieved from a **cartography table** can be displayed / hidden, but cannot be interacted with.
 
-**Table pins** are stored in a custom ZDO key under the **cartography table**'s ZNetView's ZDO, thus there is no risk if a client without the mod installed interacts with a modded table. However vanilla clients will not be able to use a modded table: they cannot retrieve **table pins**, cannot store **table pins**, and cannot even use the table to store vanilla shared pins (because these get overwritten by design when a modded client interacts with a modded table).
+**Table pins** are stored in a custom ZDO key under the **cartography table**'s ZNetView's ZDO, thus there is no conflict between non-modded vanilla clients and modded clients. Limited one-way compatibility is even provided, as modded clients will also write public pins to the vanilla shared data, allowing non-modded vanilla clients to receive public pins seamlessly. However non-modded vanilla clients will not be able to contribute anything: modded clients can only receive pins from other modded clients.
 
 ## Install
 
 This is a client-side mod, it does not need to be installed on the server.
 
-It is not required for all clients on the server to install the mod, however vanilla clients without the mod will not have access to any shared pins. This is kinda pointless so of course it's better if all clients install it 😅
+It is not strictly required for all clients on the server to install the mod, however non-modded vanilla clients will not be able to share any of their pins with modded clients, so of course it's better if all clients install it 😅
 
 ### Thunderstore (recommended)
 

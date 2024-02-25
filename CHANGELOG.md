@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+-   Add limited one-way compatibility for public pins sharing from modded clients to vanilla non-modded clients.
+
 ### Fixed
 
 -   Fix shared pins disappearing if a cartography table is in use while a save occurs.
