@@ -26,7 +26,6 @@ public static class InteractionManager
   public static void OnMapTableUse(MapTable mapTable, Humanoid user)
   {
     if (IsInteracting) return;
-
     var hasAccess = HasAccess(mapTable);
     if (!hasAccess) user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$piece_noaccess"), 0, null);
     else if (Plugin.IsModifierKeyPushed && GuildsManager.IsEnabled) TryToggleMode(mapTable, user);
@@ -124,7 +123,7 @@ public static class InteractionManager
     }
 
     // all other actions require interacting with a sharable pin on a map table
-    if (!IsInteracting && !closestPin.IsSharable) return;
+    if (!IsInteracting || !closestPin.IsSharable) return;
     var isTablePin = closestPin.IsMapTablePin(CurrentMapTable);
 
     var modifierPlusLeftClickingPrivatePin = Plugin.IsModifierKeyPushed && closestPin.IsPrivate;
@@ -168,7 +167,7 @@ public static class InteractionManager
     }
 
     // all other actions require interacting with a sharable pin on a map table
-    if (!IsInteracting && !closestPin.IsSharable) return;
+    if (!IsInteracting || !closestPin.IsSharable) return;
     var isTablePin = closestPin.IsMapTablePin(CurrentMapTable);
 
     var modifierPlusRightClickingPrivatePin = Plugin.IsModifierKeyPushed && closestPin.IsPrivate;
