@@ -44,7 +44,7 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00
   - You can now safely go ham and pin all those nice berries / copper veins / whatever floats your boat, without worrying about cluttering another player's map.
 - When multiple players are interacting with the same **cartography table**, changes are reflected in real time for all of them.
   - This allows collaborating over the map in real time, especially useful when planning the next expedition.
-- **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) is installed).
+- **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed).
   - For when you want to share super secret guild hideouts with your mates. Not that it ever happens. Definitely don't look for super secret guild hideouts on your servers. Nope...
 
 ## But why?
@@ -81,13 +81,13 @@ It is not strictly required for all clients on the server to install the mod, ho
 
 ### Thunderstore (recommended)
 
-- **[Prerequisite]** Install [**r2modman**](https://valheim.thunderstore.io/package/ebkr/r2modman/).
-- Click **Install with Mod Manager** from the [mod page](https://valheim.thunderstore.io/package/nbusseneau/Better_Cartography_Table/).
-- **[Optional]** Install [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) for guild support.
+- **[Prerequisite]** Install [**r2modman**](https://thunderstore.io/c/valheim/p/ebkr/r2modman/).
+- Click **Install with Mod Manager** from the [mod page](https://thunderstore.io/c/valheim/p/nbusseneau/Better_Cartography_Table/).
+- **[Optional]** Install [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) for guild support.
 
 ### Manually (not recommended)
 
-- **[Prerequisite]** Install [**BepInExPack Valheim**](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/).
+- **[Prerequisite]** Install [**BepInExPack Valheim**](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
 - Create a new directory `nbusseneau-Better_Cartography_Table` in your `BepInEx/plugins/` directory.
 - Download [nbusseneau-Better_Cartography_Table-0.2.0.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.2.0.zip).
 - Extract the archive.
@@ -102,4 +102,4 @@ It is not strictly required for all clients on the server to install the mod, ho
           ├── manifest.json
           └── README.md
   ```
-- **[Optional]** Install [**Guilds**](https://valheim.thunderstore.io/package/Smoothbrain/Guilds/) for guild support.
+- **[Optional]** Install [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) for guild support.
