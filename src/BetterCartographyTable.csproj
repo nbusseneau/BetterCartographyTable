@@ -63,10 +63,6 @@
     <Reference Include="LocalizationManager">
       <HintPath>$(LibPath)\LocalizationManager.dll</HintPath>
     </Reference>
-    <Reference Include="netstandard, Version=2.1.0.0">
-      <HintPath>$(ManagedPath)\netstandard.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(ManagedPath)\Unity.TextMeshPro.dll</HintPath>
       <Private>false</Private>
