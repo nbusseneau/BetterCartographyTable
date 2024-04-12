@@ -92,17 +92,14 @@
 
   <!-- BepInEx dependencies -->
   <ItemGroup>
-    <Content Include="$(LibPath)\GuildsAPI.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(LibPath)\LocalizationManager.dll">
+    <Content Include="$(LibPath)\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <!-- Translations -->
   <ItemGroup>
-    <EmbeddedResource Include="translations\*.yml"/>
+    <EmbeddedResource Include="translations\*"/>
   </ItemGroup>
 
   <!-- Copy to BepInEx plugins after IL repacking -->
