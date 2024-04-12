@@ -22,7 +22,8 @@ public static class MapTablePatches
   {
     private static IEnumerable<MethodInfo> TargetMethods() =>
     [
-      AccessTools.DeclaredMethod(typeof(MapTable), nameof(MapTable.OnRead)),
+      AccessTools.DeclaredMethod(typeof(MapTable), nameof(MapTable.OnRead), [typeof(Switch), typeof(Humanoid), typeof(ItemDrop.ItemData)]),
+      AccessTools.DeclaredMethod(typeof(MapTable), nameof(MapTable.OnRead), [typeof(Switch), typeof(Humanoid), typeof(ItemDrop.ItemData), typeof(bool)]),
       AccessTools.DeclaredMethod(typeof(MapTable), nameof(MapTable.OnWrite)),
     ];
 

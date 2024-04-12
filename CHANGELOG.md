@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Updated for Valheim 0.217.46.
+
 ### Fixed
 
 -   Fix `NullReferenceException` errors if shift-clicking a pin on the map without interacting with a cartography table.
