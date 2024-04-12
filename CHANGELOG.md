@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2024-04-12
+
 ### Added
 
 -   Support for `NoMap` world modifier: interacting with a cartography table will display the map.
@@ -45,7 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial release.
 
-[Unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.3.0...HEAD
+
+[0.3.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.2.0...0.3.0
 
 [0.2.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.1.1...0.2.0
 
