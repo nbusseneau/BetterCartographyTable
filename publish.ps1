@@ -1,19 +1,21 @@
 param(
-  [Parameter(Mandatory=$true)][string]$tag,
-  [Parameter(Mandatory=$true)][string]$githubToken,
-  [Parameter(Mandatory=$true)][string]$thunderstoreToken
+  [Parameter(Mandatory = $true)][string]$tag,
+  [Parameter(Mandatory = $true)][string]$githubToken,
+  [Parameter(Mandatory = $true)][string]$thunderstoreToken
 )
 
 $owner = "nbusseneau"
 $repo = "BetterCartographyTable"
 $workflow = "release.yaml"
+$packageName = "Better_Cartography_Table"
+
 $headers = @{
   Authorization = [String]::Format("Bearer {0}", $githubToken)
 }
 
 $url = "https://api.github.com/repos/$owner/$repo/actions/workflows/$workflow/dispatches"
 $body = @{
-  ref = "main"
+  ref    = "main"
   inputs = @{
     tag = $tag
   }
@@ -40,9 +42,9 @@ if ($release.tag_name -ne $tag) {
 git pull
 dotnet build -c Release
 tcli publish --token $thunderstoreToken
-$packageName = "nbusseneau-Better_Cartography_Table-$tag.zip"
-$packagePath = "build/$packageName"
+$assetName = "$owner-$packageName-$tag.zip"
+$assetPath = "build/$assetName"
 
-$url = "https://uploads.github.com/repos/$owner/$repo/releases/$($release.id)/assets?name=$packageName"
-Write-Output "Uploading package to release | Package name: $packageName"
-$response = Invoke-RestMethod -Method POST -ContentType "application/zip" -Uri $url -Headers $headers -InFile $packagePath
+$url = "https://uploads.github.com/repos/$owner/$repo/releases/$($release.id)/assets?name=$assetName"
+Write-Output "Uploading package to release | Asset name: $assetName"
+$response = Invoke-RestMethod -Method POST -ContentType "application/zip" -Uri $url -Headers $headers -InFile $assetPath
