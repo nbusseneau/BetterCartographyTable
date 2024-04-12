@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+-   Automatically close map when moving too far away from the cartography table.
+
 ## [0.3.0] - 2024-04-12
 
 ### Added

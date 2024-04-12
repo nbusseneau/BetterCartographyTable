@@ -16,4 +16,10 @@ public static class PlayerPatches
   {
     private static void Postfix() => PlayerSaveManager.OnLoad();
   }
+
+  [HarmonyPatch(typeof(Player), nameof(Player.FixedUpdate))]
+  public static class CloseMapWhenTooFarFromTable
+  {
+    private static void Postfix(Player __instance) => InteractionManager.CloseMapWhenTooFarFromTable(__instance);
+  }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using BetterCartographyTable.Managers;
 using BetterCartographyTable.Model;
+using UnityEngine;
 
 namespace BetterCartographyTable.Extensions;
 
@@ -29,6 +30,8 @@ public static class MapTableExtensions
     mapTable.StoreOwnerInZDO(guildName);
   }
 
+  private static readonly float maxUseDistance = 3f;
+  public static bool InUseDistance(this MapTable mapTable, Humanoid human) => Vector3.Distance(human.transform.position, mapTable.transform.position) < maxUseDistance;
 
   #region Pins (custom ZDO key)
 

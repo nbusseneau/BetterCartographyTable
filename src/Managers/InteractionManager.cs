@@ -9,10 +9,10 @@ public static class InteractionManager
 
 {
   private static MapTable currentMapTable;
-  private static MapTable CurrentMapTable
+  public static MapTable CurrentMapTable
   {
     get => currentMapTable;
-    set
+    private set
     {
       currentMapTable = value;
       CurrentMapTableMode = value?.RetrieveModeFromZDO();
@@ -83,6 +83,13 @@ public static class InteractionManager
 
     var toggleTo = isGuild ? $"$MapTableHoverText_MakePublic" : $"$MapTableHoverText_RestrictToGuild";
     return hoverText + $"\n[<b><color=yellow>{Plugin.ModifierKey}</color> + <color=yellow>$KEY_Use</color></b>] {toggleTo}";
+  }
+
+  public static void CloseMapWhenTooFarFromTable(Humanoid human)
+  {
+    if (!IsInteracting) return;
+    var isTooFar = !CurrentMapTable.InUseDistance(human);
+    if (isTooFar) Minimap.instance.SetMapMode(Minimap.MapMode.Small);
   }
 
   #endregion
