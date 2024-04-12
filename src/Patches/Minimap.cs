@@ -30,11 +30,24 @@ public static class MinimapPatches
   [HarmonyPatch(typeof(Minimap), nameof(Minimap.SetMapMode))]
   private class HandleInteractionsOnMapModeChange
   {
-    private static void Postfix(MapMode mode)
+    private static void Prefix(MapMode mode)
     {
-      var isMinimapOpen = mode == MapMode.Large;
-      if (isMinimapOpen) return;
-      InteractionManager.OnMapClose();
+      var isMinimapOpening = mode == MapMode.Large;
+
+      // override noMap mode when interacting with a table
+      if (isMinimapOpening && InteractionManager.IsInteracting && Game.m_noMap && GamePatches.IsNoMapModeEnabled)
+      {
+        Game.m_noMap = false;
+      }
+
+      // trigger on close callback when not opening map
+      if (!isMinimapOpening) InteractionManager.OnMapClose();
+    }
+
+    private static void Postfix()
+    {
+      // restore noMap mode
+      if (GamePatches.IsNoMapModeEnabled) Game.m_noMap = true;
     }
   }
 

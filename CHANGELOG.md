@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+-   Support for `NoMap` world modifier: interacting with a cartography table will display the map.
+
 ### Changed
 
 -   Updated for Valheim 0.217.46.

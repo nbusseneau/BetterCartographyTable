@@ -2,6 +2,7 @@
 
 [Valheim](https://store.steampowered.com/app/892970/Valheim/) mod that allows precise control over sharing pins via **cartography tables**.
 Supports **private pins**, **public pins**, and **guild pins**.
+Supports `NoMap` worlds.
 
 ## Video showcase
 
@@ -46,6 +47,7 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00
   - This allows collaborating over the map in real time, especially useful when planning the next expedition.
 - **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed).
   - For when you want to share super secret guild hideouts with your mates. Not that it ever happens. Definitely don't look for super secret guild hideouts on your servers. Nope...
+- If using the `NoMap` world modifier, map will be accessible only through a cartography table.
 
 ## But why?
 
@@ -55,9 +57,11 @@ This often results in situations where shared pins seem to disappear / reappear 
 
 On top of that, since the **cartography table** is "all or nothing" both ways, some players might refrain from interacting with the table (e.g. when someone is meticulously pinning all berries / copper veins / etc., or when they do not want to share some super secret pins they would prefer to keep private).
 
+And of course, the vanilla cartography table is completely useless in `NoMap` runs.
+
 ## Vanilla cartography tables, but Better™️
 
-The goal is to stick close to the vanilla experience and keep **cartography tables** relevant. We are not bypassing **cartography tables**: sharing map data (both pins and exploration) still requires players to interact with the same **cartography table** on a regular basis to synchronize progress.
+The goal is to stick close to the vanilla experience and keep **cartography tables** relevant (or in the case of `NoMap` runs, give them a purpose). We are not bypassing **cartography tables**: sharing map data (both pins and exploration) still requires players to interact with the same **cartography table** on a regular basis to synchronize progress.
 
 How it works:
 
