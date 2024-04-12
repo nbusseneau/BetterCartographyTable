@@ -75,13 +75,19 @@ How it works:
   - **Private pins** can be interacted with.
   - **Public** or **guild pins** previously retrieved from a **cartography table** can be displayed / hidden, but cannot be interacted with.
 
-**Table pins** are stored in a custom ZDO key under the **cartography table**'s ZNetView's ZDO, thus there is no conflict between non-modded vanilla clients and modded clients. Limited one-way compatibility is even provided, as modded clients will also write public pins to the vanilla shared data, allowing non-modded vanilla clients to receive public pins seamlessly. However non-modded vanilla clients will not be able to contribute anything: modded clients can only receive pins from other modded clients.
+### Compatibility with non-modded vanilla clients
+
+**Table pins** are stored in a custom ZDO key under the **cartography table**'s ZNetView's ZDO, thus non-modded vanilla clients and modded clients can both interact with the same **cartography tables** without conflict.
+Limited one-way sharing is provided, as modded clients also write public pins to the vanilla shared data, allowing non-modded vanilla clients to receive public pins seamlessly.
+However, non-modded vanilla clients are not able to contribute back: modded clients can only receive pins from other modded clients.
 
 ## Install
 
-This is a client-side mod, it does not need to be installed on the server.
+This is technically a client-side mod, and is not strictly required server-side.
+Yet, **it is strongly recommended to install the mod server-side** so as to enforce that all clients have the mod.
 
-It is not strictly required for all clients on the server to install the mod, however non-modded vanilla clients will not be able to share any of their pins with modded clients, so of course it's better if all clients install it 😅
+Exception: do not install the mod on servers intended for Xbox crossplay, otherwise Xbox players will not be able to join anymore.
+Note that non-modded vanilla clients will not be able to share any of their pins with modded clients ([see above for details](#compatibility-with-non-modded-vanilla-clients)).
 
 ### Thunderstore (recommended)
 
@@ -91,7 +97,9 @@ It is not strictly required for all clients on the server to install the mod, ho
 
 ### Manually (not recommended)
 
-- **[Prerequisite]** Install [**BepInExPack Valheim**](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
+- **[Prerequisites]**
+  - Install [**BepInExPack Valheim**](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
+  - Install [**Jötunn, the Valheim Library**](https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/).
 - Create a new directory `nbusseneau-Better_Cartography_Table` in your `BepInEx/plugins/` directory.
 - Download [nbusseneau-Better_Cartography_Table-0.2.0.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.2.0.zip).
 - Extract the archive.

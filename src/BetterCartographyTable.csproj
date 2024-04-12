@@ -5,7 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <LibPath>lib</LibPath>
-    <R2ModManProfile>Dev</R2ModManProfile>
+    <R2ModManProfile>BetterCartographyTableDev</R2ModManProfile>
   </PropertyGroup>
 
   <!-- Valheim paths -->
@@ -28,7 +28,7 @@
   </Choose>
   <PropertyGroup>
     <ManagedPath Condition="!Exists('$(ManagedPath)') AND Exists('$(GamePath)')">$(GamePath)\valheim_Data\Managed</ManagedPath>
-    <PublicizedPath Condition="!Exists('$(PublicizedPath)') AND Exists('$(ManagedPath)')">$(ManagedPath)\publicized</PublicizedPath>
+    <PublicizedPath Condition="!Exists('$(PublicizedPath)') AND Exists('$(ManagedPath)')">$(ManagedPath)\publicized_assemblies</PublicizedPath>
   </PropertyGroup>
 
   <!-- BepInEx paths -->
@@ -38,23 +38,15 @@
     <PluginsPath>$(BepInExPath)\plugins</PluginsPath>
   </PropertyGroup>
 
+  <!-- Jotunn paths -->
+  <PropertyGroup>
+    <VALHEIM_INSTALL>$(GamePath)</VALHEIM_INSTALL>
+    <BEPINEX_PATH>$(BepInExPath)</BEPINEX_PATH>
+    <ExecutePrebuild>true</ExecutePrebuild>
+  </PropertyGroup>
+
   <!-- References -->
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>$(BepInExPath)\core\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="assembly_guiutils">
-      <HintPath>$(PublicizedPath)\assembly_guiutils-publicized.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="assembly_utils">
-      <HintPath>$(PublicizedPath)\assembly_utils-publicized.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="assembly_valheim">
-      <HintPath>$(PublicizedPath)\assembly_valheim-publicized.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
     <Reference Include="BepInEx">
       <HintPath>$(BepInExPath)\core\BepInEx.dll</HintPath>
     </Reference>
@@ -64,30 +56,15 @@
     <Reference Include="LocalizationManager">
       <HintPath>$(LibPath)\LocalizationManager.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>$(ManagedPath)\Unity.TextMeshPro.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>$(ManagedPath)\UnityEngine.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(ManagedPath)\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>$(ManagedPath)\UnityEngine.InputLegacyModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>$(ManagedPath)\UnityEngine.UI.dll</HintPath>
-      <Private>false</Private>
     </Reference>
   </ItemGroup>
 
   <!-- Packages -->
   <ItemGroup>
     <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.26" />
+    <PackageReference Include="JotunnLib" Version="2.19.1" />
   </ItemGroup>
 
   <!-- BepInEx dependencies -->
@@ -99,7 +76,7 @@
 
   <!-- Translations -->
   <ItemGroup>
-    <EmbeddedResource Include="translations\*"/>
+    <EmbeddedResource Include="translations\*" />
   </ItemGroup>
 
   <!-- Copy to BepInEx plugins after IL repacking -->

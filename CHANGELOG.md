@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 -   Support for `NoMap` world modifier: interacting with a cartography table will display the map.
+-   Enforce mod to be installed on all clients if installed on the server (Jotunn version check).
 
 ### Changed
 

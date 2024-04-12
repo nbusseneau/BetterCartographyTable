@@ -12,6 +12,7 @@ containsNsfwContent = false
 
 [package.dependencies]
 denikson-BepInExPack_Valheim = "5.4.2202"
+ValheimModding-Jotunn = "2.19.1"
 
 
 [build]

@@ -5,6 +5,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using Jotunn.Utils;
 using LocalizationManager;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ namespace BetterCartographyTable;
 
 [BepInPlugin(ModGUID, ModName, ModVersion)]
 [BepInDependency("org.bepinex.plugins.guilds", BepInDependency.DependencyFlags.SoftDependency)]
+[BepInDependency(Jotunn.Main.ModGuid, BepInDependency.DependencyFlags.HardDependency)]
+[NetworkCompatibility(CompatibilityLevel.ClientMustHaveMod, VersionStrictness.Minor)]
 public class Plugin : BaseUnityPlugin
 {
   internal const string ModGUID = "nbusseneau.BetterCartographyTable";
@@ -43,7 +46,7 @@ public class Plugin : BaseUnityPlugin
 
   private void SetUpConfigWatcher()
   {
-    FileSystemWatcher watcher = new(Paths.ConfigPath, Path.GetFileName(Config.ConfigFilePath));
+    FileSystemWatcher watcher = new(BepInEx.Paths.ConfigPath, Path.GetFileName(Config.ConfigFilePath));
     watcher.Changed += ReadConfigValues;
     watcher.Created += ReadConfigValues;
     watcher.Renamed += ReadConfigValues;
