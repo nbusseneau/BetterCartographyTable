@@ -9,23 +9,20 @@ using static Minimap;
 
 namespace BetterCartographyTable.Patches;
 
+[HarmonyPatch(typeof(Minimap))]
 public static class MinimapPatches
 {
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.Awake))]
-  private class InjectSharablePinsAndCreatePinToggles
+  [HarmonyPostfix]
+  [HarmonyPatch(nameof(Minimap.Awake))]
+  private static void InjectSharablePinsAndCreatePinToggles()
   {
-    private static void Postfix()
-    {
-      MinimapManager.OnAwake();
-      MinimapManagerUI.OnAwake();
-    }
+    MinimapManager.OnAwake();
+    MinimapManagerUI.OnAwake();
   }
 
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.Start))]
-  private class ResetTogglesVisiblityOnStart
-  {
-    private static void Postfix() => MinimapManagerUI.OnStart();
-  }
+  [HarmonyPostfix]
+  [HarmonyPatch(nameof(Minimap.Start))]
+  private static void ResetTogglesVisiblityOnStart() => MinimapManagerUI.OnStart();
 
   [HarmonyPatch(typeof(Minimap), nameof(Minimap.SetMapMode))]
   private class HandleInteractionsOnMapModeChange
@@ -55,60 +52,50 @@ public static class MinimapPatches
   /// Ensure sure calls to <c>Minimap.AddPin(...)</c> always add <c>SharablePinData</c> pins to the list and use our own
   /// <c>Add(...)</c> implementation.
   /// </summary>
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.AddPin))]
-  private class InjectSharablePinsAndSharablePinDataInAddPin
+  [HarmonyTranspiler]
+  [HarmonyPatch(nameof(Minimap.AddPin))]
+  private static IEnumerable<CodeInstruction> InjectSharablePinsAndSharablePinDataInAddPin(IEnumerable<CodeInstruction> instructions)
   {
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-    {
-      return new CodeMatcher(instructions)
-          .MatchForward(false, new CodeMatch(OpCodes.Newobj, AccessTools.Constructor(typeof(PinData))))
-          .ThrowIfInvalid("Could not patch PinData constructor in Minimap.AddPin(...)")
-          .SetOperandAndAdvance(AccessTools.Constructor(typeof(SharablePinData)))
-          .MatchForward(false, new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(List<PinData>), nameof(Minimap.m_pins.Add))))
-          .ThrowIfInvalid("Could not patch List<PinData>.Add(...) method in Minimap.AddPin(...)")
-          .SetOperandAndAdvance(AccessTools.Method(typeof(SharablePins), nameof(SharablePins.Add)))
-          .InstructionEnumeration();
-    }
+    return new CodeMatcher(instructions)
+        .MatchForward(false, new CodeMatch(OpCodes.Newobj, AccessTools.Constructor(typeof(PinData))))
+        .ThrowIfInvalid("Could not patch PinData constructor in Minimap.AddPin(...)")
+        .SetOperandAndAdvance(AccessTools.Constructor(typeof(SharablePinData)))
+        .MatchForward(false, new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(List<PinData>), nameof(Minimap.m_pins.Add))))
+        .ThrowIfInvalid("Could not patch List<PinData>.Add(...) method in Minimap.AddPin(...)")
+        .SetOperandAndAdvance(AccessTools.Method(typeof(SharablePins), nameof(SharablePins.Add)))
+        .InstructionEnumeration();
   }
 
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.UpdatePins))]
-  private class UpdateUIOnUpdatePins
-  {
-    private static void Postfix() => MinimapManagerUI.OnUpdatePins();
-  }
+  [HarmonyPostfix]
+  [HarmonyPatch(nameof(Minimap.UpdatePins))]
+  private static void UpdateUIOnUpdatePins() => MinimapManagerUI.OnUpdatePins();
 
   #region Click intercepts
 
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.OnMapDblClick))]
-  private class InterceptOnMapDblClick
+  [HarmonyPrefix]
+  [HarmonyPatch(nameof(Minimap.OnMapDblClick))]
+  private static bool InterceptOnMapDblClick()
   {
-    private static bool Prefix()
-    {
-      var shouldRunOriginalMethod = InteractionManager.OnMapDblClick();
-      return shouldRunOriginalMethod;
-    }
+    var shouldRunOriginalMethod = InteractionManager.OnMapDblClick();
+    return shouldRunOriginalMethod;
   }
 
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.OnMapLeftClick))]
-  private class InterceptOnMapLeftClick
+  [HarmonyPrefix]
+  [HarmonyPatch(nameof(Minimap.OnMapLeftClick))]
+  private static bool InterceptOnMapLeftClick()
   {
-    private static bool Prefix()
-    {
-      var shouldRunOriginalMethod = false;
-      InteractionManager.OnMapLeftClick();
-      return shouldRunOriginalMethod;
-    }
+    var shouldRunOriginalMethod = false;
+    InteractionManager.OnMapLeftClick();
+    return shouldRunOriginalMethod;
   }
 
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.OnMapRightClick))]
-  private class InterceptOnMapRightClick
+  [HarmonyPrefix]
+  [HarmonyPatch(nameof(Minimap.OnMapRightClick))]
+  private static bool InterceptOnMapRightClick()
   {
-    private static bool Prefix()
-    {
-      var shouldRunOriginalMethod = false;
-      InteractionManager.OnMapRightClick();
-      return shouldRunOriginalMethod;
-    }
+    var shouldRunOriginalMethod = false;
+    InteractionManager.OnMapRightClick();
+    return shouldRunOriginalMethod;
   }
 
   #endregion
@@ -130,10 +117,7 @@ public static class MinimapPatches
       return new CodeMatcher(instructions)
           .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
           .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetMapData()")
-          .SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPrivatePinsInGetMapData), nameof(privatePins)))
-          .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
-          .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetMapData()")
-          .SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPrivatePinsInGetMapData), nameof(privatePins)))
+          .Repeat(m => m.SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPrivatePinsInGetMapData), nameof(privatePins))))
           .InstructionEnumeration();
     }
   }
@@ -153,10 +137,7 @@ public static class MinimapPatches
       return new CodeMatcher(instructions)
           .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
           .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetSharedMapData()")
-          .SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPublicPinsInGetSharedMapData), nameof(publicPins)))
-          .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
-          .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetSharedMapData()")
-          .SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPublicPinsInGetSharedMapData), nameof(publicPins)))
+          .Repeat(m => m.SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPublicPinsInGetSharedMapData), nameof(publicPins))))
           .InstructionEnumeration();
     }
   }
@@ -165,23 +146,21 @@ public static class MinimapPatches
   /// Truncate <c>Minimap.AddSharedMapData()</c> after retrieving explored map data from vanilla shared data, ignoring
   /// pins coming from non-modded clients.
   /// </summary>
-  [HarmonyPatch(typeof(Minimap), nameof(Minimap.AddSharedMapData))]
-  private class TruncateAddSharedMapData
+  [HarmonyTranspiler]
+  [HarmonyPatch(nameof(Minimap.AddSharedMapData))]
+  private static IEnumerable<CodeInstruction> TruncateAddSharedMapData(IEnumerable<CodeInstruction> instructions)
   {
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-    {
-      return new CodeMatcher(instructions)
-          .MatchForward(false,
-              new CodeMatch(OpCodes.Ldc_I4_0),
-              new CodeMatch(OpCodes.Stloc_S),
-              new CodeMatch(OpCodes.Ldloc_1),
-              new CodeMatch(OpCodes.Ldc_I4_2),
-              new CodeMatch(OpCodes.Blt))
-          .ThrowIfInvalid("Could not truncate Minimap.AddSharedMapData()")
-          .SetAndAdvance(OpCodes.Ldloc_3, null)
-          .SetAndAdvance(OpCodes.Ret, null)
-          .InstructionEnumeration();
-    }
+    return new CodeMatcher(instructions)
+        .MatchForward(false,
+            new CodeMatch(OpCodes.Ldc_I4_0),
+            new CodeMatch(OpCodes.Stloc_S),
+            new CodeMatch(OpCodes.Ldloc_1),
+            new CodeMatch(OpCodes.Ldc_I4_2),
+            new CodeMatch(OpCodes.Blt))
+        .ThrowIfInvalid("Could not truncate Minimap.AddSharedMapData()")
+        .SetAndAdvance(OpCodes.Ldloc_3, null)
+        .SetAndAdvance(OpCodes.Ret, null)
+        .InstructionEnumeration();
   }
 
   #endregion
