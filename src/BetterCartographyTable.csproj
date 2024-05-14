@@ -47,18 +47,7 @@
 
   <!-- References -->
   <ItemGroup>
-    <Reference Include="BepInEx">
-      <HintPath>$(BepInExPath)\core\BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Guilds">
-      <HintPath>$(LibPath)\GuildsAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="LocalizationManager">
-      <HintPath>$(LibPath)\LocalizationManager.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(ManagedPath)\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
+    <Reference Include="$(LibPath)\*.dll" />
   </ItemGroup>
 
   <!-- Packages -->
