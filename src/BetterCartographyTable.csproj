@@ -59,13 +59,6 @@
     <PackageReference Include="JotunnLib" Version="2.20.1" />
   </ItemGroup>
 
-  <!-- BepInEx dependencies -->
-  <ItemGroup>
-    <Content Include="$(LibPath)\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
   <!-- Translations -->
   <ItemGroup>
     <EmbeddedResource Include="translations\*" />

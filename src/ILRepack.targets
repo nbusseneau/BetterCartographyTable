@@ -3,8 +3,7 @@
   <Target Name="ILRepacker" AfterTargets="Build">
     <ItemGroup>
       <InputAssemblies Include="$(TargetPath)"/>
-      <InputAssemblies Include="$(OutputPath)$(LibPath)\GuildsAPI.dll"/>
-      <InputAssemblies Include="$(OutputPath)$(LibPath)\LocalizationManager.dll"/>
+      <InputAssemblies Include="$(LibPath)\*"/>
     </ItemGroup>
     <ILRepack Parallel="true" DebugInfo="true" Internalize="true" InputAssemblies="@(InputAssemblies)" OutputFile="$(TargetPath)" TargetKind="SameAsPrimaryAssembly" LibraryPath="$(OutputPath)"/>
   </Target>
