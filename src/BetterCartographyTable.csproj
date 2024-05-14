@@ -52,8 +52,11 @@
 
   <!-- Packages -->
   <ItemGroup>
-    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.26" />
-    <PackageReference Include="JotunnLib" Version="2.19.1" />
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.32">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="JotunnLib" Version="2.20.1" />
   </ItemGroup>
 
   <!-- BepInEx dependencies -->
