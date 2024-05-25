@@ -6,7 +6,6 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using Jotunn.Utils;
-using LocalizationManager;
 using UnityEngine;
 
 namespace BetterCartographyTable;
@@ -31,7 +30,6 @@ public class Plugin : BaseUnityPlugin
 
   public void Awake()
   {
-    Localizer.Load();
     Logger = base.Logger;
     modifierKey = Config.Bind("Keys", "Modifier key", new KeyboardShortcut(KeyCode.LeftShift), "Modifier key to use for interacting with public or guild pins on the cartography table.");
     publicPinsColor = Config.Bind("UI", "Public pins color", Color.green, "Color to use for public pins.");

@@ -1,0 +1,22 @@
+{
+  "KeyHint_RemovePrivatePin": "Retirer un repère privé",
+  "KeyHint_RemovePublicPin": "Retirer un repère public",
+  "KeyHint_RemoveGuildPin": "Retirer un repère de guilde",
+  "KeyHint_TogglePublic": "Changer privé/public",
+  "KeyHint_ToggleGuild": "Changer privé/guilde",
+  "KeyHint_PublicModifierKey": "Cartographie publique",
+  "KeyHint_GuildModifierKey": "Cartographie de guilde",
+
+  "PinsToggle_PublicPins": "Repères publics",
+  "PinsToggle_GuildPins": "Repères de guilde",
+  "PinsToggle_SharedExploration": "Exploration partagée",
+
+  "MapTableToggleMode_PopupHeader": "Êtes-vous sûr ?",
+  "MapTableToggleMode_PopupText": "Tous les repères partagés actuellement enregistrés sur cette table de cartographie seront perdus si son mode de partage est changé.",
+  "MapTableToggleMode_GuildRequired": "Vous devez rejoindre ou créer une guilde d'abord",
+
+  "MapTableHoverText_RestrictedToGuild": "Restreinte à la guilde",
+  "MapTableHoverText_Public": "Publique",
+  "MapTableHoverText_MakePublic": "Rendre publique",
+  "MapTableHoverText_RestrictToGuild": "Restreindre à la guilde"
+}

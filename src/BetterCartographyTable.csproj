@@ -62,12 +62,21 @@
 
   <!-- Translations -->
   <ItemGroup>
-    <EmbeddedResource Include="translations\*" />
+    <Translations Include="Translations\**" />
   </ItemGroup>
 
-  <!-- Copy to BepInEx plugins after IL repacking -->
+  <!-- Clean BepInEx plugins after clean -->
+  <Target Name="CleanPlugins" AfterTargets="Clean">
+    <RemoveDir Directories="$(PluginsPath)\$(MSBuildProjectName)" />
+    <Message Importance="High" Text="Removed $(PluginsPath)\$(MSBuildProjectName)" />
+  </Target>
+
+  <!-- Copy to BepInEx plugins after build -->
   <Target Name="CopyToPlugins" AfterTargets="ILRepack">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginsPath)" />
-    <Message Importance="High" Text="Copied $(TargetFileName) to $(PluginsPath)" />
+    <CallTarget Targets="CleanPlugins" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginsPath)\$(MSBuildProjectName)" />
+    <Message Importance="High" Text="Copied $(TargetFileName) to $(PluginsPath)\$(MSBuildProjectName)" />
+    <Copy SourceFiles="@(Translations)" DestinationFolder="$(PluginsPath)\$(MSBuildProjectName)\Translations\%(RecursiveDir)" />
+    <Message Importance="High" Text="Copied Translations to $(PluginsPath)\$(MSBuildProjectName)\Translations" />
   </Target>
 </Project>

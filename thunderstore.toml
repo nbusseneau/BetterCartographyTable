@@ -26,7 +26,11 @@ target = "./CHANGELOG.md"
 
 [[build.copy]]
 source = "./src/bin/Release/BetterCartographyTable.dll"
-target = "./BetterCartographyTable.dll"
+target = "./plugins/BetterCartographyTable.dll"
+
+[[build.copy]]
+source = "./src/Translations"
+target = "./plugins/Translations"
 
 
 [publish]
