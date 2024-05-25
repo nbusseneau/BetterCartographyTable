@@ -12,6 +12,7 @@ env:
   changelog: CHANGELOG.md
   readme: README.md
   config: thunderstore.toml
+  project: src/BetterCartographyTable.csproj
   plugin: src/Plugin.cs
 
 jobs:
@@ -62,13 +63,14 @@ jobs:
           sed -i 's;nbusseneau/Better_Cartography_table/[0-9]\+.[0-9]\+.[0-9]\+;nbusseneau/Better_Cartography_table/${{ github.event.inputs.tag }}.zip;g' ${{ env.readme }}
           sed -i 's/nbusseneau-Better_Cartography_Table-[0-9]\+.[0-9]\+.[0-9]\+.zip/nbusseneau-Better_Cartography_Table-${{ github.event.inputs.tag }}.zip/g' ${{ env.readme }}
           sed -i 's/versionNumber = ".*"/versionNumber = "${{ github.event.inputs.tag }}"/' ${{ env.config }}
+          sed -i 's;<Version>.*</Version>;<Version>${{ github.event.inputs.tag }}</Version>;' ${{ env.project }}
           sed -i 's/ModVersion = ".*"/ModVersion = "${{ github.event.inputs.tag }}"/' ${{ env.plugin }}
 
       - name: Push updated files to repository
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ${{ env.changelog }} ${{ env.readme }} ${{ env.config }} ${{ env.plugin }}
+          git add ${{ env.changelog }} ${{ env.readme }} ${{ env.config }} ${{ env.project }} ${{ env.plugin }}
           git commit --message "Release ${{ github.event.inputs.tag }}"
           git push origin HEAD:main
 
