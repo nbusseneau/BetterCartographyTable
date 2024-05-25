@@ -1,33 +1,43 @@
 name: Release
+run-name: Release ${{ inputs.tag }}
 
 on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Tag / Version number (leave empty for dry-run)"
+        description: "Tag / Version number"
         required: true
+
+permissions:
+  contents: write # required for pushing to the repository and creating releases
 
 env:
   python-version: "3.12"
   changelog: CHANGELOG.md
   readme: README.md
-  config: thunderstore.toml
+  thunderstore-config: thunderstore.toml
   project: src/BetterCartographyTable.csproj
   plugin: src/Plugin.cs
 
 jobs:
-  tag-and-release:
-    name: Rotate changelog, version, tag, and create release
+  release:
+    name: Release ${{ inputs.tag }}
     runs-on: ubuntu-latest
-    if: github.event.inputs.tag
-    outputs:
-      upload_url: ${{ steps.release.outputs.upload_url }}
     steps:
+      - name: Check input tag format
+        run: |
+          if ! echo "${{ inputs.tag }}" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error title=Invalid package version number::Version numbers must follow the Major.Minor.Patch format (e.g. 1.45.320)."
+            exit 1
+          fi
+
       - name: Checkout files
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@1d96c772d19495a3b5c517cd2bc0cb401ea0529f
+        with:
+          lfs: true
 
       - name: Set up Python
-        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d
         with:
           python-version: ${{ env.python-version }}
 
@@ -54,38 +64,34 @@ jobs:
             set_env("release-notes", notes)
 
       - name: Rotate unreleased section in changelog
-        uses: thomaseizinger/keep-a-changelog-new-release@5bc232893483441c5d6cd6c9dcb1e48abf9a2bae
+        uses: thomaseizinger/keep-a-changelog-new-release@77ac767b2f7f6edf2ee72ab3364ed26667086f96
         with:
-          tag: ${{ github.event.inputs.tag }}
+          tag: ${{ inputs.tag }}
 
       - name: Rotate version
         run: |
-          sed -i 's;nbusseneau/Better_Cartography_table/[0-9]\+.[0-9]\+.[0-9]\+;nbusseneau/Better_Cartography_table/${{ github.event.inputs.tag }}.zip;g' ${{ env.readme }}
-          sed -i 's/nbusseneau-Better_Cartography_Table-[0-9]\+.[0-9]\+.[0-9]\+.zip/nbusseneau-Better_Cartography_Table-${{ github.event.inputs.tag }}.zip/g' ${{ env.readme }}
-          sed -i 's/versionNumber = ".*"/versionNumber = "${{ github.event.inputs.tag }}"/' ${{ env.config }}
-          sed -i 's;<Version>.*</Version>;<Version>${{ github.event.inputs.tag }}</Version>;' ${{ env.project }}
-          sed -i 's/ModVersion = ".*"/ModVersion = "${{ github.event.inputs.tag }}"/' ${{ env.plugin }}
+          sed -i 's;nbusseneau/Better_Cartography_Table/[0-9]\+.[0-9]\+.[0-9]\+;nbusseneau/Better_Cartography_Table/${{ inputs.tag }}.zip;g' ${{ env.readme }}
+          sed -i 's/nbusseneau-Better_Cartography_Table-[0-9]\+.[0-9]\+.[0-9]\+.zip/nbusseneau-Better_Cartography_Table-${{ inputs.tag }}.zip/g' ${{ env.readme }}
+          sed -i 's/versionNumber = ".*"/versionNumber = "${{ inputs.tag }}"/' ${{ env.thunderstore-config }}
+          sed -i 's;<Version>.*</Version>;<Version>${{ inputs.tag }}</Version>;' ${{ env.project }}
+          sed -i 's/ModVersion = ".*"/ModVersion = "${{ inputs.tag }}"/' ${{ env.plugin }}
 
       - name: Push updated files to repository
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ${{ env.changelog }} ${{ env.readme }} ${{ env.config }} ${{ env.project }} ${{ env.plugin }}
-          git commit --message "Release ${{ github.event.inputs.tag }}"
-          git push origin HEAD:main
-
-      - name: Tag
-        run: |
-          git tag ${{ github.event.inputs.tag }}
-          git push origin --tags
+          git add ${{ env.changelog }} ${{ env.readme }} ${{ env.thunderstore-config }} ${{ env.project }} ${{ env.plugin }}
+          git commit --message "Release ${{ inputs.tag }}"
+          git tag ${{ inputs.tag }}
+          git push origin HEAD:${{ github.ref_name }} --tags
 
       - name: Create release
         id: release
         uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
         with:
-          release_name: ${{ github.event.inputs.tag }}
-          tag_name: ${{ github.event.inputs.tag }}
+          release_name: ${{ inputs.tag }}
+          tag_name: ${{ inputs.tag }}
           body: ${{ env.release-notes }}
-          commitish: main
+          commitish: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
