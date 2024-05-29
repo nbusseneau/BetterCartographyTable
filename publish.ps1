@@ -24,31 +24,36 @@ $headers = @{
   Authorization = [String]::Format("Bearer {0}", $githubToken)
 }
 
-$url = "https://api.github.com/repos/$owner/$repo/actions/workflows/$workflow/dispatches"
-$body = @{
-  ref    = "main"
-  inputs = @{
-    tag = $tag
-  }
-} | ConvertTo-Json
-Write-Output "Sending request to workflow_dispatch | Tag: $tag"
-Invoke-RestMethod -Method POST -Uri $url -Headers $headers -Body $body
-
-$attempt = 0
-do {
-  $url = "https://api.github.com/repos/$owner/$repo/releases/latest"
-  $release = Invoke-RestMethod -Uri $url -Headers $headers
-  $attempt++
-  Write-Output "Fetched latest release | Tag: $($release.tag_name) | Attempt: $attempt"
-  if ($release.tag_name -ne $tag -and $attempt -ne 10) {
-    Start-Sleep -Seconds 10
-  }
-}
-until ($release.tag_name -eq $tag -or $attempt -eq 10)
-
+$url = "https://api.github.com/repos/$owner/$repo/releases/latest"
+$release = Invoke-RestMethod -Uri $url -Headers $headers
 if ($release.tag_name -ne $tag) {
-  Write-Error -Message "Latest release not matching input tag, something went wrong with workflow_dispatch" -ErrorAction Stop
+  Write-Output -Message "Latest release $($release.tag_name) not matching input tag $tag"
+  $url = "https://api.github.com/repos/$owner/$repo/actions/workflows/$workflow/dispatches"
+  $body = @{
+    ref    = "main"
+    inputs = @{
+      tag = $tag
+    }
+  } | ConvertTo-Json
+  Write-Output "Sending request to workflow_dispatch | Tag: $tag"
+  Invoke-RestMethod -Method POST -Uri $url -Headers $headers -Body $body
+
+  $attempt = 0
+  do {
+    $url = "https://api.github.com/repos/$owner/$repo/releases/latest"
+    $release = Invoke-RestMethod -Uri $url -Headers $headers
+    $attempt++
+    Write-Output "Fetched latest release: $($release.tag_name) | Attempt: $attempt"
+    if ($release.tag_name -ne $tag -and $attempt -ne 10) {
+      Start-Sleep -Seconds 10
+    }
+  }
+  until ($release.tag_name -eq $tag -or $attempt -eq 10)
+  if ($release.tag_name -ne $tag) {
+    Write-Error -Message "Latest release $($release.tag_name) still not matching input tag $tag, something went wrong with workflow_dispatch" -ErrorAction Stop
+  }
 }
+Write-Output -Message "Latest release $($release.tag_name) matching input tag $tag, start publishing process"
 
 # Update repo following version rotation via release
 git pull; StopOnError
