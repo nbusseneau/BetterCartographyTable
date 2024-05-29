@@ -8,12 +8,10 @@ namespace BetterCartographyTable.Patches;
 public static class MapTablePatches
 {
   private static readonly Dictionary<MapTable, MapTableManager> s_mapTablesCache = [];
-  public static MapTableManager Get(MapTable mapTable)
-  {
-    var isCached = s_mapTablesCache.TryGetValue(mapTable, out var mapTableManager);
-    if (!isCached) mapTableManager = s_mapTablesCache[mapTable] = new(mapTable);
-    return mapTableManager;
-  }
+
+  [HarmonyPostfix]
+  [HarmonyPatch(nameof(MapTable.Start))]
+  private static void RegisterMapTable(MapTable __instance) => s_mapTablesCache[__instance] = new(__instance);
 
   /// <summary>
   /// Replace default read/write actions on MapTable with our own.
@@ -40,7 +38,7 @@ public static class MapTablePatches
       return;
     }
 
-    MapTableManager.TryOpenCurrentTable(Get(__instance), user);
+    MapTableManager.TryOpenCurrentTable(s_mapTablesCache[__instance], user);
     __result = true;
   }
 
@@ -60,7 +58,7 @@ public static class MapTablePatches
       return;
     }
 
-    var hoverText = Get(__instance).GetHoverText();
+    var hoverText = s_mapTablesCache[__instance].GetHoverText();
     __result = Localization.instance.Localize(hoverText);
   }
 }

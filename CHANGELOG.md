@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix warnings `Failed to find rpc method` due to RPC methods not being registered immediately.
+
 ## [0.4.1] - 2024-05-29
 
 ### Changed
