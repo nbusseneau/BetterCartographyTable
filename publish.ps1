@@ -27,7 +27,7 @@ $headers = @{
 $url = "https://api.github.com/repos/$owner/$repo/releases/latest"
 $release = Invoke-RestMethod -Uri $url -Headers $headers
 if ($release.tag_name -ne $tag) {
-  Write-Output -Message "Latest release $($release.tag_name) not matching input tag $tag"
+  Write-Output "Latest release $($release.tag_name) not matching input tag $tag"
   $url = "https://api.github.com/repos/$owner/$repo/actions/workflows/$workflow/dispatches"
   $body = @{
     ref    = "main"
