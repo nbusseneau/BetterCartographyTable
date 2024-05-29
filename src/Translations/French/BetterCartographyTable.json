@@ -1,9 +1,9 @@
 {
-  "KeyHint_RemovePrivatePin": "Retirer un repère privé",
-  "KeyHint_RemovePublicPin": "Retirer un repère public",
-  "KeyHint_RemoveGuildPin": "Retirer un repère de guilde",
-  "KeyHint_TogglePublic": "Changer privé/public",
-  "KeyHint_ToggleGuild": "Changer privé/guilde",
+  "KeyHint_AddPrivatePin": "Ajouter repère privé",
+  "KeyHint_RemovePrivatePin": "Retirer repère privé",
+  "KeyHint_RemovePublicPin": "Retirer repère public",
+  "KeyHint_RemoveGuildPin": "Retirer repère de guilde",
+  "KeyHint_ToggleSharing": "Partager/privatiser",
   "KeyHint_PublicModifierKey": "Cartographie publique",
   "KeyHint_GuildModifierKey": "Cartographie de guilde",
 
@@ -11,12 +11,12 @@
   "PinsToggle_GuildPins": "Repères de guilde",
   "PinsToggle_SharedExploration": "Exploration partagée",
 
-  "MapTableToggleMode_PopupHeader": "Êtes-vous sûr ?",
-  "MapTableToggleMode_PopupText": "Tous les repères partagés actuellement enregistrés sur cette table de cartographie seront perdus si son mode de partage est changé.",
-  "MapTableToggleMode_GuildRequired": "Vous devez rejoindre ou créer une guilde d'abord",
+  "MapTable_ToggleMode_GuildRequired": "Vous devez rejoindre ou créer une guilde d'abord",
+  "MapTable_ToggleMode_PopupHeader": "Impossible de changer le mode de partage",
+  "MapTable_ToggleMode_PopupText": "Des repères partagés sont enregistrés sur cette table. Pour changer de mode, supprimez tous les repères partagés de la table (ou détruisez puis reconstruisez-la).",
 
-  "MapTableHoverText_RestrictedToGuild": "Restreinte à la guilde",
-  "MapTableHoverText_Public": "Publique",
-  "MapTableHoverText_MakePublic": "Rendre publique",
-  "MapTableHoverText_RestrictToGuild": "Restreindre à la guilde"
+  "MapTable_HoverText_RestrictedToGuild": "Restreinte à la guilde",
+  "MapTable_HoverText_Public": "Publique",
+  "MapTable_HoverText_MakePublic": "Rendre publique",
+  "MapTable_HoverText_RestrictToGuild": "Restreindre à la guilde"
 }

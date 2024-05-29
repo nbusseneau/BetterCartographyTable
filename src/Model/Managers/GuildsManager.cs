@@ -1,18 +1,18 @@
 using Guilds;
 using UnityEngine;
 
-namespace BetterCartographyTable.Managers;
+namespace BetterCartographyTable.Model.Managers;
 
 public static class GuildsManager
 {
   public static bool IsEnabled => API.IsLoaded();
   private static Guild GetCurrentGuild() => IsEnabled ? API.GetOwnGuild() : null;
   public static string CurrentGuildName { get; private set; }
-  private static readonly Color fallbackColor = new(1, 0.7176471f, 0.3602941f);
-  private static Color? color = null;
-  public static Color CurrentGuildColor { get => color ?? LazySetGuildColor(); }
+  private static readonly Color s_fallbackColor = new(1, 0.7176471f, 0.3602941f);
+  private static Color? s_color = null;
+  public static Color CurrentGuildColor { get => s_color ?? LazySetGuildColor(); }
 
-  public static void OnGameStart()
+  public static void TryRegisterGuild()
   {
     if (!IsEnabled) return;
     if (GetCurrentGuild() is { } guild) Register(guild);
@@ -38,7 +38,7 @@ public static class GuildsManager
   private static void Unregister()
   {
     CurrentGuildName = null;
-    color = null;
+    s_color = null;
     MinimapManager.RemovePins(MinimapManager.GuildPins);
   }
 
@@ -46,9 +46,9 @@ public static class GuildsManager
   {
     if (GetCurrentGuild() is { } guild && ColorUtility.TryParseHtmlString(guild.General.color, out var parsedColor))
     {
-      color = parsedColor;
+      s_color = parsedColor;
       return parsedColor;
     }
-    return fallbackColor;
+    return s_fallbackColor;
   }
 }

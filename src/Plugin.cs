@@ -1,5 +1,4 @@
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
@@ -20,19 +19,19 @@ public class Plugin : BaseUnityPlugin
   private const string ModName = "BetterCartographyTable";
   private const string ModVersion = "0.3.0";
 
-  private static ConfigEntry<KeyboardShortcut> modifierKey;
-  private static ConfigEntry<Color> publicPinsColor;
+  private static ConfigEntry<KeyCode> s_modifierKey;
+  private static ConfigEntry<Color> s_publicPinsColor;
 
   public static new ManualLogSource Logger;
-  public static KeyboardShortcut ModifierKey => modifierKey.Value;
-  public static bool IsModifierKeyPushed => Input.GetKey(modifierKey.Value.MainKey) && modifierKey.Value.Modifiers.All(Input.GetKey);
-  public static Color PublicPinsColor => publicPinsColor.Value;
+  public static KeyCode ModifierKey => s_modifierKey.Value;
+  public static bool IsModifierKeyPressed => Input.GetKey(ModifierKey);
+  public static Color PublicPinsColor => s_publicPinsColor.Value;
 
   public void Awake()
   {
     Logger = base.Logger;
-    modifierKey = Config.Bind("Keys", "Modifier key", new KeyboardShortcut(KeyCode.LeftShift), "Modifier key to use for interacting with public or guild pins on the cartography table.");
-    publicPinsColor = Config.Bind("UI", "Public pins color", Color.green, "Color to use for public pins.");
+    s_modifierKey = Config.Bind("Keys", "Modifier key", KeyCode.LeftShift, "Modifier key to use for interacting with public or guild pins on the cartography table.");
+    s_publicPinsColor = Config.Bind("UI", "Public pins color", Color.green, "Color to use for public pins.");
     SetUpConfigWatcher();
 
     var assembly = Assembly.GetExecutingAssembly();

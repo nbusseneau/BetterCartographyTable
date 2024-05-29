@@ -1,5 +1,5 @@
-using BetterCartographyTable.Extensions;
-using BetterCartographyTable.Managers;
+using System.Collections.Generic;
+using BetterCartographyTable.Model.Managers;
 using HarmonyLib;
 
 namespace BetterCartographyTable.Patches;
@@ -7,53 +7,60 @@ namespace BetterCartographyTable.Patches;
 [HarmonyPatch(typeof(MapTable))]
 public static class MapTablePatches
 {
-  [HarmonyPostfix]
-  [HarmonyPatch(nameof(MapTable.Start))]
-  private static void RegisterCustomZDODataRPCsOnMapTableStart(MapTable __instance) => __instance.OnStart();
+  private static readonly Dictionary<MapTable, MapTableManager> s_mapTablesCache = [];
+  public static MapTableManager Get(MapTable mapTable)
+  {
+    var isCached = s_mapTablesCache.TryGetValue(mapTable, out var mapTableManager);
+    if (!isCached) mapTableManager = s_mapTablesCache[mapTable] = new(mapTable);
+    return mapTableManager;
+  }
 
   /// <summary>
-  /// Replace default read/write actions on Cartography Table with our own.
+  /// Replace default read/write actions on MapTable with our own.
   /// </summary>
   [HarmonyPrefix]
   [HarmonyPatch(nameof(MapTable.OnRead), [typeof(Switch), typeof(Humanoid), typeof(ItemDrop.ItemData)])]
   [HarmonyPatch(nameof(MapTable.OnRead), [typeof(Switch), typeof(Humanoid), typeof(ItemDrop.ItemData), typeof(bool)])]
   [HarmonyPatch(nameof(MapTable.OnWrite), [typeof(Switch), typeof(Humanoid), typeof(ItemDrop.ItemData)])]
-  private static bool StartInteractionOnMapTableUse(MapTable __instance, Switch caller, Humanoid user, ItemDrop.ItemData item, ref bool __result)
+  private static void OnUse(MapTable __instance, Humanoid user, ItemDrop.ItemData item, ref bool __result, ref bool __runOriginal)
   {
-    var shouldRunOriginalMethod = false;
+    __runOriginal = false;
     var isItemInteraction = item is not null;
     var isInvalidZNetView = !__instance.m_nview.IsValid();
     if (isItemInteraction || isInvalidZNetView)
     {
       __result = false;
-      return shouldRunOriginalMethod;
+      return;
     }
 
     var isProtectedByWard = !PrivateArea.CheckAccess(__instance.transform.position, 0f, true, false);
     if (isProtectedByWard)
     {
       __result = true;
-      return shouldRunOriginalMethod;
+      return;
     }
 
-    if (__instance is not null)
-    {
-      InteractionManager.OnMapTableUse(__instance, user);
-    }
+    MapTableManager.TryOpenCurrentTable(Get(__instance), user);
     __result = true;
-    return shouldRunOriginalMethod;
   }
 
   /// <summary>
-  /// Replace default read/write hover text on Cartography Table with our own.
+  /// Replace default read/write hover text on MapTable with our own.
   /// </summary>
-  [HarmonyPostfix]
+  [HarmonyPrefix]
   [HarmonyPatch(nameof(MapTable.GetReadHoverText))]
   [HarmonyPatch(nameof(MapTable.GetWriteHoverText))]
-  private static void ReplaceMapTableHoverText(MapTable __instance, ref string __result)
+  private static void GetHoverText(MapTable __instance, ref string __result, ref bool __runOriginal)
   {
-    if (__instance is null) return;
-    var hoverText = InteractionManager.GetHoverText(__instance);
+    __runOriginal = false;
+    var isProtectedByWard = !PrivateArea.CheckAccess(__instance.transform.position, 0f, true, false);
+    if (isProtectedByWard)
+    {
+      __result = Localization.instance.Localize(__instance.m_name + "\n$piece_noaccess"); ;
+      return;
+    }
+
+    var hoverText = Get(__instance).GetHoverText();
     __result = Localization.instance.Localize(hoverText);
   }
 }

@@ -1,4 +1,4 @@
-using BetterCartographyTable.Managers;
+using BetterCartographyTable.Model.Managers;
 using HarmonyLib;
 
 namespace BetterCartographyTable.Patches;
@@ -9,11 +9,11 @@ public static class GamePatches
   public static bool IsNoMapModeEnabled { get; private set; }
 
   [HarmonyPostfix]
-  [HarmonyPatch(nameof(Game.Start))]
-  private static void RegisterGuildOnGameStart() => GuildsManager.OnGameStart();
-
+  [HarmonyPatch(nameof(Game.UpdateNoMap))]
+  private static void CacheNoMapMode() => IsNoMapModeEnabled = Game.m_noMap;
 
   [HarmonyPostfix]
-  [HarmonyPatch(nameof(Game.UpdateNoMap))]
-  private static void RegisterNoMapModeOnUpdateNoMap() => IsNoMapModeEnabled = Game.m_noMap;
+  [HarmonyPatch(nameof(Game.Start))]
+  private static void TryRegisterGuild() => GuildsManager.TryRegisterGuild();
+
 }

@@ -7,13 +7,15 @@ using static Minimap;
 namespace BetterCartographyTable.Model;
 
 /// <summary>
-/// Subclass of <c>PinData</c> intended for use as a transparent and complete replacement, with
-/// Harmony patches ensuring that all pins on the map are actually <c>SharablePinData</c> objects
-/// and not <c>PinData</c> objects.
+/// Subclass of <c>PinData</c> intended for use as a transparent replacement in
+/// <c>Minimap.instance.m_pins</c>. We try to ensure that all pins on the map are actually
+/// <c>SharablePinData</c> objects and not <c>PinData</c> objects via a Harmony patch on
+/// <c>Minimap.AddPin(...)</c> (though this may not always be the case as other mods may still
+/// manually add <c>PinData</c> objects without calling <c>Minimap.AddPin(...)</c>).
 /// </summary>
 public class SharablePinData : PinData, IEquatable<PinData>
 {
-  private static readonly HashSet<PinType> sharablePinTypes = [
+  private static readonly HashSet<PinType> s_sharablePinTypes = [
     PinType.Icon0,
     PinType.Icon1,
     PinType.Icon2,
@@ -26,26 +28,17 @@ public class SharablePinData : PinData, IEquatable<PinData>
   ];
 
   public SharingMode SharingMode { get; set; } = SharingMode.Private;
-  public bool IsSharable => sharablePinTypes.Contains(this.m_type);
+  public bool IsSharable => s_sharablePinTypes.Contains(this.m_type);
   public bool IsPrivate => this.SharingMode == SharingMode.Private;
+  public bool IsShared => !this.IsPrivate;
   public bool IsPublic => this.SharingMode == SharingMode.Public;
   public bool IsGuild => this.SharingMode == SharingMode.Guild;
-  public bool IsShared => !this.IsPrivate;
-  public bool IsMapTablePin(MapTable mapTable)
-  {
-    var (isPublic, isGuild) = mapTable.GetModes();
-    return isPublic && this.IsPublic || isGuild && this.IsGuild;
-  }
-  public void ToggleChecked() => this.m_checked = !this.m_checked;
   public override string ToString() => $"{this.SharingMode} {m_name} {m_pos} {(m_checked ? "⦻" : "⭘")} {m_author} {m_ownerID}L {Enum.GetName(typeof(PinType), m_type)}";
 
   public void SetVisibility(bool isVisible)
   {
     this.m_uiElement?.gameObject?.SetActive(isVisible);
-    if (instance.m_mode == MapMode.Large)
-    {
-      this.m_NamePinData?.PinNameGameObject?.gameObject?.SetActive(isVisible);
-    }
+    if (instance.m_mode == MapMode.Large) this.m_NamePinData?.PinNameGameObject?.SetActive(isVisible);
   }
 
   public void SetColor(Color color)
@@ -54,14 +47,12 @@ public class SharablePinData : PinData, IEquatable<PinData>
     if (this.m_NamePinData?.PinNameText is { } pinNameText) pinNameText.color = color;
   }
 
-  public ZPackage ToZPackage()
+  public ZPackage ToCompressedZPackage()
   {
     ZPackage zPackage = new();
     zPackage.Write(this);
-    return zPackage.GetCompressed();
+    return zPackage.Compress();
   }
-
-  #region IEquatable & friends
 
   public bool Equals(PinData other)
   {
@@ -73,6 +64,4 @@ public class SharablePinData : PinData, IEquatable<PinData>
   public static bool operator ==(SharablePinData a, PinData b) => ReferenceEquals(a, b) || (a is not null && a.Equals(b));
   public static bool operator !=(SharablePinData a, PinData b) => !(a == b);
   public override int GetHashCode() => this.m_pos.GetHashCode();
-
-  #endregion
 }

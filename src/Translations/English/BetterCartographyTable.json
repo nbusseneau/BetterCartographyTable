@@ -1,9 +1,9 @@
 {
+  "KeyHint_AddPrivatePin": "Add private pin",
   "KeyHint_RemovePrivatePin": "Remove private pin",
   "KeyHint_RemovePublicPin": "Remove public pin",
   "KeyHint_RemoveGuildPin": "Remove guild pin",
-  "KeyHint_TogglePublic": "Toggle private/public",
-  "KeyHint_ToggleGuild": "Toggle private/guild",
+  "KeyHint_ToggleSharing": "Share/unshare",
   "KeyHint_PublicModifierKey": "Public cartography",
   "KeyHint_GuildModifierKey": "Guild cartography",
 
@@ -11,12 +11,12 @@
   "PinsToggle_GuildPins": "Guild pins",
   "PinsToggle_SharedExploration": "Shared exploration",
 
-  "MapTableToggleMode_PopupHeader": "Are you sure?",
-  "MapTableToggleMode_PopupText": "All shared pins currently stored on this cartography table will be lost if its sharing mode is changed.",
-  "MapTableToggleMode_GuildRequired": "You must join or create a guild first",
+  "MapTable_ToggleMode_GuildRequired": "You must join or create a guild first",
+  "MapTable_ToggleMode_PopupHeader": "Cannot change sharing mode",
+  "MapTable_ToggleMode_PopupText": "Shared pins are currently stored on this table. To change mode, delete all shared pins from the table (or destroy then rebuild it).",
 
-  "MapTableHoverText_RestrictedToGuild": "Restricted to guild",
-  "MapTableHoverText_Public": "Public",
-  "MapTableHoverText_MakePublic": "Make public",
-  "MapTableHoverText_RestrictToGuild": "Restrict to guild"
+  "MapTable_HoverText_RestrictedToGuild": "Restricted to guild",
+  "MapTable_HoverText_Public": "Public",
+  "MapTable_HoverText_MakePublic": "Make public",
+  "MapTable_HoverText_RestrictToGuild": "Restrict to guild"
 }
