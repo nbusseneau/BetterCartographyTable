@@ -58,7 +58,7 @@ dotnet build -c Release; StopOnError
 tcli publish --token $thunderstoreToken; StopOnError
 
 # Upload asset to Github release
-$assetPath = (Get-ChildItem -Path "build/" -Filter "*$tag.zip").FullName
-$url = "https://uploads.github.com/repos/$owner/$repo/releases/$($release.id)/assets?name=$assetName"
-Write-Output "Uploading package to release | Asset name: $assetName"
-Invoke-RestMethod -Method POST -ContentType "application/zip" -Uri $url -Headers $headers -InFile $assetPath
+$asset = (Get-ChildItem -Path "build/" -Filter "*$tag.zip")
+$url = "https://uploads.github.com/repos/$owner/$repo/releases/$($release.id)/assets?name=$($asset.Name)"
+Write-Output "Uploading package to release | Asset name: $($asset.Name)"
+Invoke-RestMethod -Method POST -ContentType "application/zip" -Uri $url -Headers $headers -InFile $asset.FullName
