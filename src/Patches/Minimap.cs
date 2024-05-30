@@ -152,12 +152,20 @@ public static class MinimapPatches
   }
 
   [HarmonyPostfix]
-  [HarmonyPatch(nameof(Minimap.Awake))]
-  private static void PrepareTogglesAndKeyHints() => MinimapUI.PrepareTogglesAndKeyHints();
+  [HarmonyPatch(nameof(Minimap.Reset))]
+  private static void PrepareTogglesAndKeyHints()
+  {
+    MinimapUI.PrepareToggles();
+    MinimapUI.PrepareKeyHints();
+  }
 
   [HarmonyPostfix]
-  [HarmonyPatch(nameof(Minimap.Update))]
-  private static void UpdateKeyHints() => MinimapUI.UpdateKeyHints();
+  [HarmonyPatch(nameof(Minimap.UpdateMap))]
+  private static void UpdateTogglesAndKeyHints()
+  {
+    MinimapUI.UpdateToggles();
+    MinimapUI.UpdateKeyHints();
+  }
 
   [HarmonyPostfix]
   [HarmonyPatch(nameof(Minimap.UpdatePins))]

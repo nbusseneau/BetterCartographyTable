@@ -1,13 +1,15 @@
+using System.Collections.Generic;
 using System.Linq;
 using BetterCartographyTable.Extensions;
 using BetterCartographyTable.Model.Managers;
-using UnityEngine.PlayerLoop;
+using UnityEngine;
 using static Minimap;
 
 namespace BetterCartographyTable.UI;
 
 public static class MinimapUI
 {
+  private static List<GameObject> s_toggles;
   private static class Toggles
   {
     public static MinimapPinsToggle PublicPins { get; set; }
@@ -22,16 +24,23 @@ public static class MinimapUI
     public static MinimapKeyHint ModifierKey { get; set; }
   }
 
-  public static void PrepareTogglesAndKeyHints()
+  public static void PrepareToggles()
   {
-    // replace Cartography Table toggle label with our own, since it's only a shared exploration toggle now
-    instance.m_sharedMapHint.SetText("$PinsToggle_SharedExploration");
-
     // create additional toggles for public and guild pins
-    MinimapPinsToggle.Prepare();
     Toggles.PublicPins = new("PublicPins", "$PinsToggle_PublicPins");
     Toggles.GuildPins = new("GuildPins", "$PinsToggle_GuildPins");
 
+    // register all toggles
+    s_toggles = [
+      instance.m_publicPosition.gameObject,
+      instance.m_sharedMapHint,
+      Toggles.PublicPins.GameObject,
+      Toggles.GuildPins.GameObject,
+    ];
+  }
+
+  public static void PrepareKeyHints()
+  {
     // set up key hints
     var keyHints = instance.m_hints[0].transform;
     KeyHints.DoubleClick = new(keyHints.Find("keyboard_hints/AddPin").gameObject);
@@ -42,7 +51,6 @@ public static class MinimapUI
 
   public static void ShowTableUI()
   {
-    KeyHints.ModifierKey.Show();
     if (MapTableManager.CurrentTable.IsPublic)
     {
       Toggles.PublicPins.ForceToggleOn();
@@ -53,18 +61,41 @@ public static class MinimapUI
       Toggles.GuildPins.ForceToggleOn();
       Toggles.GuildPins.Show();
     }
+    KeyHints.ModifierKey.Show();
   }
 
   public static void HideTableUI()
   {
-    KeyHints.ModifierKey.Hide();
     if (!MinimapManager.PublicPins.Any()) Toggles.PublicPins.Hide();
     if (!MinimapManager.GuildPins.Any()) Toggles.GuildPins.Hide();
+    KeyHints.ModifierKey.Hide();
+  }
+
+  private static int s_togglesLastCheckActiveCount = -1;
+  public static void UpdateToggles()
+  {
+    // replace Cartography Table toggle label with our own, since it's only a shared exploration toggle now
+    instance.m_sharedMapHint.SetText("$PinsToggle_SharedExploration");
+
+    // update toggles positions based on active status
+    var activeToggles = s_toggles.Where(gameObject => gameObject.activeInHierarchy);
+    var activeCount = activeToggles.Count();
+    if (!activeToggles.Any() || s_togglesLastCheckActiveCount == activeCount) return;
+    s_togglesLastCheckActiveCount = activeCount;
+
+    var firstPosition = activeToggles.First().transform.position;
+    var counter = 1;
+    var lineSpacing = instance.m_sharedMapHint.transform.position.y - instance.m_publicPosition.transform.position.y;
+    foreach (var gameObject in activeToggles.Skip(1))
+    {
+      var position = gameObject.transform.position;
+      gameObject.transform.position = new Vector3(position.x, firstPosition.y + lineSpacing * counter, position.z);
+      counter++;
+    }
   }
 
   public static void UpdateKeyHints()
   {
-    MinimapPinsToggle.UpdatePositions();
     if (!MapTableManager.IsTableInUse)
     {
       KeyHints.DoubleClick.Show("$hud_addpin");

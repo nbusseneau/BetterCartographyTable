@@ -1,5 +1,6 @@
 using BetterCartographyTable.Extensions;
 using BetterCartographyTable.Model.Managers;
+using BetterCartographyTable.UI;
 using HarmonyLib;
 
 namespace BetterCartographyTable.Patches;
@@ -38,6 +39,8 @@ public static class PlayerPatches
       var sharedPins = zPackage.ReadSharablePinDataList();
       MinimapManager.AddPins(sharedPins);
     }
+    // hide pins toggles if no pins are available
+    MinimapUI.HideTableUI();
   }
 
   [HarmonyPostfix]

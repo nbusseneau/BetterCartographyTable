@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix warnings `Failed to find rpc method` due to RPC methods not being registered immediately.
+- Fix `NullReferenceException` errors due to Minimap toggles not being fully initialized.
+- Fix shared map exploration toggle label not being replaced from its vanilla defaults.
+- Fix toggles visibility on game load.
 
 ## [0.4.1] - 2024-05-29
 

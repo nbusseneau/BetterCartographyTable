@@ -6,7 +6,7 @@ namespace BetterCartographyTable.UI;
 public class MinimapKeyHint(GameObject keyHint)
 {
   private readonly GameObject _gameObject = keyHint;
-  public string Text { set => _gameObject.SetText(value); }
+  public string Text { set => this._gameObject.SetText(value); }
 
   public static MinimapKeyHint Clone(MinimapKeyHint original, string name, KeyCode key)
   {
@@ -31,8 +31,8 @@ public class MinimapKeyHint(GameObject keyHint)
 
   public void Show(string text = null)
   {
-    _gameObject.SetActive(true);
+    this._gameObject.SetActive(true);
     if (!string.IsNullOrEmpty(text)) this.Text = text;
   }
-  public void Hide() => _gameObject.SetActive(false);
+  public void Hide() => this._gameObject.SetActive(false);
 }
