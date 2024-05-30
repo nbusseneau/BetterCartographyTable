@@ -65,7 +65,7 @@ We keep **cartography tables** relevant for sharing both pins and map exploratio
 For `NoMap` runs, the goal is to give **cartography tables** a purpose.
 
 <details>
-<summary>How it works in details <b>(click to show details)</b></summary>
+<summary>How it works <b>(click to show details)</b></summary>
 
 - When opening the map without interacting with a **cartography table**:
   - **Private pins** can be interacted with, same as in vanilla.
