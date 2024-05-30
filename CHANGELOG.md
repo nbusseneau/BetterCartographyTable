@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.2] - 2024-05-30
+
 ### Fixed
 
 - Fix warnings `Failed to find rpc method` due to RPC methods not being registered immediately.
@@ -78,7 +80,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.1...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.2...HEAD
+[0.4.2]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.1...0.4.2
 [0.4.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.0...0.4.1
 [0.4.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.2.0...0.3.0

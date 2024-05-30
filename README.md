@@ -111,7 +111,7 @@ If you do allow crossplay, note that vanilla clients will not be able to share a
 - **[Prerequisites]**
   - Install [**BepInExPack Valheim**](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
   - Install [**Jötunn, the Valheim Library**](https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/).
-- Download [nbusseneau-Better_Cartography_Table-0.4.1.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.4.1.zip).
+- Download [nbusseneau-Better_Cartography_Table-0.4.2.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.4.2.zip).
 - Extract the archive and move everything to your `BepInEx/plugins/` directory. It should look like this:
   ```
   BepInEx/
