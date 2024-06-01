@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.3] - 2024-06-01
+
 ### Changed
 
 - Document how to add new translations in the README.
@@ -84,7 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.2...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.3...HEAD
+[0.4.3]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.2...0.4.3
 [0.4.2]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.1...0.4.2
 [0.4.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.0...0.4.1
 [0.4.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.3.0...0.4.0
