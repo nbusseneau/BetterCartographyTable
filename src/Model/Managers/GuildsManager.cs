@@ -6,7 +6,7 @@ namespace BetterCartographyTable.Model.Managers;
 public static class GuildsManager
 {
   public static bool IsEnabled => API.IsLoaded();
-  private static Guild GetCurrentGuild() => IsEnabled ? API.GetOwnGuild() : null;
+  private static Guild CurrentGuild => IsEnabled ? API.GetOwnGuild() : null;
   public static string CurrentGuildName { get; private set; }
   private static readonly Color s_fallbackColor = new(1, 0.7176471f, 0.3602941f);
   private static Color? s_color = null;
@@ -15,7 +15,7 @@ public static class GuildsManager
   public static void TryRegisterGuild()
   {
     if (!IsEnabled) return;
-    if (GetCurrentGuild() is { } guild) Register(guild);
+    if (CurrentGuild is { } guild) Register(guild);
 
     API.RegisterOnGuildJoined((guild, player) =>
     {
@@ -44,7 +44,7 @@ public static class GuildsManager
 
   private static Color LazySetGuildColor()
   {
-    if (GetCurrentGuild() is { } guild && ColorUtility.TryParseHtmlString(guild.General.color, out var parsedColor))
+    if (CurrentGuild is { } guild && ColorUtility.TryParseHtmlString(guild.General.color, out var parsedColor))
     {
       s_color = parsedColor;
       return parsedColor;

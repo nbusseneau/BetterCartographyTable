@@ -5,17 +5,17 @@ namespace BetterCartographyTable.Model.MapTableZDOValues;
 /// </summary>
 public abstract class MapTableZDOValue<T>
 {
-  protected readonly MapTable MapTable;
-  protected ZNetView NView => this.MapTable.m_nview;
-  protected readonly string Key;
-  protected readonly string StoreRPC;
+  protected readonly MapTable _mapTable;
+  protected ZNetView NView => this._mapTable.m_nview;
+  protected readonly string _key;
+  protected readonly string _storeRPC;
   public abstract T Value { get; set; }
 
   public MapTableZDOValue(MapTable mapTable, string key)
   {
-    this.MapTable = mapTable;
-    this.Key = $"{Plugin.ModGUID}.MapTable.{key}";
-    this.StoreRPC = $"{Plugin.ModGUID}.RPC_Store.MapTable.{key}";
+    this._mapTable = mapTable;
+    this._key = $"{Plugin.ModGUID}.MapTable.{key}";
+    this._storeRPC = $"{Plugin.ModGUID}.RPC_Store.MapTable.{key}";
     this.RegisterStoreRPC();
   }
 

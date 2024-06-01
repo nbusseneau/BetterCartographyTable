@@ -4,18 +4,18 @@ public class MapTableZDOSharingMode(MapTable mapTable) : MapTableZDOValue<Sharin
 {
   public override SharingMode Value
   {
-    get => (SharingMode)this.NView.GetZDO().GetInt(this.Key, (int)SharingMode.Public);
+    get => (SharingMode)this.NView.GetZDO().GetInt(this._key, (int)SharingMode.Public);
     set
     {
-      if (this.NView.IsOwner()) this.NView.GetZDO().Set(this.Key, (int)value);
-      else this.NView.InvokeRPC(this.StoreRPC, (int)value);
+      if (this.NView.IsOwner()) this.NView.GetZDO().Set(this._key, (int)value);
+      else this.NView.InvokeRPC(this._storeRPC, (int)value);
     }
   }
 
-  protected override void RegisterStoreRPC() => this.NView.Register<int>(this.StoreRPC, (_, mode) => this.RPC_Store(mode));
+  protected override void RegisterStoreRPC() => this.NView.Register<int>(this._storeRPC, (_, mode) => this.RPC_Store(mode));
   private void RPC_Store(int mode)
   {
     if (!this.NView.IsOwner()) return;
-    this.NView.GetZDO().Set(this.Key, mode);
+    this.NView.GetZDO().Set(this._key, mode);
   }
 }

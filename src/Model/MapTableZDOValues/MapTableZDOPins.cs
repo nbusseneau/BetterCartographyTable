@@ -9,7 +9,7 @@ public class MapTableZDOPins(MapTable mapTable) : MapTableZDOValue<IEnumerable<S
   {
     get
     {
-      if (this.NView.GetZDO().GetByteArray(this.Key) is { } array)
+      if (this.NView.GetZDO().GetByteArray(this._key) is { } array)
       {
         array = Utils.Decompress(array);
         ZPackage zPackage = new(array);
@@ -20,15 +20,15 @@ public class MapTableZDOPins(MapTable mapTable) : MapTableZDOValue<IEnumerable<S
     set
     {
       var compressedZPackage = value.ToCompressedZPackage();
-      if (this.NView.IsOwner()) this.NView.GetZDO().Set(this.Key, compressedZPackage.GetArray());
-      else this.NView.InvokeRPC(this.StoreRPC, compressedZPackage);
+      if (this.NView.IsOwner()) this.NView.GetZDO().Set(this._key, compressedZPackage.GetArray());
+      else this.NView.InvokeRPC(this._storeRPC, compressedZPackage);
     }
   }
 
-  protected override void RegisterStoreRPC() => this.NView.Register<ZPackage>(this.StoreRPC, (_, compressedZPackage) => this.RPC_Store(compressedZPackage));
+  protected override void RegisterStoreRPC() => this.NView.Register<ZPackage>(this._storeRPC, (_, compressedZPackage) => this.RPC_Store(compressedZPackage));
   private void RPC_Store(ZPackage compressedZPackage)
   {
     if (!this.NView.IsOwner()) return;
-    this.NView.GetZDO().Set(this.Key, compressedZPackage.GetArray());
+    this.NView.GetZDO().Set(this._key, compressedZPackage.GetArray());
   }
 }
