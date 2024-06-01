@@ -1,5 +1,3 @@
-using System;
-
 namespace BetterCartographyTable.UI;
 
 public class MapTableToggleModeWarningPopup : WarningPopup
