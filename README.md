@@ -3,6 +3,7 @@
 [Valheim](https://store.steampowered.com/app/892970/Valheim/) mod that allows precise control over sharing pins via **cartography tables**.
 Supports **private pins**, **public pins**, and **guild pins**.
 Supports `NoMap` runs, giving **cartography tables** a purpose in `NoMap`.
+Translations available.
 
 ## Video showcase
 
@@ -47,6 +48,7 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00
 - **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed).
   - For when you want to share super secret guild hideouts with your mates. Not that it ever happens. Definitely don't look for super secret guild hideouts on your servers. Nope...
 - If using the `NoMap` world modifier, the map will be accessible through **cartography tables** (but only when directly interacting with them).
+- Translations available: English, French. New languages can be added easily (see [below for details](#translations)).
 
 ## But why?
 
@@ -91,6 +93,22 @@ However, vanilla clients are not able to contribute back: modded clients can onl
 ### Compatibility with other mods
 
 **Better™️ Cartography Table** tries to play nice with other mods by isolating its behaviour as much as possible, and failing that by trying to ensure the other mods will contribute pins in a compatible way. Nevertheless, there might be instances where other mods interacting with pins will result in incompatiblities. Feel free to [report any issue you find](https://github.com/nbusseneau/BetterCartographyTable/issues/new).
+
+### Translations
+
+**Better™️ Cartography Table** comes with the following languages available out of the box:
+
+- English
+- French
+
+To add a new language as a user:
+
+- Navigate to your `BepInEx/plugins/nbusseneau-Better_Cartography_Table/plugins/Translations/` directory.
+  - From `r2modman`, use `Settings > Browse profile folder` to find your `BepInEx` directory.
+- Make a copy of the `English` directory, then rename it to the appropriate name for your language (see [valid folder names](https://valheim-modding.github.io/Jotunn/data/localization/language-list.html)).
+- Edit `<your_language_name>/BetterCartographyTable.json` as appropriate using a text editor.
+
+If you localize **Better™️ Cartography Table** for your own language, you are most welcome to [send your translation file my way](https://github.com/nbusseneau/BetterCartographyTable/issues/new), and I will integrate it as part of the languages available by default.
 
 ## Install
 
