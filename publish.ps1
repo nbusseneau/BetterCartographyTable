@@ -63,6 +63,7 @@ else {
   Write-Output "Latest release $($release.tag_name) matching input tag $tag, check if repo state is in sync with existing release"
 
   # Make sure repo is synced with release state
+  git pull; StopOnError
   $currentHeadTag = git describe --exact-match HEAD; StopOnError
   if ($release.tag_name -ne $currentHeadTag) {
     Write-Error -Message "Latest release $($release.tag_name) not matching current HEAD tag $currentHeadTag, discrepancy between local repo and existing release state" -ErrorAction Stop
