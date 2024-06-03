@@ -5,48 +5,36 @@ namespace BetterCartographyTable.Model.Managers;
 
 public static class GuildsManager
 {
-  public static bool IsEnabled => API.IsLoaded();
-  private static Guild CurrentGuild => IsEnabled ? API.GetOwnGuild() : null;
-  public static string CurrentGuildName { get; private set; }
+  public static bool IsEnabled { get; private set; } = false;
+  public static Guild CurrentGuild { get; private set; } = null;
   private static readonly Color s_fallbackColor = new(1, 0.7176471f, 0.3602941f);
-  private static Color? s_color = null;
-  public static Color CurrentGuildColor { get => s_color ?? LazySetGuildColor(); }
+  private static Color? s_currentGuildColor = null;
+  public static Color CurrentGuildColor { get => s_currentGuildColor ?? TrySetGuildColor(); }
 
-  public static void TryRegisterGuild()
+  public static void Initialize()
   {
+    IsEnabled = API.IsLoaded();
     if (!IsEnabled) return;
-    if (CurrentGuild is { } guild) Register(guild);
 
-    API.RegisterOnGuildJoined((guild, player) =>
-    {
-      var isCurrentPlayer = player == PlayerReference.forOwnPlayer();
-      if (isCurrentPlayer) Register(guild);
-    });
-
-    API.RegisterOnGuildLeft((_, player) =>
-    {
-      var isCurrentPlayer = player == PlayerReference.forOwnPlayer();
-      if (isCurrentPlayer) Unregister();
-    });
+    if (API.GetOwnGuild() is { } guild) Register(guild);
+    API.RegisterOnGuildJoined((guild, player) => { if (player == PlayerReference.forOwnPlayer()) Register(guild); });
+    API.RegisterOnGuildLeft((_, player) => { if (player == PlayerReference.forOwnPlayer()) Unregister(); });
   }
 
-  private static void Register(Guild guild)
-  {
-    CurrentGuildName = guild.Name;
-  }
+  private static void Register(Guild guild) => CurrentGuild = guild;
 
   private static void Unregister()
   {
-    CurrentGuildName = null;
-    s_color = null;
+    CurrentGuild = null;
+    s_currentGuildColor = null;
     MinimapManager.RemovePins(MinimapManager.GuildPins);
   }
 
-  private static Color LazySetGuildColor()
+  private static Color TrySetGuildColor()
   {
-    if (CurrentGuild is { } guild && ColorUtility.TryParseHtmlString(guild.General.color, out var parsedColor))
+    if (CurrentGuild is not null && ColorUtility.TryParseHtmlString(CurrentGuild.General.color, out var parsedColor))
     {
-      s_color = parsedColor;
+      s_currentGuildColor = parsedColor;
       return parsedColor;
     }
     return s_fallbackColor;

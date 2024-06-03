@@ -63,8 +63,8 @@ public class MapTableManager : IEquatable<MapTable>
 
   private bool CheckAccess()
   {
-    var guildName = this.Owner;
-    var isPlayerMemberOfGuild = !string.IsNullOrEmpty(guildName) && GuildsManager.CurrentGuildName == guildName;
+    var tableOwnerGuild = this.Owner;
+    var isPlayerMemberOfGuild = !string.IsNullOrEmpty(tableOwnerGuild) && tableOwnerGuild == GuildsManager.CurrentGuild?.Name;
     return this.IsPublic || this.IsGuild && isPlayerMemberOfGuild;
   }
 
@@ -83,7 +83,7 @@ public class MapTableManager : IEquatable<MapTable>
 
   private void TryToggleMode(Humanoid user)
   {
-    if (this.IsPublic && string.IsNullOrEmpty(GuildsManager.CurrentGuildName))
+    if (this.IsPublic && string.IsNullOrEmpty(GuildsManager.CurrentGuild?.Name))
     {
       user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$MapTable_ToggleMode_GuildRequired"), 0, null);
       return;
@@ -94,7 +94,7 @@ public class MapTableManager : IEquatable<MapTable>
 
   private void ToggleMode()
   {
-    if (this.IsPublic) this.RestrictToGuild(GuildsManager.CurrentGuildName);
+    if (this.IsPublic) this.RestrictToGuild(GuildsManager.CurrentGuild.Name);
     else if (this.IsGuild) this.MakePublic();
   }
 

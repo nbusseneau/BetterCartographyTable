@@ -14,6 +14,5 @@ public static class GamePatches
 
   [HarmonyPostfix]
   [HarmonyPatch(nameof(Game.Start))]
-  private static void TryRegisterGuild() => GuildsManager.TryRegisterGuild();
-
+  private static void InitializeGuildsManager() => GuildsManager.Initialize();
 }
