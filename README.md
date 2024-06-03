@@ -1,6 +1,6 @@
 # Better™️ Cartography Table
 
-[Valheim](https://store.steampowered.com/app/892970/Valheim/) mod that allows precise control over sharing pins via **cartography tables**.
+[Valheim](https://store.steampowered.com/app/892970/Valheim/) mod that allows precise control over sharing **pins** and **map exploration** via **cartography tables**.
 Supports **private pins**, **public pins**, and **guild pins**.
 Supports `NoMap` runs, giving **cartography tables** a purpose in `NoMap`.
 Translations available.
@@ -13,7 +13,7 @@ Translations available.
 <summary><b>Private</b> and <b>public pins</b></summary>
 
 Astrid and Brynhild are playing together, however Astrid has a tad too many mushroom pins for Brynhild's liking.
-Thanks to **Better™️ Cartography Table**, their friendship is safe, as Astrid can selectively decide which pins to share on the public cartography table.
+Thanks to **Better™️ Cartography Table**, their friendship is safe, as Astrid can selectively decide which pins to share on the **public cartography table**.
 
 https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e13e6267-88ad-4aee-bdfe-f78e807bc2f8
 
@@ -23,7 +23,7 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e13e6267-88a
 <summary>Real-time collaboration</summary>
 
 Astrid and Brynhild are planning their next expedition.
-Thanks to **Better™️ Cartography Table**, it will be a great success, as they can collaborate and prepare it in real time on the public cartography table.
+Thanks to **Better™️ Cartography Table**, it will be a great success, as they can collaborate and prepare it in real time on the **public cartography table**.
 
 https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e535a301-994f-4129-b9ec-3e51685bab2c
 
@@ -33,7 +33,7 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e535a301-994
 <summary><b>Guild pins</b></summary>
 
 Astrid and Brynhild are members of rival guilds (The Mushroom Enjoyers and The Ground Shakers), and neither wants their archnemesis to know about their secret hideout.
-Thanks to **Better™️ Cartography Table**, their rivalry is fueled, as guild members can share guild-only pins on their guild-restricted cartography table.
+Thanks to **Better™️ Cartography Table**, their rivalry is fueled, as guild members can share **guild-only pins** on their **guild-restricted cartography table**.
 
 https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00f-4047-b9ce-3839ac499035
 
@@ -47,6 +47,8 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00
   - This allows collaborating over the map in real time, especially useful when planning the next expedition.
 - **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed).
   - For when you want to share super secret guild hideouts with your mates. Not that it ever happens. Definitely don't look for super secret guild hideouts on your servers. Nope...
+- **Map exploration** sharing can be **public** (default), **private**, or **restricted to a guild** (if [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed).
+  - In case you need to be extra careful that other players know not where you roamed.
 - If using the `NoMap` world modifier, the map will be accessible through **cartography tables** (but only when directly interacting with them).
 - Translations available: English, French. New languages can be added easily (see [below for details](#translations)).
 
@@ -56,31 +58,34 @@ The vanilla **cartography table** is extremely quirky.
 This often leads to frustration on multiplayer servers when multiple players interact with the table on a regular basis, as shared pins seem to disappear / reappear constantly, and crossing off shared pins does not update the table.
 
 On top of that, since the vanilla **cartography table** is "all or nothing", some players might refrain from engaging altogether.
-This is typically the case for those that like to meticulously pin all berries / copper veins / etc. but don't want others to yell at them for cluttering the table, or those that do not want to share some super secret pins they would prefer to keep private.
+This is typically the case for those that like to meticulously pin all berries / copper veins / etc. but don't want others to yell at them for cluttering the table, or those that do not want to share some super secret locations they would prefer to keep private.
 
 And of course, the vanilla **cartography table** has no purpose in `NoMap` runs.
 
 ## Vanilla cartography tables, but Better™️
 
 The goal of this mod is to stick as close as possible to the vanilla experience.
-We keep **cartography tables** relevant for sharing both pins and map exploration, same as in vanilla: players must still interact with the same **cartography table** on a regular basis to synchronize progress with other players.
+We keep **cartography tables** relevant for sharing both pins and **map exploration**, same as in vanilla: players must still interact with the same **cartography table** on a regular basis to synchronize progress with other players.
 For `NoMap` runs, the goal is to give **cartography tables** a purpose.
 
 <details>
 <summary>How it works <b>(click to show details)</b></summary>
 
 - When opening the map without interacting with a **cartography table**:
-  - **Private pins** can be interacted with, same as in vanilla.
+  - Your **private pins** can be interacted with, same as in vanilla.
   - **Public** or **guild pins** previously retrieved from a **cartography table** can be shown or hidden (akin to vanilla shared pins), but cannot be interacted with (cannot cross off, cannot remove).
   - In `NoMap` runs, the map will still refuse to open: it can only open by interacting with a **cartography table**.
+- When hovering a **cartography table**:
+  - Text will appear (akin to vanilla) and list information about the table and how to interact with it.
+  - If [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed, the table can be switched between **public mode** (default) or **guild mode**. When a table is in **guild mode**, only its guild members can interact with it.
 - When interacting with a **cartography table**:
-  - Synchronize map exploration, same as in vanilla.
+  - Retrieve other players' **map exploration** currently shared to the table, same as in vanilla.
+  - If **map exploration** sharing is in **public mode** (default) or **guild mode** (and we are interacting with a **guild table**), share your **map exploration** to the table.
   - Retrieve **public** or **guild pins** currently shared to the table.
   - Open the map:
-    - **Private pins** can be interacted with, same as in vanilla, but can additionally be shared to the table (becoming **public** or **guild pins**).
-    - **Public** or **guild pins** can be crossed off / removed akin to vanilla, or unshared from the table (becoming **private pins**).
+    - Your **private pins** can be interacted with, same as in vanilla, but can additionally be shared to the table (becoming **public** or **guild pins**).
+    - **Public** or **guild pins** can be crossed off / removed akin to vanilla, or unshared from the table (becoming **private pins** on your map).
     - When multiple players interact with the same **cartography table** at the same time, all changes to **public** or **guild pins** are reflected in real time.
-- If [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed, **cartography tables** can be switched between **public mode** (default) or **guild mode**. When a table is in **guild mode**, only its guild members can interact with it.
 
 </details>
 

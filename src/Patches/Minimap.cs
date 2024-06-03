@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -46,7 +47,7 @@ public static class MinimapPatches
   private static IEnumerable<CodeInstruction> EnforceSharablePinDataInAddPin(IEnumerable<CodeInstruction> instructions)
   {
     return new CodeMatcher(instructions)
-        .MatchForward(false, new CodeMatch(OpCodes.Newobj, AccessTools.Constructor(typeof(PinData))))
+        .MatchStartForward(new CodeMatch(OpCodes.Newobj, AccessTools.Constructor(typeof(PinData))))
         .ThrowIfInvalid("Could not patch PinData constructor in Minimap.AddPin(...)")
         .SetOperandAndAdvance(AccessTools.Constructor(typeof(SharablePinData)))
         .InstructionEnumeration();
@@ -103,7 +104,7 @@ public static class MinimapPatches
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
       return new CodeMatcher(instructions)
-          .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
+          .MatchStartForward(new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
           .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetMapData()")
           .Repeat(m => m.SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPrivatePinsInSaveFile), nameof(s_privatePins))))
           .InstructionEnumeration();
@@ -111,22 +112,51 @@ public static class MinimapPatches
   }
 
   /// <summary>
-  /// Inject public pins as <c>Minimap.instance.m_pins</c> replacement in <c>Minimap.GetSharedMapData()</c> so that
-  /// modded clients share public pins to non-modded clients via the vanilla shared map data.
+  /// We edit <c>Minimap.GetSharedMapData()</c> on two fronts:
+  /// <list type="bullet">
+  ///   <item>
+  ///     <description>Inject <c>false</c> as argument to <c>zpackage2.Write(...)</c> calls to replace actual map
+  ///     exploration status if the user has elected to keep their map exploration private, or to share it only with
+  ///     their guild but is not interacting with a guild table.</description>
+  ///   </item>
+  ///   <item>
+  ///     <description>Inject public pins as <c>Minimap.instance.m_pins</c> replacement so that modded clients share
+  ///     public pins to non-modded clients via the vanilla shared map data.</description>
+  ///   </item>
+  /// </list>
   /// </summary>
   [HarmonyPatch(typeof(Minimap), nameof(Minimap.GetSharedMapData))]
-  private class InjectPublicPinsInOutboundVanillaSharedMapData
+  private class EditOutboundVanillaSharedMapData
   {
-    private static List<PinData> s_publicPins;
-    private static void Prefix() => s_publicPins = MapTableManager.CurrentTable.IsPublic ? MinimapManager.PublicPins.ToList<PinData>() : [];
+    private static bool s_shouldShareMapExploration;
+    private static List<PinData> s_pins;
+    private static void Prefix()
+    {
+      s_shouldShareMapExploration = Plugin.MapExplorationSharingMode == SharingMode.Public || Plugin.MapExplorationSharingMode == SharingMode.Guild && MapTableManager.CurrentTable.IsGuild;
+      s_pins = MapTableManager.CurrentTable.IsPublic ? MinimapManager.PublicPins.ToList<PinData>() : [];
+    }
 
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-      return new CodeMatcher(instructions)
-          .MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
-          .ThrowIfInvalid("Could not inject pins replacement in Minimap.GetSharedMapData()")
-          .Repeat(m => m.SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(InjectPublicPinsInOutboundVanillaSharedMapData), nameof(s_publicPins))))
-          .InstructionEnumeration();
+      var matcher = new CodeMatcher(instructions);
+
+      // inject false to replace actual map exploration status, if we are not sharing map exploration
+      matcher.MatchEndForward(
+          new CodeMatch(OpCodes.Or),
+          new CodeMatch(OpCodes.Stloc_S),
+          new CodeMatch(OpCodes.Ldloc_1),
+          new CodeMatch(OpCodes.Ldloc_S))
+        .ThrowIfInvalid("Could not inject m_explored replacement in Minimap.GetSharedMapData()")
+        .Advance(1)
+        .InsertAndAdvance(Transpilers.EmitDelegate<Func<bool, bool>>(explored => s_shouldShareMapExploration && explored));
+
+      // inject public pins to replace m_pins ldfld
+      matcher.Start()
+        .MatchStartForward(new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
+        .ThrowIfInvalid("Could not inject m_pins replacement in Minimap.GetSharedMapData()")
+        .Repeat(m => m.SetAndAdvance(OpCodes.Ldsfld, AccessTools.Field(typeof(EditOutboundVanillaSharedMapData), nameof(s_pins))));
+
+      return matcher.InstructionEnumeration();
     }
   }
 
@@ -139,7 +169,7 @@ public static class MinimapPatches
   private static IEnumerable<CodeInstruction> TruncateInboundVanillaSharedMapData(IEnumerable<CodeInstruction> instructions)
   {
     return new CodeMatcher(instructions)
-        .MatchForward(false,
+        .MatchStartForward(
             new CodeMatch(OpCodes.Ldc_I4_0),
             new CodeMatch(OpCodes.Stloc_S),
             new CodeMatch(OpCodes.Ldloc_1),
