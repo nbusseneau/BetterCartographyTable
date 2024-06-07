@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2024-06-07
+
 ### Changed
 
 - Include missing `Ashlands update` tag for Thunderstore package.
@@ -96,7 +98,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.0...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.1...HEAD
+[0.5.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.0...0.5.1
 [0.5.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.3...0.5.0
 [0.4.3]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.2...0.4.3
 [0.4.2]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.1...0.4.2
