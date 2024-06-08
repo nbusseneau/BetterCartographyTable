@@ -24,7 +24,7 @@ public static class MinimapPatches
     {
       // temporarily override noMap mode when opening the map as part of using a table
       var isMinimapOpening = mode == MapMode.Large;
-      if (isMinimapOpening && MapTableManager.IsTableInUse && GamePatches.IsNoMapModeEnabled) Game.m_noMap = false;
+      if (isMinimapOpening && MapTableManager.IsTableValid && GamePatches.IsNoMapModeEnabled) Game.m_noMap = false;
 
       // trigger on close callback when closing map
       var isMinimapClosing = mode == MapMode.Small;

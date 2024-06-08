@@ -96,7 +96,7 @@ public static class MinimapUI
 
   public static void UpdateKeyHints()
   {
-    if (!MapTableManager.IsTableInUse)
+    if (!MapTableManager.IsTableValid)
     {
       KeyHints.DoubleClick.Show("$hud_addpin");
       KeyHints.LeftClick.Text = "$hud_crossoffpin";

@@ -14,11 +14,11 @@ namespace BetterCartographyTable.Model.Managers;
 public class MapTableManager : IEquatable<MapTable>
 {
   public static MapTableManager CurrentTable { get; private set; }
-  public static bool IsTableInUse => CurrentTable is not null;
+  public static bool IsTableValid => CurrentTable is not null && CurrentTable.NView.IsValid();
 
   public static void TryOpenCurrentTable(MapTableManager table, Humanoid user)
   {
-    if (IsTableInUse) return;
+    if (CurrentTable is not null) return;
     if (!table.CheckAccess()) user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$piece_noaccess"), 0, null);
     else if (Plugin.IsModifierKeyPressed && GuildsManager.IsEnabled) table.TryToggleMode(user);
     else
@@ -30,7 +30,7 @@ public class MapTableManager : IEquatable<MapTable>
 
   public static void TryCloseCurrentTable()
   {
-    if (!IsTableInUse) return;
+    if (CurrentTable is null) return;
     CurrentTable.Close();
     CurrentTable = null;
   }

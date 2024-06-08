@@ -42,7 +42,7 @@ public static class MinimapManager
     if (pin is null) return;
 
     if (pin.IsPrivate()) PrivatePinClickHandler.Dispatch(clickType, pin);
-    else if (MapTableManager.IsTableInUse && pin is SharablePinData sharablePin && sharablePin.SharingMode == MapTableManager.CurrentTable.SharingMode)
+    else if (MapTableManager.IsTableValid && pin is SharablePinData sharablePin && sharablePin.SharingMode == MapTableManager.CurrentTable.SharingMode)
     {
       MapTablePinClickHandler.Dispatch(clickType, sharablePin);
     }

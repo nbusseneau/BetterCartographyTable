@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix `NullReferenceException` errors due to keyhints UI update running when it should not
+
 ## [0.5.2] - 2024-06-08
 
 ### Fixed

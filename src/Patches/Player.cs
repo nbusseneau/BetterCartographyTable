@@ -47,7 +47,7 @@ public static class PlayerPatches
   [HarmonyPatch(nameof(Player.UpdateStations))]
   private static void CloseMapWhenTooFarFromTable(Player __instance)
   {
-    if (!MapTableManager.IsTableInUse) return;
+    if (!MapTableManager.IsTableValid) return;
     var isTooFar = !MapTableManager.CurrentTable.IsInUseDistance(__instance);
     if (isTooFar) Minimap.instance.SetMapMode(Minimap.MapMode.Small);
   }
