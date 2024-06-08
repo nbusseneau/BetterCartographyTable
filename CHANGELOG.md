@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Remove microfreeze when opening / closing tables by greatly improving map exploration sharing handling.
+
 ## [0.5.4] - 2024-06-08
 
 ### Changed

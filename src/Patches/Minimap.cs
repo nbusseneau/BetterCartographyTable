@@ -115,9 +115,9 @@ public static class MinimapPatches
   /// We edit <c>Minimap.GetSharedMapData()</c> on two fronts:
   /// <list type="bullet">
   ///   <item>
-  ///     <description>Inject <c>false</c> as argument to <c>zpackage2.Write(...)</c> calls to replace actual map
-  ///     exploration status if the user has elected to keep their map exploration private, or to share it only with
-  ///     their guild but is not interacting with a guild table.</description>
+  ///     <description>Inject a conditional branching over <c>Minimap.instance.m_explored</c> exploration status sharing
+  ///     if the user has elected to keep their map exploration private, or to share it only with their guild but is not
+  ///     interacting with a guild table.</description>
   ///   </item>
   ///   <item>
   ///     <description>Inject public pins as <c>Minimap.instance.m_pins</c> replacement so that modded clients share
@@ -136,19 +136,40 @@ public static class MinimapPatches
       s_pins = MapTableManager.CurrentTable.IsPublic ? MinimapManager.PublicPins.ToList<PinData>() : [];
     }
 
-    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-      var matcher = new CodeMatcher(instructions);
+      var matcher = new CodeMatcher(instructions, generator);
 
-      // inject false to replace actual map exploration status, if we are not sharing map exploration
+      // inject conditional branching to jump over map exploration status sharing, if we are not sharing map exploration
+      // part 1: insert delegate right before start of loop
       matcher.MatchEndForward(
-          new CodeMatch(OpCodes.Or),
-          new CodeMatch(OpCodes.Stloc_S),
-          new CodeMatch(OpCodes.Ldloc_1),
-          new CodeMatch(OpCodes.Ldloc_S))
-        .ThrowIfInvalid("Could not inject m_explored replacement in Minimap.GetSharedMapData()")
-        .Advance(1)
-        .InsertAndAdvance(Transpilers.EmitDelegate<Func<bool, bool>>(explored => s_shouldShareMapExploration && explored));
+          new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_explored))),
+          new CodeMatch(OpCodes.Ldlen),
+          new CodeMatch(OpCodes.Conv_I4),
+          new CodeMatch(OpCodes.Callvirt),
+          new CodeMatch(OpCodes.Ldc_I4_0))
+        .ThrowIfInvalid("Could not inject conditional branching over m_explored sharing loop in Minimap.GetSharedMapData()")
+        // load ZPackage (index 1) to be consumed as argument to the delegate
+        .InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_1))
+        .InsertAndAdvance(Transpilers.EmitDelegate<Func<ZPackage, bool>>(zPackage =>
+        {
+          if (!s_shouldShareMapExploration) for (int i = 0; i < instance.m_explored.Length; i++) zPackage.Write(false);
+          return s_shouldShareMapExploration;
+        }));
+      var delegatePosition = matcher.Pos;
+
+      // part 2: find end of loop
+      matcher.MatchStartForward(
+          new CodeMatch(OpCodes.Ldc_I4_0),
+          new CodeMatch(OpCodes.Stloc_2),
+          new CodeMatch(OpCodes.Ldarg_0),
+          new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_pins))))
+        .ThrowIfInvalid("Could not inject conditional branching over m_explored sharing loop in Minimap.GetSharedMapData()");
+      var branchTargetLabelPosition = matcher.Pos;
+
+      // part 3: roll back to delegate position and insert conditional branching over the loop
+      matcher.Advance(delegatePosition - branchTargetLabelPosition)
+        .InsertBranchAndAdvance(OpCodes.Brfalse_S, branchTargetLabelPosition);
 
       // inject public pins to replace m_pins ldfld
       matcher.Start()
