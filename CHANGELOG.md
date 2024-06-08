@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Add further compatibility for sharing private pins manually added by other mods.
+
 ## [0.5.3] - 2024-06-08
 
 ### Fixed

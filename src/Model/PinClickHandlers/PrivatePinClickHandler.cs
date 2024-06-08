@@ -31,7 +31,9 @@ public class PrivatePinClickHandler
   /// </summary>
   public static void LeftClickPlusModifier(PinData pin)
   {
-    if (!MapTableManager.IsTableValid || pin is not SharablePinData sharablePin || !sharablePin.IsSharable) return;
+    if (!MapTableManager.IsTableValid || !pin.IsSharable()) return;
+    if (pin is not SharablePinData sharablePin && !MinimapManager.TryConvert(pin, out sharablePin)) return;
+
     sharablePin.SharingMode = MapTableManager.CurrentTable.SharingMode;
     instance.m_pinUpdateRequired = true;
     MapTableManager.CurrentTable.SendPinEvent(sharablePin, PinEvent.Add);

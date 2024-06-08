@@ -7,11 +7,11 @@ using static Minimap;
 namespace BetterCartographyTable.Model;
 
 /// <summary>
-/// Subclass of <c>PinData</c> intended for use as a transparent replacement in
-/// <c>Minimap.instance.m_pins</c>. We try to ensure that all pins on the map are actually
-/// <c>SharablePinData</c> objects and not <c>PinData</c> objects via a Harmony patch on
-/// <c>Minimap.AddPin(...)</c> (though this may not always be the case as other mods may still
-/// manually add <c>PinData</c> objects without calling <c>Minimap.AddPin(...)</c>).
+/// Subclass of <c>PinData</c> intended for use as a transparent replacement in <c>Minimap.instance.m_pins</c>.
+/// We try to ensure that all pins on the map are actually <c>SharablePinData</c> objects and not <c>PinData</c> objects
+/// via a Harmony patch on <c>Minimap.AddPin(...)</c>, though this may not always be the case as other mods may still
+/// manually add <c>PinData</c> objects without calling <c>Minimap.AddPin(...)</c>.
+/// If this happens, <c>MinimapManager.TryConvert(...)</c> may be used to try and convert pins of a compatible type.
 /// </summary>
 public class SharablePinData : PinData, IEquatable<PinData>
 {
@@ -26,13 +26,25 @@ public class SharablePinData : PinData, IEquatable<PinData>
     PinType.Hildir2,
     PinType.Hildir3,
   ];
+  public static bool IsSharable(PinData pin) => s_sharablePinTypes.Contains(pin.m_type);
 
   public SharingMode SharingMode { get; set; } = SharingMode.Private;
-  public bool IsSharable => s_sharablePinTypes.Contains(this.m_type);
   public bool IsPrivate => this.SharingMode == SharingMode.Private;
   public bool IsShared => !this.IsPrivate;
   public bool IsPublic => this.SharingMode == SharingMode.Public;
   public bool IsGuild => this.SharingMode == SharingMode.Guild;
+
+  public SharablePinData() { }
+  public SharablePinData(PinData pin)
+  {
+    this.m_name = pin.m_name;
+    this.m_type = pin.m_type;
+    this.m_pos = pin.m_pos;
+    this.m_ownerID = pin.m_ownerID;
+    this.m_author = pin.m_author;
+    this.m_checked = pin.m_checked;
+  }
+
   public override string ToString() => $"{this.SharingMode} {m_name} {m_pos} {(m_checked ? "⦻" : "⭘")} {m_author} {m_ownerID}L {Enum.GetName(typeof(PinType), m_type)}";
 
   public void SetVisibility(bool isVisible)

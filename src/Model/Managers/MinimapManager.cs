@@ -54,4 +54,23 @@ public static class MinimapManager
     var radius = instance.m_removeRadius * (instance.m_largeZoom * 2f);
     return instance.GetClosestPin(pos, radius);
   }
+
+  /// <summary>
+  /// Try to replace given PinData with a new SharablePinData copy, if it is compatible. This internally removes the
+  /// existing pin and re-adds a new one, so be mindful of the implications.
+  /// </summary>
+  public static bool TryConvert(PinData pin, out SharablePinData sharablePin)
+  {
+    // safeguard against other mods potentially subclassing PinData, no point in converting if it will mess them up
+    if (pin.GetType() != typeof(PinData))
+    {
+      sharablePin = null;
+      return false;
+    }
+
+    sharablePin = new(pin);
+    instance.RemovePin(pin);
+    instance.AddPin(sharablePin);
+    return true;
+  }
 }
