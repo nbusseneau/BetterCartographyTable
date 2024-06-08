@@ -5,7 +5,7 @@ schemaVersion = "0.0.1"
 [package]
 namespace = "nbusseneau"
 name = "Better_Cartography_Table"
-versionNumber = "0.5.1"
+versionNumber = "0.5.2"
 description = "Allows precise control over sharing pins and map exploration via cartography tables. Supports private pins, public pins, and guild pins. Supports NoMap runs, giving cartography tables a purpose in NoMap. Translations available."
 websiteUrl = "https://github.com/nbusseneau/BetterCartographyTable"
 containsNsfwContent = false

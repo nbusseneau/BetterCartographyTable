@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.2] - 2024-06-08
+
 ### Fixed
 
 - Fix `NullReferenceException` errors due to table distance check running when it should not.
@@ -102,7 +104,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.1...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.2...HEAD
+[0.5.2]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.1...0.5.2
 [0.5.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.0...0.5.1
 [0.5.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.3...0.5.0
 [0.4.3]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.4.2...0.4.3
