@@ -18,5 +18,8 @@
   "MapTable_HoverText_RestrictedToGuild": "Restricted to guild",
   "MapTable_HoverText_Public": "Public",
   "MapTable_HoverText_MakePublic": "Make public",
-  "MapTable_HoverText_RestrictToGuild": "Restrict to guild"
+  "MapTable_HoverText_RestrictToGuild": "Restrict to guild",
+
+  "tutorial_maptable_topic": "May Meili, god of travel, grant you his blessing!",
+  "tutorial_maptable_text": "With this table, you can <color=yellow>share your exploration</color> of the tenth world. Don't forget to <color=yellow>come back from time to time</color> to learn about the latest discoveries others have written down and record your own."
 }

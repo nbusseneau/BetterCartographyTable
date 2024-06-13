@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Replace Hugin cartography table tutorial vanilla text to be consistent with the mod's functionality.
+
 ## [0.5.5] - 2024-06-08
 
 ### Changed
