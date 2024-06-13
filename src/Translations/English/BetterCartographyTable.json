@@ -9,7 +9,7 @@
 
   "PinsToggle_PublicPins": "Public pins",
   "PinsToggle_GuildPins": "Guild pins",
-  "PinsToggle_SharedExploration": "Shared exploration",
+  "hud_sharedmap": "Shared exploration",
 
   "MapTable_ToggleMode_GuildRequired": "You must join or create a guild first",
   "MapTable_ToggleMode_PopupHeader": "Cannot change sharing mode",

@@ -9,7 +9,7 @@
 
   "PinsToggle_PublicPins": "Repères publics",
   "PinsToggle_GuildPins": "Repères de guilde",
-  "PinsToggle_SharedExploration": "Exploration partagée",
+  "hud_sharedmap": "Exploration partagée",
 
   "MapTable_ToggleMode_GuildRequired": "Vous devez rejoindre ou créer une guilde d'abord",
   "MapTable_ToggleMode_PopupHeader": "Impossible de changer le mode de partage",

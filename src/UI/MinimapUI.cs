@@ -74,9 +74,6 @@ public static class MinimapUI
   private static int s_togglesLastCheckActiveCount = -1;
   public static void UpdateToggles()
   {
-    // replace Cartography Table toggle label with our own, since it's only a shared exploration toggle now
-    instance.m_sharedMapHint.SetText("$PinsToggle_SharedExploration");
-
     // update toggles positions based on active status
     var activeToggles = s_toggles.Where(gameObject => gameObject.activeInHierarchy);
     var activeCount = activeToggles.Count();
