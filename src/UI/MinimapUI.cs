@@ -46,7 +46,7 @@ public static class MinimapUI
     KeyHints.DoubleClick = new(keyHints.Find("keyboard_hints/AddPin").gameObject);
     KeyHints.LeftClick = new(keyHints.Find("keyboard_hints/CrossOffPin").gameObject);
     KeyHints.RightClick = new(keyHints.Find("keyboard_hints/RemovePin").gameObject);
-    KeyHints.ModifierKey = MinimapKeyHint.Clone(KeyHints.DoubleClick, "ModifierKey", Plugin.ModifierKey);
+    KeyHints.ModifierKey = MinimapKeyHint.Clone(KeyHints.DoubleClick, "ModifierKey", Plugin.ModifierKey.ToKeyHintString());
   }
 
   public static void ShowTableUI()

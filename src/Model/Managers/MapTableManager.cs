@@ -78,7 +78,7 @@ public class MapTableManager : IEquatable<MapTable>
     if (!GuildsManager.IsEnabled) return hoverText;
 
     var toggleTo = this.IsGuild ? $"$MapTable_HoverText_MakePublic" : $"$MapTable_HoverText_RestrictToGuild";
-    return hoverText + $"\n[<b><color=yellow>{Plugin.ModifierKey}</color> + <color=yellow>$KEY_Use</color></b>] {toggleTo}";
+    return hoverText + $"\n[<b><color=yellow>{Plugin.ModifierKey.ToKeyHintString()}</color> + <color=yellow>$KEY_Use</color></b>] {toggleTo}";
   }
 
   private void TryToggleMode(Humanoid user)

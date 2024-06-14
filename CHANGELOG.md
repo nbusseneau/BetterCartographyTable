@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replace Hugin cartography table tutorial vanilla text to be consistent with the mod's functionality.
 
+### Changed
+
+- Display cartography modifier key hint using actual Valheim key strings instead of raw key code.
+
 ## [0.5.5] - 2024-06-08
 
 ### Changed

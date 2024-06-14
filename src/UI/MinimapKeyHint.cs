@@ -8,7 +8,7 @@ public class MinimapKeyHint(GameObject keyHint)
   private readonly GameObject _gameObject = keyHint;
   public string Text { set => this._gameObject.SetText(value); }
 
-  public static MinimapKeyHint Clone(MinimapKeyHint original, string name, KeyCode key)
+  public static MinimapKeyHint Clone(MinimapKeyHint original, string name, string key)
   {
     // clone original MinimapKeyHint and set clone as its first sibling
     var clone = Object.Instantiate(original._gameObject, original._gameObject.transform.parent);
@@ -22,7 +22,7 @@ public class MinimapKeyHint(GameObject keyHint)
     var keyBkg = KeyHints.m_instance.m_buildHints.transform.Find("Keyboard/AltPlace/key_bkg").gameObject;
     var keyBkgClone = Object.Instantiate(keyBkg, clone.transform);
     keyBkgClone.name = "key_bkg";
-    keyBkgClone.SetText(key.ToString());
+    keyBkgClone.SetText(key);
 
     // hide clone by default
     clone.SetActive(false);
