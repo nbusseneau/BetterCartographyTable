@@ -18,7 +18,7 @@ public class Plugin : BaseUnityPlugin
 {
   internal const string ModGUID = "nbusseneau.BetterCartographyTable";
   private const string ModName = "BetterCartographyTable";
-  private const string ModVersion = "0.5.5";
+  private const string ModVersion = "0.5.6";
 
   private static ConfigEntry<SharingMode> s_mapExplorationSharingMode;
   private static ConfigEntry<KeyCode> s_modifierKey;
