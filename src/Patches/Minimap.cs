@@ -66,12 +66,7 @@ public static class MinimapPatches
   /// </summary>
   [HarmonyPrefix]
   [HarmonyPatch(nameof(Minimap.OnMapDblClick))]
-  private static void InterceptOnMapDblClick(ref bool __runOriginal)
-  {
-
-    if (Plugin.IsModifierKeyPressed) __runOriginal = false;
-    else __runOriginal = true;
-  }
+  private static void InterceptOnMapDblClick(ref bool __runOriginal) => __runOriginal = !Plugin.IsModifierKeyPressed;
 
   [HarmonyPrefix]
   [HarmonyPatch(nameof(Minimap.OnMapLeftClick))]
