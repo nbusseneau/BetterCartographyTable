@@ -13,6 +13,7 @@ namespace BetterCartographyTable.Model.Managers;
 /// </summary>
 public class MapTableManager : IEquatable<MapTable>
 {
+  public static Dictionary<MapTable, MapTableManager> MapTablesCache { get; } = [];
   public static MapTableManager CurrentTable { get; private set; }
   public static bool IsTableValid => CurrentTable is not null && CurrentTable.NView.IsValid();
 

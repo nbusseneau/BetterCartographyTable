@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add warning popup when trying to destroy a table storing pins with the Hammer.
+
 ## [0.5.6] - 2024-06-14
 
 ### Added

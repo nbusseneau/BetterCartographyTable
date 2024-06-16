@@ -1,3 +1,4 @@
+using System.Linq;
 using BetterCartographyTable.Extensions;
 using BetterCartographyTable.Model.Managers;
 using BetterCartographyTable.UI;
@@ -50,5 +51,30 @@ public static class PlayerPatches
     if (!MapTableManager.IsTableValid) return;
     var isTooFar = !MapTableManager.CurrentTable.IsInUseDistance(__instance);
     if (isTooFar) Minimap.instance.SetMapMode(Minimap.MapMode.Small);
+  }
+
+  private static bool s_bypassMapTableCheck = false;
+  [HarmonyPrefix]
+  [HarmonyPatch(nameof(Player.CheckCanRemovePiece))]
+  private static void CheckCanRemoveMapTable(Player __instance, Piece piece, ref bool __result, ref bool __runOriginal)
+  {
+    if (s_bypassMapTableCheck)
+    {
+      s_bypassMapTableCheck = false;
+      return;
+    }
+
+    if (piece.GetComponent<MapTable>() is { } mapTable && MapTableManager.MapTablesCache[mapTable] is { } manager && manager.Pins.Any())
+    {
+      __runOriginal = false;
+      __result = false;
+      MapTableCantRemovePopup.Show(() =>
+      {
+        // kludge because popup is a non-waiting call and all remove logic annoyingly happens in Update via
+        // raycast-based shenanigans...
+        s_bypassMapTableCheck = true;
+        __instance.RemovePiece();
+      });
+    }
   }
 }

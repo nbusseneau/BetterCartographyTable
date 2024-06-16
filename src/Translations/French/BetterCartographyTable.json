@@ -20,6 +20,9 @@
   "MapTable_HoverText_MakePublic": "Rendre publique",
   "MapTable_HoverText_RestrictToGuild": "Restreindre à la guilde",
 
+  "MapTable_CantRemove_PopupHeader": "Êtes-vous sûr ?",
+  "MapTable_CantRemove_PopupText": "Des repères partagés sont enregistrés sur cette table. Si vous la détruisez, <color=yellow>ils seront tous perdus</color>. Pensez à sauvegarder tous les repères importants en les <color=yellow>privatisant</color> depuis la table avant de la détruire.",
+
   "tutorial_maptable_topic": "Que Meili, dieu du voyage, vous accorde sa bénédiction !",
   "tutorial_maptable_text": "Grâce à cette table, vous pouvez <color=yellow>partager votre exploration</color> du dixième monde. N'oubliez pas d'y <color=yellow>revenir de temps en temps</color> pour vous tenir informé sur les dernières découvertes que d'autres ont notées et enregistrer les vôtres."
 }
