@@ -13,7 +13,7 @@
 
   "MapTable_ToggleMode_GuildRequired": "Vous devez rejoindre ou créer une guilde d'abord",
   "MapTable_ToggleMode_PopupHeader": "Impossible de changer le mode de partage",
-  "MapTable_ToggleMode_PopupText": "Des repères partagés sont enregistrés sur cette table. Pour changer de mode, supprimez tous les repères partagés de la table (ou détruisez puis reconstruisez-la).",
+  "MapTable_ToggleMode_PopupText": "Des repères partagés sont enregistrés sur cette table. Pour changer de mode, <color=yellow>retirez</color> tous les repères partagés de la table (ou <color=yellow>détruisez</color> puis reconstruisez-la).",
 
   "MapTable_HoverText_RestrictedToGuild": "Restreinte à la guilde",
   "MapTable_HoverText_Public": "Publique",

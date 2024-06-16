@@ -13,7 +13,7 @@
 
   "MapTable_ToggleMode_GuildRequired": "You must join or create a guild first",
   "MapTable_ToggleMode_PopupHeader": "Cannot change sharing mode",
-  "MapTable_ToggleMode_PopupText": "Shared pins are currently stored on this table. To change mode, delete all shared pins from the table (or destroy then rebuild it).",
+  "MapTable_ToggleMode_PopupText": "Shared pins are currently stored on this table. To change mode, <color=yellow>remove</color> all shared pins from the table (or <color=yellow>destroy</color> then rebuild it).",
 
   "MapTable_HoverText_RestrictedToGuild": "Restricted to guild",
   "MapTable_HoverText_Public": "Public",
