@@ -139,7 +139,7 @@ If you do allow crossplay, note that vanilla clients will not be able to share a
   ```
   BepInEx/
   └── plugins/
-      └── nbusseneau-Better_Cartography_Table
+      └── nbusseneau-Better_Cartography_Table/
           ├── CHANGELOG.md
           ├── icon.png
           ├── manifest.json
