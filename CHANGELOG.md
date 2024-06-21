@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix repeating ward flash when hovering a table protected by a ward.
+
 ## [0.5.7] - 2024-06-16
 
 ### Added

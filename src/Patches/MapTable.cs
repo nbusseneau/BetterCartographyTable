@@ -28,7 +28,7 @@ public static class MapTablePatches
       return;
     }
 
-    var isProtectedByWard = !PrivateArea.CheckAccess(__instance.transform.position, 0f, true, false);
+    var isProtectedByWard = !PrivateArea.CheckAccess(__instance.transform.position);
     if (isProtectedByWard)
     {
       __result = true;
@@ -48,7 +48,7 @@ public static class MapTablePatches
   private static void GetHoverText(MapTable __instance, ref string __result, ref bool __runOriginal)
   {
     __runOriginal = false;
-    var isProtectedByWard = !PrivateArea.CheckAccess(__instance.transform.position, 0f, true, false);
+    var isProtectedByWard = !PrivateArea.CheckAccess(__instance.transform.position, flash: false);
     if (isProtectedByWard)
     {
       __result = Localization.instance.Localize(__instance.m_name + "\n$piece_noaccess"); ;
