@@ -97,7 +97,9 @@ However, vanilla clients are not able to contribute back: modded clients can onl
 
 ### Compatibility with other mods
 
-**Better™️ Cartography Table** tries to play nice with other mods by isolating its behaviour as much as possible, and failing that by trying to ensure the other mods will contribute pins in a compatible way. Nevertheless, there might be instances where other mods interacting with pins will result in incompatiblities. Feel free to [report any issue you find](https://github.com/nbusseneau/BetterCartographyTable/issues/new).
+**Better™️ Cartography Table** tries to play nice with other mods by isolating its behaviour as much as possible, and failing that by trying to ensure the other mods will contribute pins in a compatible way.
+Nevertheless, there might be instances where other mods interacting with pins will result in incompatiblities.
+Feel free to [report any issue you find](https://github.com/nbusseneau/BetterCartographyTable/issues/new).
 
 ### Translations
 
