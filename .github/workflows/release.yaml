@@ -16,7 +16,7 @@ env:
   changelog: CHANGELOG.md
   readme: README.md
   thunderstore-config: thunderstore.toml
-  project: src/BetterCartographyTable.csproj
+  project: src/*.csproj
   plugin: src/Plugin.cs
 
 jobs:
@@ -70,8 +70,9 @@ jobs:
 
       - name: Rotate version
         run: |
-          sed -i 's;nbusseneau/Better_Cartography_Table/[0-9]\+.[0-9]\+.[0-9]\+;nbusseneau/Better_Cartography_Table/${{ inputs.tag }}.zip;g' ${{ env.readme }}
-          sed -i 's/nbusseneau-Better_Cartography_Table-[0-9]\+.[0-9]\+.[0-9]\+.zip/nbusseneau-Better_Cartography_Table-${{ inputs.tag }}.zip/g' ${{ env.readme }}
+          NAMESPACE=$(perl -ne 'print $1 and last if /namespace = "(.*)"/' ${{ env.thunderstore-config }})
+          NAME=$(perl -ne 'print $1 and last if /name = "(.*)"/' ${{ env.thunderstore-config }})
+          sed -i "s/${NAMESPACE}-${NAME}-[0-9]\+.[0-9]\+.[0-9]\+.zip/${NAMESPACE}-${NAME}-${{ inputs.tag }}.zip/g" ${{ env.readme }}
           sed -i 's/versionNumber = ".*"/versionNumber = "${{ inputs.tag }}"/' ${{ env.thunderstore-config }}
           sed -i 's;<Version>.*</Version>;<Version>${{ inputs.tag }}</Version>;' ${{ env.project }}
           sed -i 's/ModVersion = ".*"/ModVersion = "${{ inputs.tag }}"/' ${{ env.plugin }}

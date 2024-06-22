@@ -15,10 +15,11 @@ $headers = @{
 }
 
 $url = "https://api.github.com/repos/$repo/releases/latest"
-$release = Invoke-RestMethod -Uri $url -Headers $headers
+try { $release = Invoke-RestMethod -Uri $url -Headers $headers }
+catch { $statusCode = $_.Exception.Response.StatusCode.value__ }
 
-# Default case: no existing release for this tag
-if ($release.tag_name -ne $tag) {
+# Default case: no existing release for this tag (or no release at all, resulting in a 404)
+if ($release.tag_name -ne $tag -or $statusCode -eq "404") {
   Write-Output "Latest release $($release.tag_name) not matching input tag $tag, try to make new release"
 
   # Make sure repo is up to date
@@ -43,9 +44,10 @@ if ($release.tag_name -ne $tag) {
   $attempt = 0
   do {
     $url = "https://api.github.com/repos/$repo/releases/latest"
-    $release = Invoke-RestMethod -Uri $url -Headers $headers
+    try { $release = Invoke-RestMethod -Uri $url -Headers $headers }
+    catch { $statusCode = $_.Exception.Response.StatusCode.value__ }
     $attempt++
-    if ($release.tag_name -ne $tag -and $attempt -ne 10) {
+    if (($release.tag_name -ne $tag -or $statusCode -eq "404") -and $attempt -ne 10) {
       Start-Sleep -Seconds 10
     }
   }
