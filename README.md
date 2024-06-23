@@ -62,7 +62,7 @@ This is typically the case for those that like to meticulously pin all berries /
 
 And of course, the vanilla **cartography table** has no purpose in `NoMap` runs.
 
-## Vanilla cartography tables, but Better™️
+### Vanilla cartography tables, but Better™️
 
 The goal of this mod is to stick as close as possible to the vanilla experience.
 We keep **cartography tables** relevant for sharing both pins and **map exploration**, same as in vanilla: players must still interact with the same **cartography table** on a regular basis to synchronize progress with other players.
@@ -89,13 +89,15 @@ For `NoMap` runs, the goal is to give **cartography tables** a purpose.
 
 </details>
 
-### Compatibility with vanilla clients
+## Compatibility
 
-**Public** and **guild pins** are stored separately from vanilla shared pins in the **cartography table**, thus both modded and vanilla clients can interact with the same **cartography tables** without conflict.
-Additionally, modded clients will copy **public pins** to vanilla shared pins, allowing vanilla clients to receive them seamlessly.
-However, vanilla clients are not able to contribute back: modded clients can only receive pins from other modded clients.
+### With vanilla clients / clients not using the mod
 
-### Compatibility with other mods
+**Public** and **guild pins** are stored separately from the vanilla shared pins in the **cartography table**, thus there is no conflict between clients using the mod and clients not using the mod: all can interact with the same **cartography tables**.
+Additionally, clients using the mod will copy **public pins** to the vanilla shared pins, allowing clients not using the mod to receive them seamlessly.
+However, clients not using the mod are not able to contribute back: clients using the mod can only receive pins from other clients also using the mod.
+
+### With other mods
 
 **Better™️ Cartography Table** tries to play nice with other mods by isolating its behaviour as much as possible, and failing that by trying to ensure the other mods will contribute pins in a compatible way.
 Nevertheless, there might be instances where other mods interacting with pins will result in incompatiblities.
@@ -119,11 +121,15 @@ If you localize **Better™️ Cartography Table** for your own language, you ar
 
 ## Install
 
-This is technically a client-side mod, but **it is strongly recommended to also install the mod server-side** for the best experience.
-If installed on the server, it will enforce all clients to have the mod installed.
+- This is technically a client-side mod, but **it is strongly recommended to also install the mod server-side** for the best experience.
+- If installed on the server, all clients will be forced to have the mod installed, ensuring pin sharing will work as intended.
 
-Exception: do not install the mod on servers intended for Xbox crossplay, otherwise Xbox players will not be able to join anymore.
-If you do allow crossplay, note that vanilla clients will not be able to share any of their pins with modded clients ([see above for details](#compatibility-with-vanilla-clients)).
+In other words:
+
+- Do not install the mod on servers intended for Xbox crossplay, otherwise Xbox clients will not be able to join anymore.
+  If you do want to allow Xbox crossplay while recommending PC clients to use the mod, note that clients not using the mod will not be able to share any of their pins with clients using the mod ([see above for details](#with-vanilla-clients--clients-not-using-the-mod)).
+- This mod can be installed on your side as a client, and you will still be able to join any server (even vanilla ones), however **this is strongly not recommended**.
+  Pin sharing will only work with other clients also using the mod ([see above for details](#with-vanilla-clients--clients-not-using-the-mod)), thus you should always coordinate with the admin and other players.
 
 ### Thunderstore (recommended)
 
