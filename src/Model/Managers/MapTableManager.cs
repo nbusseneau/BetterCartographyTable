@@ -20,7 +20,7 @@ public class MapTableManager : IEquatable<MapTable>
   public static void TryOpenCurrentTable(MapTableManager table, Humanoid user)
   {
     if (CurrentTable is not null) return;
-    if (!table.CheckAccess()) user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$piece_noaccess"), 0, null);
+    if (!table.CheckAccess()) user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$piece_noaccess"));
     else if (Plugin.IsModifierKeyPressed && GuildsManager.IsEnabled) table.TryToggleMode(user);
     else
     {
@@ -86,7 +86,7 @@ public class MapTableManager : IEquatable<MapTable>
   {
     if (this.IsPublic && string.IsNullOrEmpty(GuildsManager.CurrentGuild?.Name))
     {
-      user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$MapTable_ToggleMode_GuildRequired"), 0, null);
+      user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$MapTable_ToggleMode_GuildRequired"));
       return;
     }
     if (this.Pins.Any()) MapTableToggleModeWarningPopup.Show();
