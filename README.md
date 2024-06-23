@@ -50,7 +50,7 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00
 - **Map exploration** sharing can be **public** (default), **private**, or **restricted to a guild** (if [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed).
   - In case you need to be extra careful that other players know not where you roamed.
 - If using the `NoMap` world modifier, the map will be accessible through **cartography tables** (but only when directly interacting with them).
-- Translations available: English, French. New languages can be added easily (see [below for details](#translations)).
+- Translations available: English, French. New languages can be added easily ([see below for details](#translations)).
 
 ## But why?
 
