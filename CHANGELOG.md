@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Clarifications around server-side enforcement in README.
+- Recolored icon text outline.
 
 ## [0.5.8] - 2024-06-21
 
