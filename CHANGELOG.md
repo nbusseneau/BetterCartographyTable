@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.9] - 2024-06-24
+
 ### Changed
 
 - Clarifications around server-side enforcement in README.
@@ -149,7 +151,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.8...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.9...HEAD
+[0.5.9]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.8...0.5.9
 [0.5.8]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.7...0.5.8
 [0.5.7]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.6...0.5.7
 [0.5.6]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.5...0.5.6
