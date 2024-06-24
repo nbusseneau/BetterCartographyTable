@@ -6,7 +6,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <LibPath>lib</LibPath>
-    <R2ModManProfile>BetterCartographyTableDev</R2ModManProfile>
+    <R2ModManProfile>Dev_BetterCartographyTable</R2ModManProfile>
   </PropertyGroup>
 
   <!-- Valheim paths -->
