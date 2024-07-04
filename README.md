@@ -1,4 +1,4 @@
-# Better™️ Cartography Table
+# Better™ Cartography Table
 
 [Valheim](https://store.steampowered.com/app/892970/Valheim/) mod that allows precise control over sharing **pins** and **map exploration** via **cartography tables**.
 Supports **private pins**, **public pins**, and **guild pins**.
@@ -13,7 +13,7 @@ Translations available.
 <summary><b>Private</b> and <b>public pins</b></summary>
 
 Astrid and Brynhild are playing together, however Astrid has a tad too many mushroom pins for Brynhild's liking.
-Thanks to **Better™️ Cartography Table**, their friendship is safe, as Astrid can selectively decide which pins to share on the **public cartography table**.
+Thanks to **Better™ Cartography Table**, their friendship is safe, as Astrid can selectively decide which pins to share on the **public cartography table**.
 
 https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e13e6267-88ad-4aee-bdfe-f78e807bc2f8
 
@@ -23,7 +23,7 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e13e6267-88a
 <summary>Real-time collaboration</summary>
 
 Astrid and Brynhild are planning their next expedition.
-Thanks to **Better™️ Cartography Table**, it will be a great success, as they can collaborate and prepare it in real time on the **public cartography table**.
+Thanks to **Better™ Cartography Table**, it will be a great success, as they can collaborate and prepare it in real time on the **public cartography table**.
 
 https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e535a301-994f-4129-b9ec-3e51685bab2c
 
@@ -33,7 +33,7 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/e535a301-994
 <summary><b>Guild pins</b></summary>
 
 Astrid and Brynhild are members of rival guilds (The Mushroom Enjoyers and The Ground Shakers), and neither wants their archnemesis to know about their secret hideout.
-Thanks to **Better™️ Cartography Table**, their rivalry is fueled, as guild members can share **guild-only pins** on their **guild-restricted cartography table**.
+Thanks to **Better™ Cartography Table**, their rivalry is fueled, as guild members can share **guild-only pins** on their **guild-restricted cartography table**.
 
 https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00f-4047-b9ce-3839ac499035
 
@@ -62,7 +62,7 @@ This is typically the case for those that like to meticulously pin all berries /
 
 And of course, the vanilla **cartography table** has no purpose in `NoMap` runs.
 
-### Vanilla cartography tables, but Better™️
+### Vanilla cartography tables, but Better™
 
 The goal of this mod is to stick as close as possible to the vanilla experience.
 We keep **cartography tables** relevant for sharing both pins and **map exploration**, same as in vanilla: players must still interact with the same **cartography table** on a regular basis to synchronize progress with other players.
@@ -99,13 +99,13 @@ However, clients not using the mod are not able to contribute back: clients usin
 
 ### With other mods
 
-**Better™️ Cartography Table** tries to play nice with other mods by isolating its behaviour as much as possible, and failing that by trying to ensure the other mods will contribute pins in a compatible way.
+**Better™ Cartography Table** tries to play nice with other mods by isolating its behaviour as much as possible, and failing that by trying to ensure the other mods will contribute pins in a compatible way.
 Nevertheless, there might be instances where other mods interacting with pins will result in incompatiblities.
 Feel free to [report any issue you find](https://github.com/nbusseneau/BetterCartographyTable/issues/new).
 
 ### Translations
 
-**Better™️ Cartography Table** comes with the following languages available out of the box:
+**Better™ Cartography Table** comes with the following languages available out of the box:
 
 - English
 - French
@@ -117,7 +117,7 @@ To add a new language as a user:
 - Make a copy of the `English` directory, then rename it to the appropriate name for your language (see [valid folder names](https://valheim-modding.github.io/Jotunn/data/localization/language-list.html)).
 - Edit `<your_language_name>/BetterCartographyTable.json` as appropriate using a text editor.
 
-If you localize **Better™️ Cartography Table** for your own language, you are most welcome to [send your translation file my way](https://github.com/nbusseneau/BetterCartographyTable/issues/new), and I will integrate it as part of the languages available by default.
+If you localize **Better™ Cartography Table** for your own language, you are most welcome to [send your translation file my way](https://github.com/nbusseneau/BetterCartographyTable/issues/new), and I will integrate it as part of the languages available by default.
 
 ## Install
 
