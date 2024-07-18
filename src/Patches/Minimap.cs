@@ -20,11 +20,14 @@ public static class MinimapPatches
   [HarmonyPatch(typeof(Minimap), nameof(Minimap.SetMapMode))]
   private class OnSetMapMode
   {
+    private static bool s_noMapModeCache = false;
+
     private static void Prefix(MapMode mode)
     {
       // temporarily override noMap mode when opening the map as part of using a table
+      s_noMapModeCache = Game.m_noMap;
       var isMinimapOpening = mode == MapMode.Large;
-      if (isMinimapOpening && MapTableManager.IsTableValid && GamePatches.IsNoMapModeEnabled) Game.m_noMap = false;
+      if (isMinimapOpening && MapTableManager.IsTableValid && s_noMapModeCache) Game.m_noMap = false;
 
       // trigger on close callback when closing map
       var isMinimapClosing = mode == MapMode.Small;
@@ -34,7 +37,11 @@ public static class MinimapPatches
     private static void Postfix()
     {
       // restore noMap mode immediately after opening the map, ensuring default behaviour after table interaction ends
-      if (GamePatches.IsNoMapModeEnabled) Game.m_noMap = true;
+      if (s_noMapModeCache)
+      {
+        Game.m_noMap = true;
+        s_noMapModeCache = false;
+      }
     }
   }
 
