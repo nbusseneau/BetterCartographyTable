@@ -13,6 +13,6 @@ public static class GamePatches
   private static void CacheNoMapMode() => IsNoMapModeEnabled = Game.m_noMap;
 
   [HarmonyPostfix]
-  [HarmonyPatch(nameof(Game.Start))]
+  [HarmonyPatch(nameof(Game.RequestRespawn))]
   private static void InitializeGuildsManager() => GuildsManager.Initialize();
 }
