@@ -1,5 +1,6 @@
 using BetterCartographyTable.Model.Managers;
 using HarmonyLib;
+using UnityEngine;
 
 namespace BetterCartographyTable.Patches;
 
@@ -8,7 +9,7 @@ public static class MapTablePatches
 {
   [HarmonyPostfix]
   [HarmonyPatch(nameof(MapTable.Start))]
-  private static void RegisterMapTable(MapTable __instance) => MapTableManager.MapTablesCache[__instance] = new(__instance);
+  private static void RegisterMapTable(MapTable __instance) => MapTableManager.Add(__instance);
 
   /// <summary>
   /// Replace default read/write actions on MapTable with our own.
@@ -35,7 +36,7 @@ public static class MapTablePatches
       return;
     }
 
-    MapTableManager.TryOpenCurrentTable(MapTableManager.MapTablesCache[__instance], user);
+    MapTableManager.TryOpen(__instance, user);
     __result = true;
   }
 
@@ -55,7 +56,7 @@ public static class MapTablePatches
       return;
     }
 
-    var hoverText = MapTableManager.MapTablesCache[__instance].GetHoverText();
+    var hoverText = MapTableManager.GetHoverText(__instance);
     __result = Localization.instance.Localize(hoverText);
   }
 }

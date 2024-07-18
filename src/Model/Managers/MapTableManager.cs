@@ -13,31 +13,65 @@ namespace BetterCartographyTable.Model.Managers;
 /// </summary>
 public class MapTableManager : IEquatable<MapTable>
 {
-  public static Dictionary<MapTable, MapTableManager> MapTablesCache { get; } = [];
+  private static readonly Dictionary<MapTable, MapTableManager> s_byMapTable = [];
+  private static readonly Dictionary<ZNetView, MapTableManager> s_byZNetView = [];
+  public static void Add(MapTable mapTable) => s_byMapTable[mapTable] = s_byZNetView[mapTable.m_nview] = new(mapTable);
+  public static MapTableManager Get(MapTable mapTable)
+  {
+    if (!s_byMapTable.TryGetValue(mapTable, out var mapTableManager)) return null;
+    if (!mapTableManager.IsValid)
+    {
+      Remove(mapTableManager);
+      return null;
+    }
+    return mapTableManager;
+  }
+  public static void Remove(ZNetView nview)
+  {
+    if (!s_byZNetView.TryGetValue(nview, out var mapTableManager)) return;
+    Remove(mapTableManager);
+  }
+  private static void Remove(MapTableManager mapTableManager)
+  {
+    if (CurrentTable == mapTableManager)
+    {
+      CurrentTable = null;
+      Minimap.instance.SetMapMode(Minimap.MapMode.Small);
+    }
+    s_byMapTable.Remove(mapTableManager._mapTable);
+    s_byZNetView.Remove(mapTableManager.NView);
+  }
+
   public static MapTableManager CurrentTable { get; private set; }
   public static bool IsTableValid => CurrentTable is not null && CurrentTable.NView.IsValid();
-
-  public static void TryOpenCurrentTable(MapTableManager table, Humanoid user)
+  public static void TryOpen(MapTable mapTable, Humanoid user)
   {
     if (CurrentTable is not null) return;
-    if (!table.CheckAccess()) user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$piece_noaccess"));
-    else if (Plugin.IsModifierKeyPressed && GuildsManager.IsEnabled) table.TryToggleMode(user);
+    if (Get(mapTable) is not { } mapTableManager) return;
+    else if (!mapTableManager.CheckAccess()) user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$piece_noaccess"));
+    else if (Plugin.IsModifierKeyPressed && GuildsManager.IsEnabled) mapTableManager.TryToggleMode(user);
     else
     {
-      CurrentTable = table;
+      CurrentTable = mapTableManager;
       CurrentTable.Open();
     }
   }
-
-  public static void TryCloseCurrentTable()
+  public static void TryClose()
   {
     if (CurrentTable is null) return;
     CurrentTable.Close();
     CurrentTable = null;
   }
 
+  public static string GetHoverText(MapTable mapTable)
+  {
+    if (Get(mapTable) is not { } mapTableManager) return mapTable.m_name;
+    return mapTableManager.GetHoverText();
+  }
+
   private readonly MapTable _mapTable;
   private ZNetView NView => this._mapTable.m_nview;
+  public bool IsValid => this?.NView?.IsValid() ?? false;
   private Vector3 Position => this._mapTable.transform.position;
 
   private readonly MapTableZDOPins _pins;

@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix guild tables not being accessible on after logging out / logging back in.
 - Fix public and guild pins being loaded from player save file multiple times due to respawns.
 - Fix incompatibility with [Server devcommands](https://valheim.thunderstore.io/package/JereKuusela/Server_devcommands/)'s `NoMap` modifier override.
+- Fix removal warning popup displaying when trying to repair a table.
+- Fix table map being stuck open if another player destroys the table while it is open.
 
 ## [0.5.9] - 2024-06-24
 

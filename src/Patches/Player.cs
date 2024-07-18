@@ -53,26 +53,37 @@ public static class PlayerPatches
     if (isTooFar) Minimap.instance.SetMapMode(Minimap.MapMode.Small);
   }
 
-  private static bool s_bypassMapTableCheck = false;
+  private static bool s_isRemovingPiece = false;
+  [HarmonyPatch(typeof(Player), nameof(Player.RemovePiece))]
+  private class IsRemovingPiece
+  {
+    private static void Prefix() => s_isRemovingPiece = true;
+    private static void Postfix() => s_isRemovingPiece = false;
+  }
+
+  private static bool s_shouldForceRemoveMapTable = false;
   [HarmonyPrefix]
   [HarmonyPatch(nameof(Player.CheckCanRemovePiece))]
   private static void CheckCanRemoveMapTable(Player __instance, Piece piece, ref bool __result, ref bool __runOriginal)
   {
-    if (s_bypassMapTableCheck)
+    // kludge to check if we're actually removing a piece, because CheckCanRemovePiece is also called when repairing
+    if (!s_isRemovingPiece) return;
+
+    // kludge to go through with vanilla checks after user has answered yes to the popup, because popup is a non-waiting
+    // call and all remove logic annoyingly runs as part of Update, via raycast-based shenanigans
+    if (s_shouldForceRemoveMapTable)
     {
-      s_bypassMapTableCheck = false;
+      s_shouldForceRemoveMapTable = false;
       return;
     }
 
-    if (piece.GetComponent<MapTable>() is { } mapTable && MapTableManager.MapTablesCache[mapTable] is { } manager && manager.Pins.Any())
+    if (piece.GetComponent<MapTable>() is { } mapTable && MapTableManager.Get(mapTable) is { } mapTableManager && mapTableManager.Pins.Any())
     {
       __runOriginal = false;
       __result = false;
       MapTableCantRemovePopup.Show(() =>
       {
-        // kludge because popup is a non-waiting call and all remove logic annoyingly happens in Update via
-        // raycast-based shenanigans...
-        s_bypassMapTableCheck = true;
+        s_shouldForceRemoveMapTable = true;
         __instance.RemovePiece();
       });
     }

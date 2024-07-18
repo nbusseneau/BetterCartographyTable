@@ -31,7 +31,7 @@ public static class MinimapPatches
 
       // trigger on close callback when closing map
       var isMinimapClosing = mode == MapMode.Small;
-      if (isMinimapClosing) MapTableManager.TryCloseCurrentTable();
+      if (isMinimapClosing) MapTableManager.TryClose();
     }
 
     private static void Postfix()
