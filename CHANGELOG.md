@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Local instances of a table pin are now removed when syncing with a table (e.g. a known boss pin was shared to the table).
+
 ### Fixed
 
 - Fix guild tables not being accessible on after logging out / logging back in.

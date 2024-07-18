@@ -118,6 +118,7 @@ public class MapTableManager : IEquatable<MapTable>
   private void Open()
   {
     this.UpdateMinimapPins();
+    MinimapManager.RemoveDuplicateLocalPins();
     this.SyncVanillaSharedMapData();
     MinimapUI.ShowTableUI();
     Minimap.instance.ShowPointOnMap(this.Position);

@@ -73,4 +73,9 @@ public static class MinimapManager
     instance.AddPin(sharablePin);
     return true;
   }
+
+  /// <summary>
+  /// Used to clean up existing local instances of shared pins when getting pins from a table (e.g. known boss pins).
+  /// </summary>
+  public static void RemoveDuplicateLocalPins() => SharedPins.Intersect(PrivatePins).ToList().ForEach(instance.RemovePin);
 }
