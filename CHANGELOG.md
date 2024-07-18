@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix guild tables not being accessible on after logging out / logging back in.
+- Fix public and guild pins being loaded from player save file multiple times due to respawns.
 
 ## [0.5.9] - 2024-06-24
 

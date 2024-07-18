@@ -32,7 +32,7 @@ public static class PlayerPatches
   [HarmonyPatch(nameof(Player.Load))]
   private static void LoadSharedPins(Player __instance)
   {
-    if (__instance != Player.m_localPlayer) return;
+    if (__instance != Player.m_localPlayer || !__instance.m_firstSpawn) return;
     var hasPins = __instance.m_customData.TryGetValue(CurrentWorldPinsCustomDataKey, out var base64Data);
     if (hasPins)
     {
