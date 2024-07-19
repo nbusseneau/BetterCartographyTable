@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.11] - 2024-07-19
+
 ### Fixed
 
 - Fix public and guild pins not being loaded from player save (duh).
@@ -169,7 +171,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.10...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.11...HEAD
+[0.5.11]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.10...0.5.11
 [0.5.10]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.9...0.5.10
 [0.5.9]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.8...0.5.9
 [0.5.8]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.7...0.5.8
