@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix public and guild pins being loaded from player save file multiple times due to respawns (for real this time 🤞).
+
 ## [0.5.11] - 2024-07-19
 
 ### Fixed
