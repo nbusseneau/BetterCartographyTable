@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.10] - 2024-07-19
+
 ### Changed
 
 - Local instances of a table pin are now removed when syncing with a table (e.g. a known boss pin was shared to the table).
@@ -163,7 +165,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.9...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.10...HEAD
+[0.5.10]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.9...0.5.10
 [0.5.9]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.8...0.5.9
 [0.5.8]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.7...0.5.8
 [0.5.7]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.6...0.5.7
