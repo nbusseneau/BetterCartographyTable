@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.12] - 2024-07-19
+
 ### Fixed
 
 - Fix public and guild pins being loaded from player save file multiple times due to respawns (for real this time 🤞).
@@ -175,7 +177,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.11...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.12...HEAD
+[0.5.12]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.11...0.5.12
 [0.5.11]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.10...0.5.11
 [0.5.10]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.9...0.5.10
 [0.5.9]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.8...0.5.9
