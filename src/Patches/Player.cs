@@ -28,20 +28,26 @@ public static class PlayerPatches
   /// <summary>
   /// Retrieve shared pins for current world from the player save's custom data.
   /// </summary>
-  [HarmonyPostfix]
-  [HarmonyPatch(nameof(Player.Load))]
-  private static void LoadSharedPins(Player __instance)
+  [HarmonyPatch(typeof(Player), nameof(Player.Load))]
+  private class LoadSharedPins
   {
-    if (__instance != Player.m_localPlayer || !__instance.m_firstSpawn) return;
-    var hasPins = __instance.m_customData.TryGetValue(CurrentWorldPinsCustomDataKey, out var base64Data);
-    if (hasPins)
+    private static bool s_isFirstSpawn;
+
+    private static void Prefix(Player __instance) => s_isFirstSpawn = __instance.m_firstSpawn;
+
+    private static void Postfix(Player __instance)
     {
-      var zPackage = new ZPackage(base64Data).Decompress();
-      var sharedPins = zPackage.ReadSharablePinDataList();
-      MinimapManager.AddPins(sharedPins);
+      if (__instance != Player.m_localPlayer || !s_isFirstSpawn) return;
+      var hasPins = __instance.m_customData.TryGetValue(CurrentWorldPinsCustomDataKey, out var base64Data);
+      if (hasPins)
+      {
+        var zPackage = new ZPackage(base64Data).Decompress();
+        var sharedPins = zPackage.ReadSharablePinDataList();
+        MinimapManager.AddPins(sharedPins);
+      }
+      // hide pins toggles if no pins are available
+      MinimapUI.HideTableUI();
     }
-    // hide pins toggles if no pins are available
-    MinimapUI.HideTableUI();
   }
 
   [HarmonyPostfix]

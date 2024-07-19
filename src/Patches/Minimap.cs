@@ -20,7 +20,7 @@ public static class MinimapPatches
   [HarmonyPatch(typeof(Minimap), nameof(Minimap.SetMapMode))]
   private class OnSetMapMode
   {
-    private static bool s_noMapModeCache = false;
+    private static bool s_noMapModeCache;
 
     private static void Prefix(MapMode mode)
     {

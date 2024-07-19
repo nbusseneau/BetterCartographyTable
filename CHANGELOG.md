@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix public and guild pins not being loaded from player save (duh).
+
 ## [0.5.10] - 2024-07-19
 
 ### Changed
