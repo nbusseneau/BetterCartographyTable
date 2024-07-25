@@ -12,7 +12,6 @@ permissions:
   contents: write # required for pushing to the repository and creating releases
 
 env:
-  python-version: "3.12"
   changelog: CHANGELOG.md
   readme: README.md
   thunderstore-config: thunderstore.toml
@@ -36,35 +35,9 @@ jobs:
         with:
           lfs: true
 
-      - name: Set up Python
-        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d
-        with:
-          python-version: ${{ env.python-version }}
-
-      - name: Build release notes
-        shell: python
-        run: |
-          import os
-          from pathlib import Path
-          import re
-
-          regex = re.compile(r'## \[Unreleased\]\s+(?P<notes>.*?)\s+## ', re.DOTALL)
-          changelog = Path('${{ env.changelog }}').read_text()
-          found = regex.search(changelog)
-
-          def set_env(name, value):
-              with open(os.environ['GITHUB_ENV'], 'a') as f:
-                  delimiter = "EOF"
-                  print(f'{name}<<{delimiter}', file=f)
-                  print(value, file=f)
-                  print(delimiter, file=f)
-
-          if found:
-            notes = found.group('notes')
-            set_env("release-notes", notes)
-
       - name: Rotate unreleased section in changelog
-        uses: thomaseizinger/keep-a-changelog-new-release@77ac767b2f7f6edf2ee72ab3364ed26667086f96
+        id: rotate-changelog
+        uses: thomaseizinger/keep-a-changelog-new-release@f62c3c390716df5af712ba5d94f4f4a8efc1306d
         with:
           tag: ${{ inputs.tag }}
 
@@ -92,7 +65,7 @@ jobs:
         with:
           release_name: ${{ inputs.tag }}
           tag_name: ${{ inputs.tag }}
-          body: ${{ env.release-notes }}
+          body: ${{ steps.rotate-changelog.outputs.release-notes }}
           commitish: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
