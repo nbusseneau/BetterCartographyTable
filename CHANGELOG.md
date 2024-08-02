@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update Jotunn to 2.20.3.
+
 ## [0.5.12] - 2024-07-19
 
 ### Fixed
