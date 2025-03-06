@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BetterCartographyTable.Model;
+using Splatform;
 
 namespace BetterCartographyTable.Extensions;
 
@@ -32,7 +33,7 @@ public static class ZPackageExtensions
     var pos = zPackage.ReadVector3();
     var type = (Minimap.PinType)zPackage.ReadInt();
     var isChecked = zPackage.ReadBool();
-    var author = zPackage.ReadString();
+    var author = new PlatformUserID(zPackage.ReadString());
     var sharingMode = (SharingMode)zPackage.ReadInt();
     return new SharablePinData()
     {
@@ -58,23 +59,23 @@ public static class ZPackageExtensions
     return pins;
   }
 
-  public static void Write(this ZPackage zPackage, SharablePinData pin, long currentPlayerID, string networkUserId)
+  public static void Write(this ZPackage zPackage, SharablePinData pin, long currentPlayerID, PlatformUserID platformUserID)
   {
     var ownerID = (pin.m_ownerID != 0L) ? pin.m_ownerID : currentPlayerID;
-    var author = (string.IsNullOrEmpty(pin.m_author) && ownerID == currentPlayerID) ? networkUserId : pin.m_author;
+    var author = (!pin.m_author.IsValid && ownerID == currentPlayerID) ? platformUserID : pin.m_author;
     zPackage.Write(ownerID);
     zPackage.Write(pin.m_name);
     zPackage.Write(pin.m_pos);
     zPackage.Write((int)pin.m_type);
     zPackage.Write(pin.m_checked);
-    zPackage.Write(author);
+    zPackage.Write(author.ToString());
     zPackage.Write((int)pin.SharingMode);
   }
 
   public static void Write(this ZPackage zPackage, SharablePinData pin)
   {
     var currentPlayerID = Player.m_localPlayer.GetPlayerID();
-    var networkUserId = PrivilegeManager.GetNetworkUserId();
-    zPackage.Write(pin, currentPlayerID, networkUserId);
+    var platformUserID = PlatformManager.DistributionPlatform.LocalUser.PlatformUserID;
+    zPackage.Write(pin, currentPlayerID, platformUserID);
   }
 }

@@ -49,6 +49,9 @@
   <!-- References -->
   <ItemGroup>
     <Reference Include="$(LibPath)\*.dll" />
+    <Reference Include="Splatform">
+      <HintPath>$(ManagedPath)\Splatform.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <!-- Packages -->
