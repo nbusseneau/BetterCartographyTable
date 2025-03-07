@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add Chinese translation (@Calvaire https://github.com/nbusseneau/BetterCartographyTable/issues/18).
+
 ## [0.6.1] - 2025-03-07
 
 ### Changed

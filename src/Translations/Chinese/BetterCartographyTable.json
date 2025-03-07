@@ -1,0 +1,28 @@
+{
+  "KeyHint_AddPrivatePin": "添加私人标记",
+  "KeyHint_RemovePrivatePin": "移除私人标记",
+  "KeyHint_RemovePublicPin": "移除公共标记",
+  "KeyHint_RemoveGuildPin": "移除公会标记",
+  "KeyHint_ToggleSharing": "共享/取消共享",
+  "KeyHint_PublicModifierKey": "公共制图",
+  "KeyHint_GuildModifierKey": "公会制图",
+
+  "PinsToggle_PublicPins": "公共标记",
+  "PinsToggle_GuildPins": "公会标记",
+  "hud_sharedmap": "制图台",
+
+  "MapTable_ToggleMode_GuildRequired": "你必须先加入或创建一个公会",
+  "MapTable_ToggleMode_PopupHeader": "无法更改共享模式",
+  "MapTable_ToggleMode_PopupText": "当前共享标记存储在此制图台上。若要更改模式，请<color=yellow>移除</color>此制图台上的所有共享标记（或<color=yellow>摧毁</color>后重新建造）。",
+
+  "MapTable_HoverText_RestrictedToGuild": "仅限该公会使用",
+  "MapTable_HoverText_Public": "公共模式",
+  "MapTable_HoverText_MakePublic": "设为公共模式",
+  "MapTable_HoverText_RestrictToGuild": "设为公会模式",
+
+  "MapTable_CantRemove_PopupHeader": "你确定吗？",
+  "MapTable_CantRemove_PopupText": "当前共享标记存储在此制图台上。如果你摧毁它，<color=yellow>这些标记将会丢失</color>。在摧毁之前，请考虑通过<color=yellow>取消共享</color>来保存任何重要的标记。",
+
+  "tutorial_maptable_topic": "愿旅行之神梅利赐予你祂的祝福！",
+  "tutorial_maptable_text": "通过这张制图台，你可以<color=yellow>分享你在第十世界的探索</color>。别忘了<color=yellow>时常回来</color>，了解他人记录的最新发现，并写下你自己的见闻。"
+}
