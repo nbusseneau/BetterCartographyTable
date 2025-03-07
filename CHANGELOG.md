@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add Chinese translation (@Calvaire <https://github.com/nbusseneau/BetterCartographyTable/issues/18>).
+- Add Chinese translation (@Calvaire [#18](https://github.com/nbusseneau/BetterCartographyTable/issues/18)).
 
 ## [0.6.1] - 2025-03-07
 
