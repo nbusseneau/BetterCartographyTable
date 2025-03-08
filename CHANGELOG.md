@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `GuildsAPI` library to 1.4 (`Guilds` mod 1.1.11).
+
 ## [0.7.0] - 2025-03-07
 
 ### Added
