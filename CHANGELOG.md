@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.1] - 2025-03-09
+
 ### Changed
 
 - Update `GuildsAPI` library to 1.4 (`Guilds` mod 1.1.11).
@@ -201,7 +203,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.7.0...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.7.1...HEAD
+[0.7.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.6.1...0.7.0
 [0.6.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.5.12...0.6.0
