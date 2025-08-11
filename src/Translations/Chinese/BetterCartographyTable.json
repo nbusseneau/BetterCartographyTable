@@ -23,6 +23,12 @@
   "MapTable_CantRemove_PopupHeader": "你确定吗？",
   "MapTable_CantRemove_PopupText": "当前共享标记存储在此制图台上。如果你摧毁它，<color=yellow>这些标记将会丢失</color>。在摧毁之前，请考虑通过<color=yellow>取消共享</color>来保存任何重要的标记。",
 
+  "MapTable_IncorrectPositionExistingPins_PopupHeader": "你确定吗？",
+  "MapTable_IncorrectPositionsExistingPins_PopupText": "您正在与一张新的制图台互动。是否切换？切换后，<color=yellow>地图上来自旧制图台中所有的共享标记将会消失</color>，并载入新制图台的共享标记。",
+
+  "MapTable_IncorrecPositionNoPins_PopupHeader": "你确定吗？",
+  "MapTable_IncorrecPositionNoPins_PopupText": "该制图台是空的。要将您现有的标记迁移至此吗？如果是，您可以<color=yellow>将所有的共享标记</color>同步到该新制图台。提醒：每种共享模式下，您同时只能与一张制图台绑定来共享标记。当您尝试与多张制图台互动时，将必须选择其中之一来使用。",
+
   "tutorial_maptable_topic": "愿旅行之神梅利赐予你祂的祝福！",
   "tutorial_maptable_text": "通过这张制图台，你可以<color=yellow>分享你在第十世界的探索</color>。别忘了<color=yellow>时常回来</color>，了解他人记录的最新发现，并写下你自己的见闻。"
 }

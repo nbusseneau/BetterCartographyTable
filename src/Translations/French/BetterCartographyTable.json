@@ -23,6 +23,12 @@
   "MapTable_CantRemove_PopupHeader": "Êtes-vous sûr ?",
   "MapTable_CantRemove_PopupText": "Des repères partagés sont enregistrés sur cette table. Si vous la détruisez, <color=yellow>ils seront tous perdus</color>. Pensez à sauvegarder tous les repères importants en les <color=yellow>privatisant</color> depuis la table avant de la détruire.",
 
+  "MapTable_IncorrectPositionExistingPins_PopupHeader": "Êtes-vous sûr ?",
+  "MapTable_IncorrectPositionsExistingPins_PopupText": "Vous interagissez avec une table différente de votre habitude. Souhaitez-vous changer de table ? Si oui, <color=yellow>tous les repères partagés de la table précédente disparaîtront</color> et vous recevrez à la place les repères partagés de cette nouvelle table.",
+
+  "MapTable_IncorrecPositionNoPins_PopupHeader": "Êtes-vous sûr ?",
+  "MapTable_IncorrecPositionNoPins_PopupText": "Cette table est vide. Migrez-vous vers une nouvelle table ? Si oui, vous pouvez <color=yellow>transférer tous vos repères partagés</color> vers la nouvelle table. Rappel : vous ne pouvez partager des repères qu'avec une seule table à la fois (par mode de partage). Interagir avec plusieurs tables vous obligera à choisir celle que vous souhaitez utiliser.",
+
   "tutorial_maptable_topic": "Que Meili, dieu du voyage, vous accorde sa bénédiction !",
   "tutorial_maptable_text": "Grâce à cette table, vous pouvez <color=yellow>partager votre exploration</color> du dixième monde. N'oubliez pas d'y <color=yellow>revenir de temps en temps</color> pour vous tenir informé sur les dernières découvertes que d'autres ont notées et enregistrer les vôtres."
 }

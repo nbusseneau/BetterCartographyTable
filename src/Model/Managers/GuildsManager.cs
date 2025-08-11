@@ -27,6 +27,7 @@ public static class GuildsManager
   {
     CurrentGuild = null;
     s_currentGuildColor = null;
+    MapTableManager.GuildTablePosition = null;
     MinimapManager.RemovePins(MinimapManager.GuildPins);
   }
 

@@ -86,6 +86,9 @@ For `NoMap` runs, the goal is to give **cartography tables** a purpose.
     - Your **private pins** can be interacted with, same as in vanilla, but can additionally be shared to the table (becoming **public** or **guild pins**).
     - **Public** or **guild pins** can be crossed off / removed akin to vanilla, or unshared from the table (becoming **private pins** on your map).
     - When multiple players interact with the same **cartography table** at the same time, all changes to **public** or **guild pins** are reflected in real time.
+- When trying to interact with a **cartography table** different from the one you currently have shared pins from:
+  - A warning popup will show up, asking you if you want to switch table. If yes, then all **public pins** or **guild pins** (depending on if the table is in **public mode** or **guild mode**) from the previous table will disappear from your map, and the ones from the new map will appear instead.
+  - Special case: if the **cartography table** is empty (no **public pins** or **guild pins** stored on it), the warning popup will instead allow you to push all **public pins** or **guild pins** from the previous table to the new table. (This allows you to relocate your table elsewhere.)
 
 </details>
 

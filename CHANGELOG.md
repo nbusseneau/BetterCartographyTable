@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add warning popup when switching to another table, to prevent accidental pin loss.
+- Add special handling for empty tables, allowing to relocate tables more easily.
+
 ## [0.7.1] - 2025-03-09
 
 ### Changed

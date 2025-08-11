@@ -16,4 +16,6 @@ public static class IEnumerableSharablePinDataExtensions
     foreach (var pin in pins) zPackage.Write(pin, currentPlayerID, platformUserID);
     return zPackage.Compress();
   }
+
+  public static string ToBase64(this IEnumerable<SharablePinData> pins) => pins.ToCompressedZPackage().GetBase64();
 }

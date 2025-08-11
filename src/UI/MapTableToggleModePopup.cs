@@ -1,11 +1,11 @@
 namespace BetterCartographyTable.UI;
 
-public class MapTableToggleModeWarningPopup : WarningPopup
+public class MapTableWarningPopup : WarningPopup
 {
-  private MapTableToggleModeWarningPopup() : base("$MapTable_ToggleMode_PopupHeader", "$MapTable_ToggleMode_PopupText", UnifiedPopup.Pop)
+  private MapTableWarningPopup(string header, string text) : base(header, text, UnifiedPopup.Pop)
   {
     UnifiedPopup.Push(this);
   }
 
-  public static void Show() => new MapTableToggleModeWarningPopup();
+  public static void Show(string header, string text) => new MapTableWarningPopup(header, text);
 }

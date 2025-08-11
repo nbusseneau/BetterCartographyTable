@@ -1,47 +1,66 @@
+using System.Collections.Generic;
 using System.Linq;
 using BetterCartographyTable.Extensions;
+using BetterCartographyTable.Model;
 using BetterCartographyTable.Model.Managers;
 using BetterCartographyTable.UI;
 using HarmonyLib;
+using UnityEngine;
 
 namespace BetterCartographyTable.Patches;
 
 [HarmonyPatch(typeof(Player))]
 public static class PlayerPatches
 {
+  private const string TablePositionCustomDataKey = $"{Plugin.ModGUID}.TablePosition";
+  private static string CurrentWorldPublicTablePositionCustomDataKey => $"Public{TablePositionCustomDataKey}.{ZNet.instance.GetWorldUID()}";
+  private static string CurrentWorldGuildTablePositionCustomDataKey => $"Guild{TablePositionCustomDataKey}.{ZNet.instance.GetWorldUID()}";
   private const string PinsCustomDataKey = $"{Plugin.ModGUID}.Pins";
   private static string CurrentWorldPinsCustomDataKey => $"{PinsCustomDataKey}.{ZNet.instance.GetWorldUID()}";
 
   /// <summary>
-  /// Store shared pins for current world in the player save's custom data.
+  /// Store table positions and shared pins for current world in the player save's custom data.
   /// </summary>
   [HarmonyPrefix]
   [HarmonyPatch(nameof(Player.Save))]
   private static void SaveSharedPins(Player __instance)
   {
     if (__instance != Player.m_localPlayer) return;
-    var compressedZPackage = MinimapManager.SharedPins.ToCompressedZPackage();
-    var base64Data = compressedZPackage.GetBase64();
-    __instance.m_customData[CurrentWorldPinsCustomDataKey] = base64Data;
+    __instance.m_customData[CurrentWorldPublicTablePositionCustomDataKey] = MapTableManager.PublicTablePosition.ToBase64();
+    __instance.m_customData[CurrentWorldGuildTablePositionCustomDataKey] = MapTableManager.GuildTablePosition.ToBase64();
+    __instance.m_customData[CurrentWorldPinsCustomDataKey] = MinimapManager.SharedPins.ToBase64();
   }
 
   /// <summary>
-  /// Retrieve shared pins for current world from the player save's custom data.
+  /// Retrieve table positions and shared pins for current world from the player save's custom data.
   /// </summary>
   [HarmonyPostfix]
   [HarmonyPatch(nameof(Player.Load))]
   private static void LoadSharedPins(Player __instance)
   {
     if (__instance != Player.m_localPlayer || !Game.instance.m_firstSpawn) return;
-    var hasPins = __instance.m_customData.TryGetValue(CurrentWorldPinsCustomDataKey, out var base64Data);
-    if (hasPins)
-    {
-      var zPackage = new ZPackage(base64Data).Decompress();
-      var sharedPins = zPackage.ReadSharablePinDataList();
-      MinimapManager.AddPins(sharedPins);
-    }
+
+    MapTableManager.PublicTablePosition = PositionFromBase64(__instance, CurrentWorldPublicTablePositionCustomDataKey);
+    MapTableManager.GuildTablePosition = PositionFromBase64(__instance, CurrentWorldGuildTablePositionCustomDataKey);
+    MinimapManager.AddPins(PinsFromBase64(__instance, CurrentWorldPinsCustomDataKey));
     // hide pins toggles if no pins are available
     MinimapUI.HideTableUI();
+  }
+
+  private static Vector3? PositionFromBase64(Player __instance, string key)
+  {
+    var hasValue = __instance.m_customData.TryGetValue(key, out var base64Data);
+    if (!hasValue || base64Data == string.Empty) return null;
+    var zPackage = new ZPackage(base64Data).Decompress();
+    return zPackage.ReadVector3();
+  }
+
+  private static List<SharablePinData> PinsFromBase64(Player __instance, string key)
+  {
+    var hasValue = __instance.m_customData.TryGetValue(key, out var base64Data);
+    if (!hasValue) return [];
+    var zPackage = new ZPackage(base64Data).Decompress();
+    return zPackage.ReadSharablePinDataList();
   }
 
   [HarmonyPostfix]
@@ -81,10 +100,11 @@ public static class PlayerPatches
     {
       __runOriginal = false;
       __result = false;
-      MapTableCantRemovePopup.Show(() =>
+      MapTableYesNoPopup.Show("$MapTable_CantRemove_PopupHeader", "$MapTable_CantRemove_PopupText", () =>
       {
         s_shouldForceRemoveMapTable = true;
         __instance.RemovePiece();
+        MapTableManager.ClearTablePosition(mapTableManager);
       });
     }
   }

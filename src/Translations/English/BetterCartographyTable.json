@@ -23,6 +23,12 @@
   "MapTable_CantRemove_PopupHeader": "Are you sure?",
   "MapTable_CantRemove_PopupText": "Shared pins are currently stored on this table. If you destroy it, <color=yellow>they will be lost</color>. Consider saving any important pins by <color=yellow>unsharing</color> them from the table before destroying it.",
 
+  "MapTable_IncorrectPositionExistingPins_PopupHeader": "Are you sure?",
+  "MapTable_IncorrectPositionsExistingPins_PopupText": "You are interacting with a different table than usual. Do you want to switch tables? If yes, <color=yellow>all shared pins from the previous table will disappear</color>, and you will instead receive the shared pins from this new table.",
+
+  "MapTable_IncorrecPositionNoPins_PopupHeader": "Are you sure?",
+  "MapTable_IncorrecPositionNoPins_PopupText": "This table is empty. Are you migrating to a new table? If yes, you can <color=yellow>push all your shared pins</color> to the new table. Reminder: you can share pins with only one table (per sharing mode) at a time, and trying to interact with multiple tables will force you to choose which one to use.",
+
   "tutorial_maptable_topic": "May Meili, god of travel, grant you his blessing!",
   "tutorial_maptable_text": "With this table, you can <color=yellow>share your exploration</color> of the tenth world. Don't forget to <color=yellow>come back from time to time</color> to learn about the latest discoveries others have written down and record your own."
 }

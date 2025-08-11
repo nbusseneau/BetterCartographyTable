@@ -42,6 +42,14 @@ public class MapTableManager : IEquatable<MapTable>
     s_byZNetView.Remove(mapTableManager.NView);
   }
 
+  public static Vector3? PublicTablePosition { get; set; }
+  public static Vector3? GuildTablePosition { get; set; }
+  public static void ClearTablePosition(MapTableManager mapTableManager)
+  {
+    if (mapTableManager.IsPublic) PublicTablePosition = null;
+    else if (mapTableManager.IsGuild) GuildTablePosition = null;
+  }
+
   public static MapTableManager CurrentTable { get; private set; }
   public static bool IsTableValid => CurrentTable is not null && CurrentTable.NView.IsValid();
   public static void TryOpen(MapTable mapTable, Humanoid user)
@@ -50,17 +58,13 @@ public class MapTableManager : IEquatable<MapTable>
     if (Get(mapTable) is not { } mapTableManager) return;
     else if (!mapTableManager.CheckAccess()) user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$piece_noaccess"));
     else if (Plugin.IsModifierKeyPressed && GuildsManager.IsEnabled) mapTableManager.TryToggleMode(user);
-    else
-    {
-      CurrentTable = mapTableManager;
-      CurrentTable.Open();
-    }
+    else if (!mapTableManager.CheckTablePosition()) mapTableManager.OnIncorrectTablePosition();
+    else mapTableManager.Open();
   }
   public static void TryClose()
   {
     if (CurrentTable is null) return;
     CurrentTable.Close();
-    CurrentTable = null;
   }
 
   public static string GetHoverText(MapTable mapTable)
@@ -103,6 +107,22 @@ public class MapTableManager : IEquatable<MapTable>
     return this.IsPublic || this.IsGuild && isPlayerMemberOfGuild;
   }
 
+  private bool CheckTablePosition()
+  {
+    if (this.IsPublic) return PublicTablePosition is null || PublicTablePosition.Value.Equals(this.Position);
+    else if (this.IsGuild) return GuildTablePosition is null || GuildTablePosition.Value.Equals(this.Position);
+    return false; // should never happen lul
+  }
+
+  private void OnIncorrectTablePosition()
+  {
+    var hasLocalPins = this.IsPublic && MinimapManager.PublicPins.Any() || this.IsGuild && MinimapManager.GuildPins.Any();
+    var hasTablePins = this.Pins.Any();
+    if (hasLocalPins && hasTablePins) MapTableYesNoPopup.Show("$MapTable_IncorrectPositionExistingPins_PopupHeader", "$MapTable_IncorrectPositionsExistingPins_PopupText", () => this.Open());
+    else if (hasLocalPins && !hasTablePins) MapTableYesNoPopup.Show("$MapTable_IncorrecPositionNoPins_PopupHeader", "$MapTable_IncorrecPositionNoPins_PopupText", () => this.Open(pushPinsToTable: true));
+    else this.Open();
+  }
+
   public string GetHoverText()
   {
     var hoverText = this._mapTable.m_name + "\n";
@@ -123,7 +143,7 @@ public class MapTableManager : IEquatable<MapTable>
       user.Message(MessageHud.MessageType.Center, Localization.instance.Localize("$MapTable_ToggleMode_GuildRequired"));
       return;
     }
-    if (this.Pins.Any()) MapTableToggleModeWarningPopup.Show();
+    if (this.Pins.Any()) MapTableWarningPopup.Show("$MapTable_ToggleMode_PopupHeader", "$MapTable_ToggleMode_PopupText");
     else this.ToggleMode();
   }
 
@@ -149,29 +169,39 @@ public class MapTableManager : IEquatable<MapTable>
     this.Owner = guildName;
   }
 
-  private void Open()
+  private void Open(bool pushPinsToTable = false)
   {
-    this.UpdateMinimapPins();
+    CurrentTable = this;
+    this.StoreTablePosition();
+    if (pushPinsToTable) this.PushPinsToTable();
+    else this.PullPinsFromTable();
     MinimapManager.RemoveDuplicateLocalPins();
-    this.SyncVanillaSharedMapData();
+    this.SyncVanillaData();
     MinimapUI.ShowTableUI();
     Minimap.instance.ShowPointOnMap(this.Position);
   }
 
   private void Close()
   {
-    this.SaveTablePins();
-    this.SyncVanillaSharedMapData();
+    this.PushPinsToTable();
+    this.SyncVanillaData();
     MinimapUI.HideTableUI();
+    CurrentTable = null;
   }
 
-  private void UpdateMinimapPins()
+  private void StoreTablePosition()
+  {
+    if (this.IsPublic) PublicTablePosition = this.Position;
+    else if (this.IsGuild) GuildTablePosition = this.Position;
+  }
+
+  private void PullPinsFromTable()
   {
     if (this.IsPublic) MinimapManager.PublicPins = this.Pins;
     else if (this.IsGuild) MinimapManager.GuildPins = this.Pins;
   }
 
-  private void SaveTablePins()
+  private void PushPinsToTable()
   {
     if (this.IsPublic) this.Pins = MinimapManager.PublicPins;
     else if (this.IsGuild) this.Pins = MinimapManager.GuildPins;
@@ -182,7 +212,7 @@ public class MapTableManager : IEquatable<MapTable>
   public void SendPinEvent(SharablePinData pin, PinEvent pinEvent)
   {
     this.NView.InvokeRPC(ZNetView.Everybody, OnPinEventRPC, pin.ToCompressedZPackage(), (int)pinEvent);
-    this.SaveTablePins(); // annoying, but required in case someone else opens the table before we close it
+    this.PushPinsToTable(); // annoying, but required in case someone else opens the table before we close it
   }
 
   private void RPC_OnPinEvent(long senderId, ZPackage compressedZPackage, int pinEventInt)
@@ -211,13 +241,13 @@ pin: {pin} | pinEvent: {pinEvent} | isExistingPin: {existingPin}";
     }
   }
 
-  private void SyncVanillaSharedMapData()
+  private void SyncVanillaData()
   {
-    this.RetrieveExploredMap();
-    this.StoreExploredMapAndPublicPins();
+    this.PullExploredMap();
+    this.PushExploredMapAndPublicPins();
   }
 
-  private void RetrieveExploredMap()
+  private void PullExploredMap()
   {
     if (this.NView.GetZDO().GetByteArray(ZDOVars.s_data) is { } array)
     {
@@ -228,7 +258,7 @@ pin: {pin} | pinEvent: {pinEvent} | isExistingPin: {existingPin}";
     }
   }
 
-  private void StoreExploredMapAndPublicPins()
+  private void PushExploredMapAndPublicPins()
   {
     var array = this.NView.GetZDO().GetByteArray(ZDOVars.s_data, null);
     if (array is not null) array = Utils.Decompress(array);
