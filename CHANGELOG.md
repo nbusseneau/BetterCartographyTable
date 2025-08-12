@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2025-08-12
+
 ### Added
 
 - Add warning popup when switching to another table, to prevent accidental pin loss.
@@ -208,7 +210,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.7.1...HEAD
+[unreleased]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.8.0...HEAD
+[0.8.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.7.1...0.8.0
 [0.7.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.6.1...0.7.0
 [0.6.1]: https://github.com/nbusseneau/BetterCartographyTable/compare/0.6.0...0.6.1

@@ -146,7 +146,7 @@ In other words:
 - **[Prerequisites]**
   - Install [**BepInExPack Valheim**](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/).
   - Install [**Jötunn, the Valheim Library**](https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/).
-- Download [nbusseneau-Better_Cartography_Table-0.7.1.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.7.1.zip).
+- Download [nbusseneau-Better_Cartography_Table-0.8.0.zip](https://github.com/nbusseneau/BetterCartographyTable/releases/latest/download/nbusseneau-Better_Cartography_Table-0.8.0.zip).
 - Extract the archive and move everything to your `BepInEx/plugins/` directory. It should look like this:
   ```
   BepInEx/
