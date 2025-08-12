@@ -11,8 +11,8 @@ websiteUrl = "https://github.com/nbusseneau/BetterCartographyTable"
 containsNsfwContent = false
 
 [package.dependencies]
-denikson-BepInExPack_Valheim = "5.4.2202"
-ValheimModding-Jotunn = "2.24.2"
+denikson-BepInExPack_Valheim = "5.4.2332"
+ValheimModding-Jotunn = "2.26.0"
 
 
 [build]
