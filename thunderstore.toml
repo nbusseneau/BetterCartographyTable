@@ -11,8 +11,8 @@ websiteUrl = "https://github.com/nbusseneau/BetterCartographyTable"
 containsNsfwContent = false
 
 [package.dependencies]
-denikson-BepInExPack_Valheim = "5.4.2332"
-ValheimModding-Jotunn = "2.26.0"
+denikson-BepInExPack_Valheim = "5.4.2351"
+ValheimModding-Jotunn = "2.30.2"
 
 
 [build]
@@ -38,4 +38,4 @@ repository = "https://thunderstore.io"
 communities = [ "valheim", ]
 
 [publish.categories]
-valheim = [ "client-side", "server-side", "mods", "tools", "tweaks", "utility", "bog-witch-update", ]
+valheim = [ "client-side", "server-side", "mods", "tools", "tweaks", "utility", "deep-north-update", ]
