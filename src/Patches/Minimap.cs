@@ -81,7 +81,7 @@ public static class MinimapPatches
   }
 
   [HarmonyPrefix]
-  [HarmonyPatch(nameof(Minimap.OnMapRightClick))]
+  [HarmonyPatch(nameof(Minimap.RemovePinUnderPointer))]
   private static void InterceptOnMapRightClick(ref bool __runOriginal)
   {
     __runOriginal = false;
@@ -142,8 +142,7 @@ public static class MinimapPatches
       // part 1: insert delegate right before start of loop
       matcher.MatchEndForward(
           new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Minimap), nameof(Minimap.m_explored))),
-          new CodeMatch(OpCodes.Ldlen),
-          new CodeMatch(OpCodes.Conv_I4),
+          new CodeMatch(OpCodes.Callvirt),
           new CodeMatch(OpCodes.Callvirt),
           new CodeMatch(OpCodes.Ldc_I4_0))
         .ThrowIfInvalid("Could not inject conditional branching over m_explored sharing loop in Minimap.GetSharedMapData()")
@@ -227,7 +226,7 @@ public static class MinimapPatches
   /// </summary>
   [HarmonyPostfix]
   [HarmonyPatch(nameof(Minimap.AddSharedMapData))]
-  [HarmonyPatch(nameof(Minimap.ResetAndExplore))]
+  [HarmonyPatch(nameof(Minimap.ResetAndExplore), [typeof(byte[]), typeof(byte[])])]
   private static void ShowCartographyToggle()
   {
     if (instance.m_exploredOthers.Length > 0) instance.m_sharedMapHint.SetActive(true);

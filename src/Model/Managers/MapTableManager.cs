@@ -215,7 +215,7 @@ public class MapTableManager : IEquatable<MapTable>
     this.PushPinsToTable(); // annoying, but required in case someone else opens the table before we close it
   }
 
-  private void RPC_OnPinEvent(long senderId, ZPackage compressedZPackage, int pinEventInt)
+  private void RPC_OnPinEvent(long senderId, ZPackage zPackage, int pinEventInt)
   {
     // ignore events if the table is not open
     if (this != CurrentTable) return;
@@ -224,7 +224,8 @@ public class MapTableManager : IEquatable<MapTable>
     var currentPlayerPeerID = Player.m_localPlayer.GetZDOID().UserID;
     if (senderId == currentPlayerPeerID) return;
 
-    var pin = compressedZPackage.Decompress().ReadSharablePinData();
+    zPackage.Decompress();
+    var pin = zPackage.ReadSharablePinData();
     var pinEvent = (PinEvent)pinEventInt;
     var existingPin = MinimapManager.SharablePins.SingleOrDefault(p => pin.Equals(p));
     if (existingPin is null && pinEvent == PinEvent.Add) Minimap.instance.AddPin(pin);

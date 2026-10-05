@@ -7,23 +7,15 @@ namespace BetterCartographyTable.Extensions;
 public static class ZPackageExtensions
 {
   /// <summary>
-  /// Utility function for compressing a ZPackage. Does not edit in place, use the returned instance.
+  /// Utility function for compressing a ZPackage in place.
   /// </summary>
   public static ZPackage Compress(this ZPackage zPackage)
   {
-    var array = zPackage.GetArray();
-    array = Utils.Compress(array);
-    return new(array);
-  }
-
-  /// <summary>
-  /// Utility function for decompressing a ZPackage. Does not edit in place, use the returned instance.
-  /// </summary>
-  public static ZPackage Decompress(this ZPackage zPackage)
-  {
-    var array = zPackage.GetArray();
-    array = Utils.Decompress(array);
-    return new(array);
+    byte[] array = Utils.Compress(zPackage.GetArray());
+    zPackage.m_stream.Position = 0L;
+    zPackage.m_stream.Write(array, 0, array.Length);
+    zPackage.m_stream.Position = 0L;
+    return zPackage;
   }
 
   public static SharablePinData ReadSharablePinData(this ZPackage zPackage)

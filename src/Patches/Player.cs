@@ -51,7 +51,8 @@ public static class PlayerPatches
   {
     var hasValue = __instance.m_customData.TryGetValue(key, out var base64Data);
     if (!hasValue || base64Data == string.Empty) return null;
-    var zPackage = new ZPackage(base64Data).Decompress();
+    var zPackage = new ZPackage(base64Data);
+    zPackage.Decompress();
     return zPackage.ReadVector3();
   }
 
@@ -59,7 +60,8 @@ public static class PlayerPatches
   {
     var hasValue = __instance.m_customData.TryGetValue(key, out var base64Data);
     if (!hasValue) return [];
-    var zPackage = new ZPackage(base64Data).Decompress();
+    var zPackage = new ZPackage(base64Data);
+    zPackage.Decompress();
     return zPackage.ReadSharablePinDataList();
   }
 
