@@ -45,9 +45,9 @@ https://github.com/nbusseneau/BetterCartographyTable/assets/4659919/421e90b4-f00
   - You can now safely go ham and pin all those nice berries / copper veins / whatever floats your boat, without worrying about cluttering another player's map.
 - When multiple players interact with the same **cartography table** at the same time, all changes are reflected in real time.
   - This allows collaborating over the map in real time, especially useful when planning the next expedition.
-- **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed).
+- **Cartography tables** can be **public** (default) or **restricted to a guild** (if [**Guilds**](https://valheim.hexium.gg/mods/Smoothbrain/Guilds) is installed).
   - For when you want to share super secret guild hideouts with your mates. Not that it ever happens. Definitely don't look for super secret guild hideouts on your servers. Nope...
-- **Map exploration** sharing can be **public** (default), **private**, or **restricted to a guild** (if [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed).
+- **Map exploration** sharing can be **public** (default), **private**, or **restricted to a guild** (if [**Guilds**](https://valheim.hexium.gg/mods/Smoothbrain/Guilds) is installed).
   - In case you need to be extra careful that other players know not where you roamed.
 - If using the `NoMap` world modifier, the map will be accessible through **cartography tables** (but only when directly interacting with them).
 - Translations available: English, French, Chinese. New languages can be added easily ([see below for details](#translations)).
@@ -77,7 +77,7 @@ For `NoMap` runs, the goal is to give **cartography tables** a purpose.
   - In `NoMap` runs, the map will still refuse to open: it can only open by interacting with a **cartography table**.
 - When hovering a **cartography table**:
   - Text will appear (akin to vanilla) and list information about the table and how to interact with it.
-  - If [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) is installed, the table can be switched between **public mode** (default) or **guild mode**. When a table is in **guild mode**, only its guild members can interact with it.
+  - If [**Guilds**](https://valheim.hexium.gg/mods/Smoothbrain/Guilds) is installed, the table can be switched between **public mode** (default) or **guild mode**. When a table is in **guild mode**, only its guild members can interact with it.
 - When interacting with a **cartography table**:
   - Retrieve other players' **map exploration** currently shared to the table, same as in vanilla.
   - If **map exploration** sharing is in **public mode** (default) or **guild mode** (and we are interacting with a **guild table**), share your **map exploration** to the table.
@@ -139,7 +139,7 @@ In other words:
 
 - **[Prerequisite]** Install [**r2modman**](https://thunderstore.io/c/valheim/p/ebkr/r2modman/).
 - Click **Install with Mod Manager** from the [mod page](https://thunderstore.io/c/valheim/p/nbusseneau/Better_Cartography_Table/).
-- **[Optional]** Install [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) for guild support.
+- **[Optional]** Install [**Guilds**](https://valheim.hexium.gg/mods/Smoothbrain/Guilds) for guild support.
 
 ### Manually (not recommended)
 
@@ -158,7 +158,7 @@ In other words:
           ├── plugins/
           └── README.md
   ```
-- **[Optional]** Install [**Guilds**](https://thunderstore.io/c/valheim/p/Smoothbrain/Guilds/) for guild support.
+- **[Optional]** Install [**Guilds**](https://valheim.hexium.gg/mods/Smoothbrain/Guilds) for guild support.
 
 ## Special thanks
 

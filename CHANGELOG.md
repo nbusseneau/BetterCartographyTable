@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for 1.0 (Deep North).
 - Update BepInEx to 5.4.2351.
 - Update Jotunn to 2.30.2.
+- Update `GuildsAPI` library to 1.5 (`Guilds` mod 1.1.14).
 
 ## [0.8.1] - 2025-08-12
 
